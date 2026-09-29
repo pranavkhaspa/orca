@@ -1,0 +1,86 @@
+# Render blueprint for the ORCA API.
+#
+# A blueprint declares the whole service, so a deploy is reproducible from the
+# repository rather than from a dashboard someone clicked through once. Every
+# setting here has a working default: with no environment variables at all the
+# service starts, answers, and degrades honestly. The variable names below are
+# the complete set read by internal/config; nothing else is consulted.
+
+services:
+  - type: web
+    name: orca-api
+    runtime: docker
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: ./api
+    plan: free
+    # Closest free region to the users this serves.
+    region: singapore
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      # Render injects this; declared so the value is visible in the blueprint.
+      - key: PORT
+        value: "8080"
+
+      # ---- Optional. Everything below runs without it. --------------------
+      #
+      # Without a key the service uses its deterministic router and the ten
+      # localized templates, and the safety verdict is bit-for-bit identical.
+      # With a key the planner and the narrator may call the model — for wording
+      # and for reading a place name out of a sentence, never for the verdict.
+      # - key: OPENROUTER_API_KEY
+      #   sync: false
+
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: PLAN_MODEL
+        value: deepseek/deepseek-v3.2
+      - key: NARRATE_MODEL
+        value: deepseek/deepseek-v3.2
+      - key: LLM_TIMEOUT_SEC
+        value: "25"
+
+      # ---- CORS ------------------------------------------------------------
+      #
+      # Defaults to "*", which is fine for a keyless public demo: there is no
+      # cookie, no credential, and nothing to steal cross-origin. Set this to the
+      # Vercel origin once it exists, e.g.
+      #   https://orca-xyz.vercel.app
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+      # ---- Timeouts and limits ---------------------------------------------
+      #
+      # The free plan has one CPU and a request ceiling, so the concurrency cap
+      # and the per-client rate limit are what decide whether the service stays
+      # up under a crowd. The defaults allow six simultaneous upstream fan-outs
+      # (each query issues up to eight calls) and twelve questions a minute per
+      # IP.
+      - key: MAX_CONCURRENT
+        value: "6"
+      - key: RATE_LIMIT_PER_MIN
+        value: "12"
+      - key: REQUEST_TIMEOUT_SEC
+        value: "60"
+      - key: UPSTREAM_TIMEOUT_SEC
+        value: "20"
+
+      # ---- Caching and search geometry -------------------------------------
+      - key: CACHE_TTL_SEC
+        value: "900"
+      - key: MARINE_DAYS
+        value: "5"
+      - key: WAYPOINT_KM
+        value: "45"
+      # Radius of the fishing-zone search fan. Lower it to cut the number of
+      # upstream calls per query; 0 pins the zone to the waypoint.
+      - key: PFZ_SEARCH_KM
+        value: "120"
+
+      # ---- Demo switch -----------------------------------------------------
+      #
+      # ORCA_OFFLINE=1 suppresses every outbound call and answers from the
+      # snapshot embedded in the binary. Left commented out on purpose: turning
+      # it on in production would silently serve yesterday's numbers.
+      # - key: ORCA_OFFLINE
+      #   value: "1"

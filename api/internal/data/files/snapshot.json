@@ -1,0 +1,2181 @@
+{
+  "generated_at": "2026-09-29T11:54:36.271899868Z",
+  "places": {
+    "chennai": {
+      "name": "Chennai",
+      "lat": 13.083,
+      "lon": 80.27,
+      "way_lat": 13.012404028495984,
+      "way_lon": 80.67905043849828,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 0.82,
+        "wave_period_s": 11.7,
+        "wave_dir_deg": 151,
+        "swell_height_m": 0.76,
+        "swell_period_s": 10.9,
+        "wind_wave_m": 0.02,
+        "sst_c": 30.4,
+        "tide_m": 0.31
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 16.1,
+        "gust_kmh": 21.2,
+        "precip_mm": 0,
+        "cloud_pct": 98,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146379+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809440556+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809440556+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809440556+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809440556+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.0124\u0026longitude=80.6791\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809440556+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "kakinada": {
+      "name": "Kakinada",
+      "lat": 16.989,
+      "lon": 82.247,
+      "way_lat": 16.953295562725994,
+      "way_lon": 82.66847098484436,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.04,
+        "wave_period_s": 13.6,
+        "wave_dir_deg": 162,
+        "swell_height_m": 1.04,
+        "swell_period_s": 11.4,
+        "wind_wave_m": 0,
+        "sst_c": 30.5,
+        "tide_m": 0.36
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 10.8,
+        "gust_kmh": 14.8,
+        "precip_mm": 0,
+        "cloud_pct": 20,
+        "wx_code": 1,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.606146347+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812460894+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812460894+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812460894+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812460894+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.9533\u0026longitude=82.6685\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812460894+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "karwar": {
+      "name": "Karwar",
+      "lat": 14.813,
+      "lon": 74.13,
+      "way_lat": 14.812622035818622,
+      "way_lon": 73.71139353152125,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.04,
+        "wave_period_s": 10.3,
+        "wave_dir_deg": 211,
+        "swell_height_m": 0.72,
+        "swell_period_s": 8.3,
+        "wind_wave_m": 0.02,
+        "sst_c": 30.3,
+        "tide_m": 0.78
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 14.9,
+        "gust_kmh": 23,
+        "precip_mm": 0,
+        "cloud_pct": 99,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634501+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.185871274+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.185871274+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.185871274+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.185871274+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=14.8126\u0026longitude=73.7114\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.185871274+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "kavaratti": {
+      "name": "Kavaratti",
+      "lat": 10.567,
+      "lon": 72.642,
+      "way_lat": 10.531464257310223,
+      "way_lon": 72.23193754164049,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.3,
+        "wave_period_s": 10.3,
+        "wave_dir_deg": 212,
+        "swell_height_m": 0.84,
+        "swell_period_s": 10.3,
+        "wind_wave_m": 0.24,
+        "sst_c": 29.9,
+        "tide_m": 0.39
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 16.8,
+        "gust_kmh": 23,
+        "precip_mm": 0,
+        "cloud_pct": 97,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.17315105+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172684102+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172684102+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172684102+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172684102+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=10.5315\u0026longitude=72.2319\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172684102+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "kochi": {
+      "name": "Kochi",
+      "lat": 9.931,
+      "lon": 76.267,
+      "way_lat": 9.792366397241656,
+      "way_lon": 75.88108913974474,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.18,
+        "wave_period_s": 9.8,
+        "wave_dir_deg": 210,
+        "swell_height_m": 0.9,
+        "swell_period_s": 10,
+        "wind_wave_m": 0.32,
+        "sst_c": 29.2,
+        "tide_m": 0.2
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 18.2,
+        "gust_kmh": 25.6,
+        "precip_mm": 0,
+        "cloud_pct": 100,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.42388169+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101234+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101234+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101234+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101234+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.7924\u0026longitude=75.8811\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101234+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "kolkata": {
+      "name": "Kolkata",
+      "lat": 21.65,
+      "lon": 88.15,
+      "way_lat": 21.283121494225743,
+      "way_lon": 88.33354859608176,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.08,
+        "wave_period_s": 14,
+        "wave_dir_deg": 181,
+        "swell_height_m": 1.06,
+        "swell_period_s": 11.8,
+        "wind_wave_m": 0.06,
+        "sst_c": 30,
+        "tide_m": 2.37
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 14.3,
+        "gust_kmh": 18.7,
+        "precip_mm": 0,
+        "cloud_pct": 99,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.809464165+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016165425+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016165425+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016165425+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016165425+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.2831\u0026longitude=88.3335\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016165425+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "kollam": {
+      "name": "Kollam",
+      "lat": 8.893,
+      "lon": 76.614,
+      "way_lat": 8.721786182694135,
+      "way_lon": 76.24293158332273,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.28,
+        "wave_period_s": 9.9,
+        "wave_dir_deg": 205,
+        "swell_height_m": 0.98,
+        "swell_period_s": 10.2,
+        "wind_wave_m": 0.4,
+        "sst_c": 28.8,
+        "tide_m": 0.01
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 21.1,
+        "gust_kmh": 27.4,
+        "precip_mm": 0.1,
+        "cloud_pct": 100,
+        "wx_code": 51,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173167576+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.187418269+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.187418269+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.187418269+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.187418269+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=8.7218\u0026longitude=76.2429\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.187418269+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "mumbai": {
+      "name": "Mumbai",
+      "lat": 18.938,
+      "lon": 72.835,
+      "way_lat": 18.90224225794251,
+      "way_lon": 72.4088645566178,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.06,
+        "wave_period_s": 9.4,
+        "wave_dir_deg": 226,
+        "swell_height_m": 0.72,
+        "swell_period_s": 7.3,
+        "wind_wave_m": 0.3,
+        "sst_c": 29.9,
+        "tide_m": 1.36
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 21.8,
+        "gust_kmh": 28.4,
+        "precip_mm": 0,
+        "cloud_pct": 23,
+        "wx_code": 1,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.18834372+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423797258+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423797258+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423797258+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423797258+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=18.9022\u0026longitude=72.4089\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423797258+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "paradip": {
+      "name": "Paradip",
+      "lat": 20.264,
+      "lon": 86.694,
+      "way_lat": 20.228205284061957,
+      "way_lon": 87.12365502767761,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.28,
+        "wave_period_s": 14.5,
+        "wave_dir_deg": 181,
+        "swell_height_m": 1.28,
+        "swell_period_s": 12.2,
+        "wind_wave_m": 0.02,
+        "sst_c": 30,
+        "tide_m": 1.61
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 13.5,
+        "gust_kmh": 17.3,
+        "precip_mm": 0,
+        "cloud_pct": 98,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173252123+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.18298342+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.18298342+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.18298342+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.18298342+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.2282\u0026longitude=87.1237\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.18298342+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "porbandar": {
+      "name": "Porbandar",
+      "lat": 21.642,
+      "lon": 69.609,
+      "way_lat": 21.470504538485304,
+      "way_lon": 69.21487211423812,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.32,
+        "wave_period_s": 10.5,
+        "wave_dir_deg": 210,
+        "swell_height_m": 0.94,
+        "swell_period_s": 6.7,
+        "wind_wave_m": 0.08,
+        "sst_c": 29.2,
+        "tide_m": 1.09
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 14.5,
+        "gust_kmh": 19.8,
+        "precip_mm": 0,
+        "cloud_pct": 1,
+        "wx_code": 0,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.189841968+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423770168+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423770168+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423770168+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423770168+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=21.4705\u0026longitude=69.2149\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423770168+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "port blair": {
+      "name": "Port Blair",
+      "lat": 11.623,
+      "lon": 92.726,
+      "way_lat": 11.622706024414212,
+      "way_lon": 93.1391666460861,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 0.92,
+        "wave_period_s": 10,
+        "wave_dir_deg": 191,
+        "swell_height_m": 0.76,
+        "swell_period_s": 10.5,
+        "wind_wave_m": 0.2,
+        "sst_c": 29,
+        "tide_m": 0.01
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 14.9,
+        "gust_kmh": 20.2,
+        "precip_mm": 0,
+        "cloud_pct": 100,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.812544582+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016248547+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016248547+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016248547+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016248547+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=11.6227\u0026longitude=93.1392\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.016248547+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "rameswaram": {
+      "name": "Rameswaram",
+      "lat": 9.288,
+      "lon": 79.312,
+      "way_lat": 9.055721200189277,
+      "way_lon": 79.64768977476433,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.2,
+        "wave_period_s": 6.7,
+        "wave_dir_deg": 206,
+        "swell_height_m": 0.66,
+        "swell_period_s": 10.2,
+        "wind_wave_m": 0.96,
+        "sst_c": 30,
+        "tide_m": 0.2
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 32.5,
+        "gust_kmh": 40.7,
+        "precip_mm": 0,
+        "cloud_pct": 100,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.4001704+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605959519+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605959519+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605959519+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605959519+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=9.0557\u0026longitude=79.6477\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605959519+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "ratnagiri": {
+      "name": "Ratnagiri",
+      "lat": 16.99,
+      "lon": 73.312,
+      "way_lat": 16.851201949574964,
+      "way_lon": 72.91464956915911,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.04,
+        "wave_period_s": 10,
+        "wave_dir_deg": 217,
+        "swell_height_m": 0.74,
+        "swell_period_s": 10.6,
+        "wind_wave_m": 0.16,
+        "sst_c": 30.1,
+        "tide_m": 1.01
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 17.6,
+        "gust_kmh": 24.1,
+        "precip_mm": 0,
+        "cloud_pct": 97,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.423881587+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101232+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101232+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101232+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101232+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=16.8512\u0026longitude=72.9146\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.630101232+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "udupi": {
+      "name": "Udupi",
+      "lat": 13.337,
+      "lon": 74.75,
+      "way_lat": 13.231942115336878,
+      "way_lon": 74.34843396865233,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.12,
+        "wave_period_s": 9.7,
+        "wave_dir_deg": 227,
+        "swell_height_m": 0.56,
+        "swell_period_s": 9.7,
+        "wind_wave_m": 0.06,
+        "sst_c": 29.6,
+        "tide_m": 0.59
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 12.3,
+        "gust_kmh": 17.6,
+        "precip_mm": 0,
+        "cloud_pct": 100,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.01634121+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.190383833+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.190383833+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.190383833+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.190383833+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=13.2319\u0026longitude=74.3484\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:39.190383833+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "veraval": {
+      "name": "Veraval",
+      "lat": 20.852,
+      "lon": 70.367,
+      "way_lat": 20.713106995598782,
+      "way_lon": 69.96043205280046,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.2,
+        "wave_period_s": 10.4,
+        "wave_dir_deg": 213,
+        "swell_height_m": 0.88,
+        "swell_period_s": 6.4,
+        "wind_wave_m": 0.04,
+        "sst_c": 29.1,
+        "tide_m": 0.99
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 14.8,
+        "gust_kmh": 20.2,
+        "precip_mm": 0,
+        "cloud_pct": 2,
+        "wx_code": 0,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:37.173205823+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172671768+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172671768+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172671768+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172671768+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=20.7131\u0026longitude=69.9604\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.172671768+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    },
+    "visakhapatnam": {
+      "name": "Visakhapatnam",
+      "lat": 17.673,
+      "lon": 83.284,
+      "way_lat": 17.60228458768379,
+      "way_lon": 83.70212386439198,
+      "marine": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wave_height_m": 1.12,
+        "wave_period_s": 13.6,
+        "wave_dir_deg": 169,
+        "swell_height_m": 1.12,
+        "swell_period_s": 11.4,
+        "wind_wave_m": 0,
+        "sst_c": 30.4,
+        "tide_m": 0.29
+      },
+      "weather": {
+        "time": "2026-09-29T17:00:00+05:30",
+        "wind_kmh": 12.6,
+        "gust_kmh": 17.3,
+        "precip_mm": 0,
+        "cloud_pct": 100,
+        "wx_code": 3,
+        "lightning_risk": "low"
+      },
+      "marine_prov": {
+        "sea_level_height_msl": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_level_height_msl",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "sea_surface_temperature": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "sea_surface_temperature",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "swell_wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "swell_wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_direction": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_direction",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wave_period": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wave_period",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_wave_height": {
+          "Source": "Open-Meteo Marine",
+          "Dataset": "wind_wave_height",
+          "URL": "https://marine-api.open-meteo.com/v1/marine?forecast_days=5\u0026hourly=wave_height%2Cwave_period%2Cwave_direction%2Cswell_wave_height%2Cswell_wave_period%2Cwind_wave_height%2Csea_surface_temperature%2Csea_level_height_msl\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.400216211+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "weather_prov": {
+        "cloud_cover": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "cloud_cover",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605948124+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "precipitation": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "precipitation",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605948124+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "weather_code": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "weather_code",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605948124+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_gusts_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_gusts_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605948124+05:30",
+          "Live": true,
+          "Err": ""
+        },
+        "wind_speed_10m": {
+          "Source": "Open-Meteo Forecast",
+          "Dataset": "wind_speed_10m",
+          "URL": "https://api.open-meteo.com/v1/forecast?forecast_days=5\u0026hourly=wind_speed_10m%2Cwind_gusts_10m%2Cprecipitation%2Ccloud_cover%2Cweather_code\u0026latitude=17.6023\u0026longitude=83.7021\u0026timezone=Asia%2FKolkata",
+          "Retrieved": "2026-09-29T17:24:38.605948124+05:30",
+          "Live": true,
+          "Err": ""
+        }
+      },
+      "source": "Open-Meteo (baked fallback)"
+    }
+  }
+}

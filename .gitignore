@@ -1,0 +1,29 @@
+# ---- Go ---------------------------------------------------------------------
+# The binary and any local build output. The service has no third-party modules,
+# so there is no vendor directory to keep and nothing to audit.
+api/orca
+api/api
+*.test
+*.out
+
+# Local environment overrides. .env.example is committed; .env is not.
+.env
+.env.local
+api/.env
+web/.env
+web/.env.local
+
+# ---- Node / Vite ------------------------------------------------------------
+node_modules/
+web/dist/
+web/.vite/
+web/tsconfig.tsbuildinfo
+npm-debug.log*
+yarn-error.log*
+
+# ---- Editors and OS ---------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

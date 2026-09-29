@@ -1,0 +1,8 @@
+# The snapshot and the coastal table are embedded in the binary, so nothing under
+# internal/data/files is needed at build time beyond what is already in the
+# module. Only genuinely useless build context is excluded here.
+.git
+.gitignore
+*.md
+Dockerfile
+.dockerignore
