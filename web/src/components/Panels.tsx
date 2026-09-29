@@ -1,5 +1,6 @@
 import type { Citation, Findings, Rules, Severity } from '../types'
 import type { T } from '../i18n'
+import { RuleIcon, VERDICT_ICON } from './Icons'
 
 const LEVEL_TEXT: Record<string, string> = {
   go: 'GO',
@@ -9,30 +10,39 @@ const LEVEL_TEXT: Record<string, string> = {
 
 export function VerdictCard({ f, t }: { f: Findings; t: T }) {
   const v = f.verdict
+  const LevelIcon = VERDICT_ICON[v.level] ?? RuleIcon
   return (
     <section className={`panel verdict v-${v.level}`}>
-      <h2>{t.verdict}</h2>
-      <div className="verdict-head">
-        <div className="verdict-level">{LEVEL_TEXT[v.level] ?? v.level}</div>
-        <div className="verdict-where">
-          <strong>{f.geo.name}</strong>
-          <span className="muted">
-            {f.plan.window_hours}h window ·{' '}
-            {new Date(f.marine.time).toLocaleString(undefined, {
-              hour: '2-digit',
-              minute: '2-digit',
-              day: 'numeric',
-              month: 'short',
-            })}
-          </span>
+      <div className="verdict-inner">
+        <h2>{t.verdict}</h2>
+        <div className="verdict-head">
+          <div className="verdict-level">
+            <LevelIcon />
+            {LEVEL_TEXT[v.level] ?? v.level}
+          </div>
+          <div className="verdict-where">
+            <strong>{f.geo.name}</strong>
+            <span className="muted">
+              {f.plan.window_hours}h window ·{' '}
+              {new Date(f.marine.time).toLocaleString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                day: 'numeric',
+                month: 'short',
+              })}
+            </span>
+          </div>
         </div>
+        <p className="verdict-source">
+          <RuleIcon />
+          {t.verdictSource}
+        </p>
+        <ul className="rationale">
+          {v.rationale.map((r, i) => (
+            <li key={i}>{r}</li>
+          ))}
+        </ul>
       </div>
-      <p className="verdict-source">{t.verdictSource}</p>
-      <ul className="rationale">
-        {v.rationale.map((r, i) => (
-          <li key={i}>{r}</li>
-        ))}
-      </ul>
     </section>
   )
 }

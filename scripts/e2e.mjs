@@ -16,10 +16,20 @@
 //
 // API, WEB and CHROME override the endpoints. With WEB unset the script serves
 // web/dist itself, so there is nothing to start by hand.
+//
+// RATE_LIMIT_PER_MIN should be raised for this run. The service limits each
+// client to twelve questions a minute, which is right for a public demo on free
+// upstreams and completely wrong for a harness that asks fourteen questions as
+// fast as it can: the product then correctly answers 429, the page correctly
+// shows the error, and the test reports a failure that is really the limiter
+// doing its job.
+//
+//   RATE_LIMIT_PER_MIN=1000 go run ./cmd/orca &
 
 import { spawn } from 'node:child_process'
 import { readFileSync, existsSync, mkdtempSync, statSync } from 'node:fs'
 import { createServer } from 'node:http'
+import { Readable } from 'node:stream'
 import { tmpdir } from 'node:os'
 import { dirname, extname, join, normalize, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -48,8 +58,34 @@ function serveDist() {
     process.exit(1)
   }
   const server = createServer((req, res) => {
+    const url = req.url ?? '/'
+    // Proxy the API to the Go service. The bundle calls /api on its own origin,
+    // which is exactly the arrangement Vercel's rewrite creates in production;
+    // without this the single-page-app fallback below answers the streaming
+    // endpoint with index.html, and the page sits waiting for events that can
+    // never arrive.
+    if (url.startsWith('/api/') || url.startsWith('/healthz')) {
+      const upstream = fetch(API + url, { method: req.method, headers: { accept: 'text/event-stream' } })
+        .then((up) => {
+          res.writeHead(up.status, {
+            'content-type': up.headers.get('content-type') ?? 'text/plain',
+            'cache-control': 'no-store',
+          })
+          // Pipe rather than buffer: this endpoint is a long-lived event stream,
+          // and collecting it into one buffer before replying would delay every
+          // trace event until the analysis had already finished.
+          if (up.body) return Readable.fromWeb(up.body).pipe(res)
+          res.end()
+        })
+        .catch((e) => {
+          if (res.headersSent) return res.end()
+          res.writeHead(502, { 'content-type': 'text/plain' })
+          res.end('upstream unreachable: ' + e.message)
+        })
+      return
+    }
     // normalize() plus the prefix check keeps "../" out of the served tree.
-    const rel = normalize(decodeURIComponent((req.url ?? '/').split('?')[0]))
+    const rel = normalize(decodeURIComponent(url.split('?')[0]))
     let file = join(DIST, rel)
     if (!file.startsWith(DIST)) {
       res.writeHead(403).end()
@@ -179,6 +215,19 @@ async function gotoApp() {
       `!!document.querySelector('form input') && !!document.querySelector('form button')`)
     if (ready) {
       await sleep(400)
+      // The first-visit tour is a modal that stays up until it is dismissed, and
+      // it covers the page a user is trying to read. This harness never clicks
+      // through it, so it would reappear on every single question and sit over
+      // the verdict — including the refusals, whose whole assertion is that no
+      // verdict word appears anywhere in the rendered text. Dismiss it the way a
+      // person would, once, and let localStorage keep it dismissed.
+      await evaluate(`
+        (() => {
+          const skip = document.querySelector('[role="dialog"] .btn.ghost');
+          if (skip) skip.click();
+          return !!skip;
+        })()`)
+      await sleep(250)
       return
     }
     await sleep(250)

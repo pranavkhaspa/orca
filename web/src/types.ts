@@ -145,6 +145,9 @@ export interface Rules {
 export interface Meta {
   languages: LangOpt[]
   places: string[]
+  /** The supported ports with coordinates, so the globe can draw the coastline
+   *  it actually covers rather than a decorative sphere. */
+  towns: { name: string; lat: number; lon: number; coast: string }[]
   llm: boolean
   rules: Rules
   sources: { name: string; use: string }[]

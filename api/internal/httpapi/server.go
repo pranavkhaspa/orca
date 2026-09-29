@@ -134,9 +134,30 @@ func (s *Server) handleMeta(w http.ResponseWriter, r *http.Request) {
 	for _, c := range lang.All {
 		langs = append(langs, langOpt{string(c), lang.Name(c)})
 	}
+	// The supported ports are published with their coordinates, not just their
+	// names. The frontend draws each one on the globe, and thirty-two points
+	// along the Indian coastline are what makes the globe legible: with no
+	// basemap texture to load — and none is, deliberately, because an ad blocker
+	// silently eating a texture URL is a bug report nobody can reproduce — the
+	// ports themselves are the map. Deriving the dots from this list also means
+	// a place added to the reference table appears on the globe without a second
+	// edit in TypeScript.
+	type townOpt struct {
+		Name  string  `json:"name"`
+		Lat   float64 `json:"lat"`
+		Lon   float64 `json:"lon"`
+		Coast string  `json:"coast"`
+	}
+	towns := []townOpt{}
+	if ts, err := data.Towns(s.cfg.CoastalPath); err == nil {
+		for _, t := range ts {
+			towns = append(towns, townOpt{t.Name, t.Lat, t.Lon, t.Coast})
+		}
+	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"languages": langs,
 		"places":    data.GeoNames(s.cfg.CoastalPath),
+		"towns":     towns,
 		"llm":       s.cfg.LLMAvailable(),
 		// Published so the UI can state the rules rather than presenting
 		// unexplained numbers.

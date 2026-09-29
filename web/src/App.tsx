@@ -1,9 +1,22 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { fetchHealth, fetchMeta, streamAsk } from './api'
 import { EXAMPLES, makeT } from './i18n'
+import { copy } from './tour'
 import type { AgentRun, Findings, Health, Meta, VerdictLevel } from './types'
 import { AgentTrace } from './components/AgentTrace'
 import { AnswerPanel } from './components/AnswerPanel'
+import { Boundary } from './components/Boundary'
+import { LoadingResults } from './components/Loading'
+import { Tutorial } from './components/Tutorial'
+import { GlobeIcon, HelpIcon } from './components/Icons'
 import {
   DegradedBanner,
   HazardGrid,
@@ -14,9 +27,13 @@ import {
   ZoneCard,
 } from './components/Panels'
 
-// MapLibre is ~700 kB of the bundle and is not needed to read the verdict. It is
-// loaded in parallel after the first render so a weak connection still shows the
-// answer first — which is the part the fisher actually needs.
+// Two heavy, optional visualisations, both kept out of the critical path. The
+// verdict is text and must render on its own: a fisher on a 2G connection in a
+// boat is the person this is for, and a 620 kB WebGL bundle must never stand
+// between them and the answer.
+const Globe3D = lazy(() =>
+  import('./components/Globe3D').then((m) => ({ default: m.Globe3D })),
+)
 const MapPanel = lazy(() =>
   import('./components/MapPanel').then((m) => ({ default: m.MapPanel })),
 )
@@ -32,6 +49,20 @@ const AGENT_LABELS: Record<string, string> = {
 }
 const ORDER = Object.keys(AGENT_LABELS)
 
+// Which narration stage each agent's report implies. The pipeline reports
+// agents, not stages, and the user cares about stages.
+const STAGE_OF: Record<string, number> = {
+  planner: 0,
+  geo: 1,
+  ocean: 2,
+  weather: 2,
+  incois: 3,
+  domain: 4,
+  narrator: 5,
+}
+
+const TOUR_KEY = 'orca.tour.v1'
+
 function detectLang(text: string): string {
   if (/[ऀ-ॿ]/.test(text)) return /\b(marathi|मराठी)\b/i.test(text) ? 'mr' : 'hi'
   if (/[ঀ-৿]/.test(text)) return 'bn'
@@ -40,7 +71,7 @@ function detectLang(text: string): string {
   if (/[ಀ-೿]/.test(text)) return 'kn'
   if (/[ഀ-ൿ]/.test(text)) return 'ml'
   if (/[઀-૿]/.test(text)) return 'gu'
-  if (/[଀-୿]/.test(text)) return 'or'
+  if (/[଀-ୀ]/.test(text)) return 'or'
   return 'en'
 }
 
@@ -56,10 +87,14 @@ export default function App() {
   const [findings, setFindings] = useState<Findings | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [globeFailed, setGlobeFailed] = useState(false)
+  const [tour, setTour] = useState(false)
   const abort = useRef<AbortController | null>(null)
   const resultRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const t = useMemo(() => makeT(lang), [lang])
+  const c = useMemo(() => copy(lang), [lang])
 
   useEffect(() => {
     localStorage.setItem('orca.lang', lang)
@@ -71,6 +106,18 @@ export default function App() {
     fetchMeta(ac.signal).then(setMeta).catch(() => undefined)
     fetchHealth(ac.signal).then(setHealth).catch(() => undefined)
     return () => ac.abort()
+  }, [])
+
+  // First visit gets the tour. Offered once, never again, and always available
+  // from the header — a modal that reappears every session gets dismissed
+  // without being read, which is worse than not showing it.
+  useEffect(() => {
+    if (!localStorage.getItem(TOUR_KEY)) setTour(true)
+  }, [])
+
+  const closeTour = useCallback(() => {
+    localStorage.setItem(TOUR_KEY, 'seen')
+    setTour(false)
   }, [])
 
   const submit = useCallback(
@@ -101,8 +148,6 @@ export default function App() {
           onDone: (f) => {
             setFindings(f)
             setAnswer(f.answer)
-            // The backend detected the language of the question; adopt it so the
-            // interface matches the answer the user just received.
             if (f.answer_lang) setLang(f.answer_lang)
           },
           onError: (m) => setError(m),
@@ -113,148 +158,277 @@ export default function App() {
     [busy],
   )
 
-  // Announce the result to assistive technology and move focus to it, so a
-  // screen-reader user is not left on the input after the answer arrives.
   useEffect(() => {
     if (findings) resultRef.current?.focus()
   }, [findings])
 
   const reported = new Set(runs.map((r) => r.name))
   const pending = ORDER.filter((n) => !reported.has(n)).slice(0, busy ? 2 : 0)
+  const stage = runs.reduce((s, r) => Math.max(s, STAGE_OF[r.name] ?? 0), 0)
+
+  const towns = meta?.towns ?? []
+  const showHero = !findings && !busy
 
   return (
-    <div className="app">
-      <header className="top">
-        <div className="brand">
-          <div className="logo" aria-hidden="true">
-            ⚓
+    <div className="shell">
+      <div className="app">
+        <header className="top">
+          <div className="brand">
+            <div className="logo" aria-hidden="true">
+              <AnchorMark />
+            </div>
+            <div className="brand-text">
+              <h1>{t.title}</h1>
+              <p className="tagline">{t.tagline}</p>
+            </div>
           </div>
-          <div>
-            <h1>{t.title}</h1>
-            <p className="tagline">{t.tagline}</p>
-          </div>
-        </div>
-        <div className="top-right">
-          <label className="lang-pick">
-            <span className="sr-only">{t.language}</span>
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              aria-label={t.language}
-            >
-              {(meta?.languages ?? [{ code: 'en', native: 'English' }]).map((l) => (
-                <option key={l.code} value={l.code}>
-                  {l.native}
-                </option>
-              ))}
-            </select>
-          </label>
-          {health ? (
-            <span
-              className={`health ${health.offline ? 'offline' : ''}`}
-              title={health.offline ? 'ORCA_OFFLINE is set: every value comes from the baked snapshot' : `snapshot ${health.snapshot_age} · ${health.cache_entries} cached`}
-            >
-              ● {health.offline ? 'offline mode' : health.status}
-            </span>
-          ) : null}
-        </div>
-      </header>
-
-      <section className="ask">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            submit(query)
-          }}
-        >
-          <label className="sr-only" htmlFor="q">
-            {t.ask}
-          </label>
-          <input
-            id="q"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value)
-              if (findings) setLang(detectLang(e.target.value))
-            }}
-            placeholder={t.placeholder}
-            autoComplete="off"
-            enterKeyHint="send"
-          />
-          <button className="btn primary" type="submit" disabled={busy || !query.trim()}>
-            {busy ? '…' : t.submit}
-          </button>
-        </form>
-        <div className="examples">
-          <span className="muted">{t.example}:</span>
-          {EXAMPLES.map((ex) => (
+          <div className="top-right">
             <button
-              key={ex.q}
-              className="chip"
-              onClick={() => {
-                setQuery(ex.q)
-                setLang(ex.lang)
-                submit(ex.q)
-              }}
-              disabled={busy}
+              className="icon-btn"
+              onClick={() => setTour(true)}
+              aria-label={c.tourCta}
+              title={c.tourCta}
             >
-              {ex.lang.toUpperCase()}
+              <HelpIcon />
             </button>
-          ))}
-        </div>
-      </section>
-
-      {error ? <div className="error" role="alert">{error}</div> : null}
-
-      {!findings && !busy ? (
-        <div className="empty">
-          <p>{t.empty}</p>
-          {meta ? (
-            <p className="muted">
-              {meta.places.length} coastal locations · {meta.sources.length} public data sources
-              {meta.llm ? '' : ' · deterministic narration (no model key configured)'}
-            </p>
-          ) : null}
-        </div>
-      ) : null}
-
-      {busy && !findings ? <p className="thinking">{t.thinking}</p> : null}
-
-      {findings || busy ? (
-        <div className="results" ref={resultRef} tabIndex={-1}>
-          <div className="col-left">
-            <Suspense
-              fallback={<div className="map map-skeleton">◌</div>}
-            >
-              <MapPanel geo={findings?.geo ?? null} pfz={findings?.pfz ?? null} />
-            </Suspense>
-          </div>
-          <div className="col-main">
-            {findings ? <DegradedBanner f={findings} t={t} /> : null}
-            {findings ? <VerdictCard f={findings} t={t} /> : null}
-            {answer ? <AnswerPanel answer={answer} lang={findings?.answer_lang ?? lang} t={t} /> : null}
-            {findings ? (
-              <div className="two-up">
-                <ZoneCard f={findings} t={t} />
-                <HazardGrid f={findings} t={t} />
-              </div>
+            <label className="lang-pick">
+              <span className="sr-only">{t.language}</span>
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+                aria-label={t.language}
+              >
+                {(meta?.languages ?? [{ code: 'en', native: 'English' }]).map((l) => (
+                  <option key={l.code} value={l.code}>
+                    {l.native}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {health ? (
+              <span
+                className={`health ${health.offline ? 'offline' : ''}`}
+                title={
+                  health.offline
+                    ? 'ORCA_OFFLINE is set: every value comes from the baked snapshot'
+                    : `snapshot ${health.snapshot_age} · ${health.cache_entries} cached · ${health.places} places`
+                }
+              >
+                {health.offline ? 'offline' : health.status}
+              </span>
             ) : null}
-            {findings ? <Observations f={findings} t={t} /> : null}
-            <AgentTrace runs={runs} pending={pending} t={t} />
-            {findings ? <SourcesPanel f={findings} t={t} /> : null}
-            {meta ? <RulesPanel rules={meta.rules} t={t} /> : null}
           </div>
-        </div>
-      ) : null}
+        </header>
 
-      <footer className="foot">
-        <span>ORCA · SIH26176</span>
-        <span className="muted">
-          Verdict computed in Go from published thresholds. The language model never decides
-          whether it is safe to go to sea.
-        </span>
-      </footer>
+        {showHero ? (
+          <section className="hero">
+            <div className="hero-copy">
+              <p className="eyebrow">{t.tagline}</p>
+              <h2>
+                {t.ask} <span className="grad">ORCA</span>
+              </h2>
+              <p className="hero-lead">{c.heroLead}</p>
+              <ul className="trust">
+                {c.trust.map((item, i) => (
+                  <li key={item}>
+                    {i === 0 ? <GlobeIcon /> : null}
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="hero-globe">
+              <Boundary fallback={<div className="sk-orbit" />} label="hero globe">
+                <Suspense fallback={<div className="sk-orbit" />}>
+                  <Globe3D
+                    towns={towns}
+                    geo={null}
+                    pfz={null}
+                    level={null}
+                    onFail={() => setGlobeFailed(true)}
+                  />
+                </Suspense>
+              </Boundary>
+              <span className="globe-hint">{c.globeHint}</span>
+            </div>
+          </section>
+        ) : null}
+
+        <section className="ask">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              submit(query)
+            }}
+          >
+            <label className="sr-only" htmlFor="q">
+              {c.searchLabel}
+            </label>
+            <input
+              id="q"
+              ref={inputRef}
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                if (findings) setLang(detectLang(e.target.value))
+              }}
+              placeholder={t.placeholder}
+              autoComplete="off"
+              enterKeyHint="send"
+            />
+            <button className="btn primary" type="submit" disabled={busy || !query.trim()}>
+              {busy ? <span className="btn-spinner" aria-hidden="true" /> : null}
+              {busy ? t.thinking : t.submit}
+            </button>
+          </form>
+          <div className="examples">
+            <span className="muted">{t.example}:</span>
+            {EXAMPLES.map((ex) => (
+              <button
+                key={ex.q}
+                className="chip"
+                onClick={() => {
+                  setQuery(ex.q)
+                  setLang(ex.lang)
+                  submit(ex.q)
+                }}
+                disabled={busy}
+                title={ex.q}
+              >
+                {ex.lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {error ? (
+          <div className="error" role="alert">
+            {error}
+          </div>
+        ) : null}
+
+        {showHero ? (
+          <div className="empty">
+            {meta ? (
+              <p className="muted">
+                {meta.places.length} coastal locations · {meta.sources.length} public data
+                sources
+                {meta.llm ? '' : ' · deterministic narration (no model key configured)'}
+              </p>
+            ) : (
+              <p className="muted">{t.empty}</p>
+            )}
+            <p className="muted">
+              <button className="btn ghost" onClick={() => setTour(true)}>
+                {c.newHere}
+              </button>
+            </p>
+          </div>
+        ) : null}
+
+        {busy && !findings ? <LoadingResults c={c} title={t.thinking} stage={stage} /> : null}
+
+        {findings || (busy && runs.length > 0) ? (
+          <div className="results" ref={resultRef} tabIndex={-1}>
+            <div className="col-left">
+              {globeFailed ? (
+                <Suspense fallback={<div className="sk-globe" />}>
+                  <MapPanel geo={findings?.geo ?? null} pfz={findings?.pfz ?? null} />
+                </Suspense>
+              ) : (
+                <div className="globe-panel">
+                  <Boundary
+                    fallback={
+                      <Suspense fallback={<div className="sk-globe" />}>
+                        <MapPanel geo={findings?.geo ?? null} pfz={findings?.pfz ?? null} />
+                      </Suspense>
+                    }
+                    label="result globe"
+                  >
+                    <Suspense fallback={<div className="sk-globe" />}>
+                      <Globe3D
+                        towns={towns}
+                        geo={findings?.geo ?? null}
+                        pfz={findings?.pfz ?? null}
+                        level={findings?.verdict.level ?? null}
+                        onFail={() => setGlobeFailed(true)}
+                      />
+                    </Suspense>
+                  </Boundary>
+                  {findings ? (
+                    <div className="globe-caption">
+                      <span className="globe-place">{findings.geo.name}</span>
+                      <span className="globe-hint inline">{c.globeHint}</span>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </div>
+            <div className="col-main">
+              {findings ? <DegradedBanner f={findings} t={t} /> : null}
+              {findings ? <VerdictCard f={findings} t={t} /> : null}
+              {answer ? (
+                <AnswerPanel answer={answer} lang={findings?.answer_lang ?? lang} t={t} />
+              ) : null}
+              {findings ? (
+                <div className="two-up">
+                  <ZoneCard f={findings} t={t} />
+                  <HazardGrid f={findings} t={t} />
+                </div>
+              ) : null}
+              {findings ? <Observations f={findings} t={t} /> : null}
+              <AgentTrace runs={runs} pending={pending} t={t} />
+              {findings ? <SourcesPanel f={findings} t={t} /> : null}
+              {meta ? <RulesPanel rules={meta.rules} t={t} /> : null}
+            </div>
+          </div>
+        ) : null}
+
+        <footer className="foot">
+          <span>
+            <strong>ORCA</strong> · SIH26176
+          </span>
+          <span>
+            Verdict computed in Go from published thresholds. The language model never
+            decides whether it is safe to go to sea.
+          </span>
+        </footer>
+      </div>
+
+      {tour ? <Tutorial c={c} onClose={closeTour} /> : null}
     </div>
+  )
+}
+
+// The mark is an anchor over two waves — the same drawing as the favicon, kept
+// as a component so the two cannot drift apart.
+function AnchorMark() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path
+        d="M16 5v11"
+        stroke="currentColor"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <circle cx="16" cy="6" r="2.8" fill="currentColor" />
+      <path
+        d="M5 18c3.6 3.4 6.8 3.4 11 0 4.2-3.4 7.4-3.4 11 0"
+        stroke="currentColor"
+        strokeWidth="2.6"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 24c3.6 3.4 6.8 3.4 11 0 4.2-3.4 7.4-3.4 11 0"
+        stroke="currentColor"
+        strokeWidth="2.6"
+        fill="none"
+        strokeLinecap="round"
+        opacity=".6"
+      />
+    </svg>
   )
 }
 

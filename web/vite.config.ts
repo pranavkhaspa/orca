@@ -25,9 +25,13 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        // Keep the map engine out of the critical path: the verdict and the trace
-        // must render even if the map chunk is slow.
+        // Keep the heavy visualisations out of the critical path: the verdict
+        // and the trace must render even if the globe chunk is slow. three is
+        // named separately from globe.gl because it is by far the larger half
+        // and every globe.gl release bumps it.
         manualChunks: {
+          globe: ['globe.gl'],
+          three: ['three'],
           map: ['maplibre-gl'],
           react: ['react', 'react-dom'],
         },

@@ -67,10 +67,24 @@ export function streamAsk(
       handlers.onError(`stream → HTTP ${res.status}`)
       return
     }
+    // A 200 is not a stream. A static host that does not proxy /api answers this
+    // endpoint with index.html — a successful response that contains no events,
+    // which leaves the user watching a loading state that can never finish. Any
+    // content type other than an event stream is a configuration problem, so
+    // say so instead of waiting forever.
+    const type = res.headers.get('content-type') ?? ''
+    if (!type.includes('text/event-stream')) {
+      handlers.onError(
+        `The API did not return an event stream (content-type: ${type || 'none'}). ` +
+          'The frontend is not reaching the ORCA service.',
+      )
+      return
+    }
 
     const reader = res.body.getReader()
     const decoder = new TextDecoder()
     let buf = ''
+    let sawDone = false
 
     const handle = (block: string) => {
       let event = 'message'
@@ -94,6 +108,7 @@ export function streamAsk(
       else if (p.type === 'answer') {
         handlers.onAnswer(String(p.answer ?? ''), String(p.answer_lang ?? 'en'))
       } else if (p.type === 'done' && p.final) {
+        sawDone = true
         handlers.onDone(p.final as Findings)
       }
     }
@@ -115,6 +130,13 @@ export function streamAsk(
       if (!signal?.aborted) {
         handlers.onError(err instanceof Error ? err.message : 'stream interrupted')
       }
+      return
+    }
+    // The connection closed cleanly but no verdict arrived. Reporting that is
+    // the difference between "something went wrong, ask again" and a page that
+    // looks finished and shows nothing.
+    if (!sawDone && !signal?.aborted) {
+      handlers.onError('The connection closed before ORCA finished the analysis.')
     }
   })()
 }
