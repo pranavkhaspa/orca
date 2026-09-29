@@ -607,13 +607,18 @@ React 19, TypeScript 7, Vite 7, three 0.186 + globe.gl 2.46, MapLibre GL 5.6 as
 a fallback, no UI framework. 3,163 lines.
 
 - **Globe.** globe.gl draws a rotating sphere that flies to the place you asked
-  about and colours the result by verdict. The surface is generated at runtime
-  in a `<canvas>` — an ocean gradient and a graticule — instead of being fetched
-  from a texture host, because an ad blocker in this project's own browser ate
-  one CDN asset and a safety tool should not depend on a third party staying
-  reachable. The 32 supported ports are plotted on it, sourced from the same
-  table the backend resolves against, so the picture shows real coverage instead
-  of a decorative sphere.
+  about and colours the result by verdict. The ocean is generated at runtime in a
+  `<canvas>` — a gradient and a graticule — rather than being fetched from a
+  texture host, because an ad blocker in this project's own browser ate one CDN
+  asset and a safety tool should not depend on a third party staying reachable.
+  The land is real and equally self-hosted: Natural Earth 110m (public domain),
+  converted to GeoJSON at build time by `web/scripts/build-land.mjs` and
+  committed to `web/public/geo/land.json` at 74 kB. The 32 supported ports are
+  plotted on top of it, sourced from the same table the backend resolves
+  against, so the picture shows real coverage instead of a decorative sphere.
+  `vercel.json` excludes `/geo` from the SPA rewrite — the rewrite would
+  otherwise answer the geometry request with `index.html`, which is the same
+  failure as the CDN this avoids.
 - **Map.** MapLibre remains as the 2D fallback, with ORCA's zone point, the
   offshore waypoint and the bearing between them. The base style loads from a
   CDN; if the style or the tiles are unavailable, the map degrades to a

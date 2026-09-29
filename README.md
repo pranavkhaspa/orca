@@ -92,11 +92,13 @@ they finish, so the collaboration is visible rather than claimed.
 ### The interface
 
 A rotating globe opens the page, and the place you ask about is where it goes.
-The sphere is generated in a runtime `<canvas>` — an ocean gradient and a
-graticule — rather than fetched from a texture host, and the 32 supported ports
-are plotted on it, so the surface shows the coastline ORCA actually covers
-instead of a decorative globe. Nothing about the picture is invented: it comes
-from the same table the backend resolves against.
+The ocean is generated in a runtime `<canvas>`, and the land is Natural Earth
+110m converted to GeoJSON at build time and committed to the repository — 74 kB,
+served from this origin, with nothing left to block. The 32 supported ports are
+plotted on it, so the surface shows the coastline ORCA actually covers instead of
+a decorative globe. Nothing about the picture is invented: the coastlines come
+from public-domain geodata and the ports from the same table the backend
+resolves against.
 
 The wait is narrated rather than spun. A query fans out across several upstream
 services and a model, which is long enough that a spinner reads as a hang, so
@@ -312,7 +314,9 @@ render.yaml             the complete Render blueprint
 
 This code is original. Marine data is Open-Meteo (free, no key required, CC BY
 4.0 attribution retained in the source table). INCOIS data is the Government
-of India's public bulletin. Public fishing-zone projects were reviewed for
-prior art during development; **none carried a licence permitting reuse of
-their code**, so none of it is present here. Every technique in ORCA is
+of India's public bulletin. The globe's land is Natural Earth 110m via the
+`world-atlas` package — **public domain**, vendored into `web/public/geo` and
+regenerated with `npm run build:land`. Public fishing-zone projects were
+reviewed for prior art during development; **none carried a licence permitting
+reuse of their code**, so none of it is present here. Every technique in ORCA is
 implemented from the published specifications.
