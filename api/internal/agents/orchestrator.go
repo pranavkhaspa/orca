@@ -152,6 +152,34 @@ func (o *Orchestrator) Ask(ctx context.Context, query string, emit func(Event)) 
 		nil, resolveErr(geo.Source))
 	emitAgent(gi, "geo", "Geo Resolution")
 
+	// An unresolved location must stop the request here, whatever the reason.
+	//
+	// This is the most important gate in the service. Geocode returns a zero
+	// Geo on failure, and (0, 0) is not "no location" — it is a real point in
+	// the Gulf of Guinea. Continuing would fetch genuine marine data for that
+	// point and hand back a complete, confident, correctly-formatted verdict
+	// about a stretch of the Atlantic, in reply to a question about an Indian
+	// fishing port. It happened: "kanyakumari" resolved to nothing, the
+	// pipeline continued, and the answer reported 1.26 m waves and 26.8 °C for
+	// West Africa while looking exactly like a correct answer about Tamil Nadu.
+	//
+	// The failure is invisible by construction — every field is populated, the
+	// provenance is real, the language is right, and nothing in the response
+	// says the coordinates are wrong. A user cannot catch it. Only this gate
+	// can, so it is checked on the resolution *result* rather than on the plan,
+	// which means it also covers an unknown place name, a geocoder outage and a
+	// rate-limited response. No verdict, no hazard checks, no zone: a clarifying
+	// question instead.
+	if geo.Source == "unresolved" {
+		f.Plan = plan
+		f.Trace = rs.snapshot()
+		f.AnswerLang = string(detected)
+		f.Answer = unknownPlace(plan.Place, detected)
+		emit(Event{Type: "answer", Answer: f.Answer, AnswerLang: f.AnswerLang})
+		emit(Event{Type: "done", Final: &f})
+		return f
+	}
+
 	// ---- 3. Parallel fan-out ----------------------------------------------
 	var (
 		wg       sync.WaitGroup

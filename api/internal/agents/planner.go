@@ -49,7 +49,11 @@ func (p *PlannerAgent) Plan(ctx context.Context, query string, detected lang.Cod
 	}
 
 	var out domain.Plan
-	ctx, cancel := context.WithTimeout(ctx, p.cfg.LLMTimeout)
+	// The refinement budget, not the narration budget. The deterministic plan is
+	// already complete and correct, so there is nothing here worth waiting ten
+	// seconds for; on a slow link a model that replies at 12s would be discarded
+	// by the request timeout anyway, having cost the user the whole wait.
+	ctx, cancel := context.WithTimeout(ctx, p.cfg.PlannerLLMTimeout)
 	defer cancel()
 	system := plannerSystem
 	if err := p.llm.CompleteJSON(ctx, p.cfg.PlanModel, system, query, &out); err != nil {
@@ -64,6 +68,23 @@ func (p *PlannerAgent) Plan(ctx context.Context, query string, detected lang.Cod
 		if det.Place != "" {
 			return det
 		}
+		// Otherwise the model's place is passed along even though the coastal
+		// reference table has never heard of it.
+		//
+		// It used to be discarded here, on the reasoning that a name the table
+		// does not know is a string rather than a location. That was
+		// over-cautious and it cost real capability: Kanyakumari is a major
+		// fishing port that the table simply does not list, and the geocoder can
+		// resolve it perfectly well. Refusing to try answered a question about
+		// a real harbour with a generic "which location?", and would have
+		// answered the same way for every coastal town the table has not caught
+		// up with yet.
+		//
+		// Safety does not depend on this check. The orchestrator refuses to
+		// produce a verdict for any location it could not resolve, whatever the
+		// cause, so the worst outcome here is a failed geocode and a clarifying
+		// question — never a wrong ocean. Guessing wrong is what the resolver
+		// is for.
 	}
 	if out.WindowHours < 1 || out.WindowHours > 72 {
 		out.WindowHours = det.WindowHours

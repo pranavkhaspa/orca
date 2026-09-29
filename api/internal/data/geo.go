@@ -94,55 +94,81 @@ func MatchTown(q, path string) (Town, bool) {
 	if n == "" {
 		return Town{}, false
 	}
-	eq := func(a, b string) bool { return normName(a) == b }
+
+	// Two of the 31 names are multi-word: Car Nicobar and Port Blair. For those
+	// two, only an exact match against the whole name or one of its aliases is
+	// accepted, and the loose passes below are skipped.
+	//
+	// The reason is a real answer to a question nobody asked. "Is it safe at
+	// Port of Nowhere?" matched the token "port" against the alias "portblair"
+	// and returned a confident go verdict for Port Blair, in the Andaman
+	// Islands, with live marine data and correct provenance. Every layer of the
+	// response looked right. A substring rule cannot tell "Port Blair" from the
+	// first half of it, so for these two names it is not allowed to try.
+	//
+	// The cost is that a user has to name the place fully, or use a distinctive
+	// alias such as "nicobar". Both are reasonable, and the alternative is a
+	// wrong ocean.
+	exactOnly := func(t Town) bool { return multiWord(t.Name) }
+	matches := func(t Town, accept func(cand, whole string) bool) bool {
+		for _, cand := range append([]string{t.Name}, t.Aliases...) {
+			if accept(normName(cand), normName(t.Name)) {
+				return true
+			}
+		}
+		return false
+	}
 
 	// 1. Exact name or alias.
 	for _, t := range ts {
-		if eq(t.Name, n) {
+		if matches(t, func(cand, _ string) bool { return cand == n }) {
 			return t, true
 		}
-		for _, a := range t.Aliases {
-			if eq(a, n) {
-				return t, true
-			}
-		}
 	}
-	// 2. Substring in either direction.
+
+	// 2. Substring in either direction. This is what lets a user type
+	// "mangalore" for Mangaluru or "thoothukudi" for Tuticorin, so it stays for
+	// the single-word names that are the overwhelming majority.
 	for _, t := range ts {
-		if containsStr(normName(t.Name), n) || containsStr(n, normName(t.Name)) {
+		if exactOnly(t) {
+			continue
+		}
+		if matches(t, func(cand, _ string) bool {
+			return containsStr(cand, n) || containsStr(n, cand)
+		}) {
 			return t, true
 		}
-		for _, a := range t.Aliases {
-			if containsStr(normName(a), n) || containsStr(n, normName(a)) {
-				return t, true
-			}
-		}
 	}
-	// 3. Any token of the query prefixes or is a near-prefix of a town name.
+
+	// 3. A token of the query prefixes a town name, so "koch" finds Kochi.
 	for _, tok := range strings.Fields(n) {
 		if len(tok) < 3 {
 			continue
 		}
 		for _, t := range ts {
-			for _, cand := range append([]string{t.Name}, t.Aliases...) {
-				c := normName(cand)
-				if strings.HasPrefix(c, tok) {
-					return t, true
-				}
+			if exactOnly(t) {
+				continue
+			}
+			if matches(t, func(cand, _ string) bool { return strings.HasPrefix(cand, tok) }) {
+				return t, true
 			}
 		}
 	}
-	// 4. One-character typos, which is how place names actually get typed.
-	// Only for tokens long enough that a single edit is unlikely to collide.
+
+	// 4. One-character typos, which is how place names actually get typed. Only
+	// for tokens long enough that a single edit is unlikely to collide, and
+	// never for a multi-word name, where an edit in one half is indistinguishable
+	// from a different place.
 	for _, tok := range strings.Fields(n) {
 		if len(tok) < 5 {
 			continue
 		}
 		for _, t := range ts {
-			for _, cand := range append([]string{t.Name}, t.Aliases...) {
-				if withinOneEdit(normName(cand), tok) {
-					return t, true
-				}
+			if exactOnly(t) {
+				continue
+			}
+			if matches(t, func(cand, _ string) bool { return withinOneEdit(cand, tok) }) {
+				return t, true
 			}
 		}
 	}
@@ -372,6 +398,12 @@ func isBoundary(r rune) bool {
 
 // normName lowercases and strips punctuation and spaces so that "Kochi, Kerala"
 // and "kochi kerala" compare equal.
+// multiWord reports whether a place name is more than one word, which is what
+// makes a partial prefix ambiguous.
+func multiWord(s string) bool {
+	return len(strings.Fields(strings.TrimSpace(s))) > 1
+}
+
 func normName(s string) string {
 	s = strings.ToLower(strings.TrimSpace(s))
 	var b strings.Builder

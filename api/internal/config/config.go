@@ -22,6 +22,20 @@ type Config struct {
 	WaypointKm     float64
 	AllowedOrigins string
 
+	// PlannerLLMTimeout is the model budget for the router's *refinement* pass,
+	// and it is deliberately far shorter than LLMTimeout.
+	//
+	// The deterministic router has already produced a complete, correct plan
+	// before the model is consulted, and every failure path in the planner
+	// returns that plan. The model call is therefore an optional improvement to
+	// place-name extraction, not an input to the analysis — so blocking the
+	// whole pipeline on it for the narration budget charged the user ten
+	// seconds of latency for a cosmetic edit, on the one request where the
+	// result was already certain. Five seconds is generous for extracting a
+	// place name from a sentence; past that the router's answer is the better
+	// one anyway, because it is the answer the language-parity test guarantees.
+	PlannerLLMTimeout time.Duration
+
 	// Operational limits. These were hardcoded when there was one deployment to
 	// think about; on a free-tier host the concurrency cap and the per-client
 	// rate limit are the two numbers that decide whether the service survives
@@ -83,15 +97,19 @@ const (
 	DefaultUpstreamTimeout = 20 * time.Second
 	DefaultRequestTimeout  = 60 * time.Second
 	DefaultLLMTimeout      = 25 * time.Second
-	DefaultCacheTTL        = 15 * time.Minute
-	DefaultMarineDays      = 5
-	DefaultWaypointKm      = 45.0
-	DefaultPFZSearchKm     = 120.0
-	DefaultMaxConcurrent   = 6
-	DefaultRateLimitPerMin = 12
-	DefaultAllowedOrigins  = "*"
-	DefaultCoastalPath     = "embed:coastal_towns.json"
-	DefaultSnapshotPath    = "embed:snapshot.json"
+	// The router's refinement pass is optional and already has a correct answer
+	// waiting, so it gets a budget sized for "did the model get back in time" and
+	// not for "did the model write a good paragraph".
+	DefaultPlannerLLMTimeout = 5 * time.Second
+	DefaultCacheTTL          = 15 * time.Minute
+	DefaultMarineDays        = 5
+	DefaultWaypointKm        = 45.0
+	DefaultPFZSearchKm       = 120.0
+	DefaultMaxConcurrent     = 6
+	DefaultRateLimitPerMin   = 12
+	DefaultAllowedOrigins    = "*"
+	DefaultCoastalPath       = "embed:coastal_towns.json"
+	DefaultSnapshotPath      = "embed:snapshot.json"
 )
 
 // WithDefaults returns a copy with every unset field replaced by its documented
@@ -123,6 +141,9 @@ func (c Config) WithDefaults() Config {
 	}
 	if c.LLMTimeout <= 0 {
 		c.LLMTimeout = DefaultLLMTimeout
+	}
+	if c.PlannerLLMTimeout <= 0 {
+		c.PlannerLLMTimeout = DefaultPlannerLLMTimeout
 	}
 	if c.CacheTTL <= 0 {
 		c.CacheTTL = DefaultCacheTTL
@@ -162,17 +183,19 @@ func Load() Config {
 	origin := env("ALLOWED_ORIGINS", DefaultAllowedOrigins)
 	var pfzUnset bool
 	c := Config{
-		Port:           env("PORT", DefaultPort),
-		OpenRouterKey:  os.Getenv("OPENROUTER_API_KEY"),
-		PlanModel:      env("PLAN_MODEL", DefaultPlanModel),
-		NarrateModel:   env("NARRATE_MODEL", DefaultNarrateModel),
-		LLMTimeout:     time.Duration(envFloat("LLM_TIMEOUT_SEC", DefaultLLMTimeout.Seconds())) * time.Second,
-		CoastalPath:    env("COASTAL_PATH", DefaultCoastalPath),
-		SnapshotPath:   env("SNAPSHOT_PATH", DefaultSnapshotPath),
-		CacheTTL:       time.Duration(envFloat("CACHE_TTL_SEC", DefaultCacheTTL.Seconds())) * time.Second,
-		MarineDays:     int(envFloat("MARINE_DAYS", DefaultMarineDays)),
-		WaypointKm:     envFloat("WAYPOINT_KM", DefaultWaypointKm),
-		AllowedOrigins: origin,
+		Port:          env("PORT", DefaultPort),
+		OpenRouterKey: os.Getenv("OPENROUTER_API_KEY"),
+		PlanModel:     env("PLAN_MODEL", DefaultPlanModel),
+		NarrateModel:  env("NARRATE_MODEL", DefaultNarrateModel),
+		LLMTimeout:    time.Duration(envFloat("LLM_TIMEOUT_SEC", DefaultLLMTimeout.Seconds())) * time.Second,
+
+		PlannerLLMTimeout: time.Duration(envFloat("PLANNER_LLM_TIMEOUT_SEC", DefaultPlannerLLMTimeout.Seconds())) * time.Second,
+		CoastalPath:       env("COASTAL_PATH", DefaultCoastalPath),
+		SnapshotPath:      env("SNAPSHOT_PATH", DefaultSnapshotPath),
+		CacheTTL:          time.Duration(envFloat("CACHE_TTL_SEC", DefaultCacheTTL.Seconds())) * time.Second,
+		MarineDays:        int(envFloat("MARINE_DAYS", DefaultMarineDays)),
+		WaypointKm:        envFloat("WAYPOINT_KM", DefaultWaypointKm),
+		AllowedOrigins:    origin,
 
 		UpstreamTimeout: time.Duration(envFloat("UPSTREAM_TIMEOUT_SEC", DefaultUpstreamTimeout.Seconds())) * time.Second,
 		RequestTimeout:  time.Duration(envFloat("REQUEST_TIMEOUT_SEC", DefaultRequestTimeout.Seconds())) * time.Second,

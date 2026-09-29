@@ -86,6 +86,38 @@ func (o *Orchestrator) narrate(ctx context.Context, f domain.Findings, code lang
 	return txt, true
 }
 
+// unknownPlace says the named place could not be located, and asks for one that
+// can. It is deliberately a different message from clarify(): the user *did*
+// name a place, so repeating "which location?" would read as though the app had
+// ignored them. The honest thing is to say the name was not found and name the
+// places that are supported, so the next question is answerable first time.
+func unknownPlace(place string, code lang.Code) string {
+	var head string
+	switch code {
+	case lang.HI:
+		head = fmt.Sprintf("**%s** नाम की जगह नहीं मिल सकी।", place)
+	case lang.MR:
+		head = fmt.Sprintf("**%s** येथे शोधता आली नाही.", place)
+	case lang.TA:
+		head = fmt.Sprintf("**%s** என்ற இடம் கிடைக்கவில்லை.", place)
+	case lang.TE:
+		head = fmt.Sprintf("**%s** అనే స్థానం కనబడలేదు.", place)
+	case lang.KN:
+		head = fmt.Sprintf("**%s** ಎಂಬ ಸ್ಥಳವು ಸಿಗಲಿಲ್ಲ.", place)
+	case lang.ML:
+		head = fmt.Sprintf("**%s** എന്ന സ്ഥലം കണ്ടെത്തിയില്ല.", place)
+	case lang.GU:
+		head = fmt.Sprintf("**%s** નામનું સ્થળ મળ્યું નથી.", place)
+	case lang.OR:
+		head = fmt.Sprintf("**%s** ନାମର ସ୍ଥାନ ମିଳିଲା ନାହିଁ।", place)
+	case lang.BN:
+		head = fmt.Sprintf("**%s** নামের জায়গা পাওয়া যায়নি।", place)
+	default:
+		head = fmt.Sprintf("I could not find a coastal location called **%s**.", place)
+	}
+	return head + " " + clarify(code)
+}
+
 // clarify asks for a location when the question did not contain one. Asking is
 // the correct behaviour here: guessing a coast would produce a confident,
 // wrong answer about a real person's safety.

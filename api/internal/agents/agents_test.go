@@ -31,6 +31,72 @@ func newOffline(t *testing.T) *Orchestrator {
 	return New(cfg, llm.New("", 0, ""), data.NewCache(time.Minute))
 }
 
+// TestUnresolvablePlaceNeverYieldsAVerdict is the regression test for the worst
+// failure this service is capable of.
+//
+// Asking for a place the coastal table does not contain used to produce a
+// complete, confident, correctly-formatted safety verdict about the Gulf of
+// Guinea. "kanyakumari" resolved to nothing, the zero Geo that came back was
+// (0, 0) — a real point in the Atlantic — and the pipeline fetched genuine
+// marine data for it and reported 1.26 m waves and 26.8 °C while looking exactly
+// like a correct answer about an Indian fishing port. The user saw a map
+// centred on West Africa and had no way to tell.
+//
+// The gate lives in the orchestrator, on the resolution result rather than on
+// the plan, so this test drives the whole path: an unknown place must produce a
+// clarifying question, no verdict, and no coordinates.
+func TestUnresolvablePlaceNeverYieldsAVerdict(t *testing.T) {
+	o := newOffline(t)
+	for _, q := range []string{
+		"Is it safe to go fishing off Kanyakumari?",
+		"conditions near Atlantis",
+		"Is tomorrow safe at Port of Nowhere?",
+	} {
+		f := o.Ask(context.Background(), q, nil)
+
+		if f.Verdict.Level != "" {
+			t.Errorf("%q: got verdict %q; an unresolved location must never produce one", q, f.Verdict.Level)
+		}
+		if len(f.Verdict.Hazards) != 0 || len(f.Verdict.Rationale) != 0 {
+			t.Errorf("%q: got %d hazards and %d rationale lines; an unresolved location must produce neither",
+				q, len(f.Verdict.Hazards), len(f.Verdict.Rationale))
+		}
+		if f.Answer == "" {
+			t.Errorf("%q: got an empty answer; the user must be asked a question", q)
+		}
+		// The specific coordinates that caused the bug. (0, 0) is a valid point
+		// of ocean, so the invariant is that the response never *claims* to have
+		// resolved a location. An empty source means geo was never attempted
+		// (the planner discarded the name) and "unresolved" means it was
+		// attempted and failed; both are honest, and neither may carry a
+		// verdict.
+		if f.Geo.Source != "" && f.Geo.Source != "unresolved" {
+			t.Errorf("%q: claims a resolved location from source %q at %v,%v", q, f.Geo.Source, f.Geo.Lat, f.Geo.Lon)
+		}
+		if f.PFZ.Score != 0 || f.PFZ.DistanceKm != 0 {
+			t.Errorf("%q: a fishing zone was scored for an unresolved location (score %v, %v km)",
+				q, f.PFZ.Score, f.PFZ.DistanceKm)
+		}
+	}
+}
+
+// TestKnownPlacesStillResolve guards the fix above from being over-broad: the
+// gate must not swallow the 31 places that do resolve.
+func TestKnownPlacesStillResolve(t *testing.T) {
+	o := newOffline(t)
+	for _, q := range []string{
+		"Is it safe to go fishing off Kochi?",
+		"where can I fish near Visakhapatnam?",
+		"sea state at Mumbai",
+	} {
+		f := o.Ask(context.Background(), q, nil)
+		if f.Verdict.Level == "" {
+			t.Errorf("%q: a known coastal place must still produce a verdict (geo source %q)",
+				q, f.Geo.Source)
+		}
+	}
+}
+
 func TestRouterResolvesPlaceAndIntent(t *testing.T) {
 	tests := []struct {
 		query      string
