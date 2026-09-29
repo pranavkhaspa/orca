@@ -1,0 +1,152 @@
+{
+  "_comment": [
+    "Recurring seasonal fishing-ban patterns for the Indian coastal states covered",
+    "by the coastal reference table.",
+    "",
+    "READ THIS BEFORE TRUSTING A DATE IN HERE.",
+    "",
+    "Every state issues its closed season each year by gazette notification, and",
+    "the dates are not always the same as the previous year. This file records the",
+    "recurring pattern that has been observed, NOT the current year's notification.",
+    "A date read out of this table is a reason to go and check the gazette, never a",
+    "substitute for it. The engine labels every result 'indicative' for that reason.",
+    "",
+    "'confidence' grades how stable each pattern is, and the grade is shown to the",
+    "user rather than hidden:",
+    "  high      - window has held for many consecutive seasons",
+    "  moderate  - window has moved between seasons",
+    "  low       - rule is set close to the season and cannot be predicted from the",
+    "              previous year at all",
+    "",
+    "'low' and 'moderate' entries exist so that a state we know less about is",
+    "visibly less certain, instead of reading with the same authority as a state",
+    "whose pattern is genuinely stable. Do not raise a grade without a reason in",
+    "the basis field.",
+    "",
+    "Dates are MM-DD and both ends are inclusive. A window may wrap the year end.",
+    "02-29 is not representable and is rejected at parse time.",
+    "",
+    "Verification for any specific year: the gazette notification issued by the",
+    "state's own fisheries department, named in 'authority' on each row, is the",
+    "only authority. The Department of Fisheries, Government of India (dof.gov.in)",
+    "publishes the national framework that the state notifications sit under."
+  ],
+  "_source": "Department of Fisheries, Government of India (https://www.dof.gov.in/) for the national framework; each row names the state department that issues the binding notification.",
+  "_source_url": "https://www.dof.gov.in/",
+  "_compiled_on": "2026-09-30",
+  "_verified_against_gazettes": false,
+  "_provenance_limitation": "These windows were compiled from recurring statutory practice, NOT read out of any individual year's gazette notification, and no row has been checked against a current notification. The _verified_against_gazettes flag is false for that reason and a test enforces that it stays false: a table that started claiming gazette verification would need the actual notifications behind it, which are not in this repository.",
+  "schema_version": 1,
+  "windows": [
+    {
+      "state": "Kerala",
+      "authority": "Department of Fisheries, Government of Kerala",
+      "typical_start": "06-10",
+      "typical_end": "07-15",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern; window has been substantially stable across recent seasons",
+      "confidence": "high",
+      "caveat": "Confirm the exact dates in this year's Kerala fisheries notification before relying on them."
+    },
+    {
+      "state": "Karnataka",
+      "authority": "Department of Fisheries, Government of Karnataka",
+      "typical_start": "06-01",
+      "typical_end": "07-31",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern; window has been substantially stable across recent seasons",
+      "confidence": "high",
+      "caveat": "Confirm the exact dates in this year's Karnataka fisheries notification before relying on them."
+    },
+    {
+      "state": "Goa",
+      "authority": "Directorate of Fisheries, Government of Goa",
+      "typical_start": "06-01",
+      "typical_end": "07-31",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern; window has been substantially stable across recent seasons",
+      "confidence": "high",
+      "caveat": "Confirm the exact dates in this year's Goa fisheries notification before relying on them."
+    },
+    {
+      "state": "Maharashtra",
+      "authority": "Department of Fisheries, Government of Maharashtra",
+      "typical_start": "06-01",
+      "typical_end": "07-31",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern; window has been substantially stable across recent seasons",
+      "confidence": "high",
+      "caveat": "Confirm the exact dates in this year's Maharashtra fisheries notification before relying on them."
+    },
+    {
+      "state": "Andhra Pradesh",
+      "authority": "Department of Fisheries, Government of Andhra Pradesh",
+      "typical_start": "06-01",
+      "typical_end": "07-31",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern, with additional periodic day bans on top that are not modelled here",
+      "confidence": "moderate",
+      "caveat": "Confirm this year's notification, and note that Andhra Pradesh also announces separate periodic day bans that this calendar does not model."
+    },
+    {
+      "state": "Tamil Nadu",
+      "authority": "Department of Fisheries, Government of Tamil Nadu",
+      "typical_start": "06-01",
+      "typical_end": "07-31",
+      "applies_to": "mechanised boats",
+      "basis": "recurring monsoon-season pattern; the end date has moved between seasons",
+      "confidence": "moderate",
+      "caveat": "Confirm the exact dates in this year's Tamil Nadu fisheries notification before relying on them."
+    },
+    {
+      "state": "Odisha",
+      "authority": "Directorate of Fisheries, Government of Odisha",
+      "typical_start": "04-01",
+      "typical_end": "06-30",
+      "applies_to": "bottom-trawl and other mechanised craft; non-mechanised craft are notified on separate dates",
+      "basis": "recurring pre-monsoon pattern; substantially stable, but the non-mechanised dates are set separately and are not modelled here",
+      "confidence": "high",
+      "caveat": "Confirm this year's notification, and note that Odisha notifies non-mechanised craft on separate dates that this calendar does not model."
+    },
+    {
+      "state": "Gujarat",
+      "authority": "Department of Fisheries, Government of Gujarat",
+      "typical_start": "05-15",
+      "typical_end": "06-15",
+      "applies_to": "mechanised boats",
+      "basis": "recurring pattern, but Gujarat has announced substantially different windows in some seasons",
+      "confidence": "moderate",
+      "caveat": "Gujarat's window has varied widely between seasons. Confirm this year's notification before relying on it."
+    },
+    {
+      "state": "West Bengal",
+      "authority": "Department of Fisheries, Government of West Bengal",
+      "typical_start": "06-01",
+      "typical_end": "06-30",
+      "applies_to": "all fishing craft operating from the state",
+      "basis": "pattern recorded for the Sundarbans and the Hooghly estuary; the window is announced close to the season and has varied",
+      "confidence": "low",
+      "caveat": "This window is set close to the season and has varied between years. Treat it as a weak indicator and confirm with the state department."
+    },
+    {
+      "state": "Andaman & Nicobar",
+      "authority": "Department of Fisheries, Government of India (Andaman & Nicobar Administration)",
+      "typical_start": "06-01",
+      "typical_end": "06-30",
+      "applies_to": "all fishing craft operating in the islands",
+      "basis": "island administration sets a shorter window than the mainland states, announced close to the season",
+      "confidence": "low",
+      "caveat": "The island administration sets this close to the season and it has varied. Treat it as a weak indicator and confirm with the administration."
+    },
+    {
+      "state": "Lakshadweep",
+      "authority": "Department of Fisheries, Government of India (Lakshadweep Administration)",
+      "typical_start": "06-01",
+      "typical_end": "06-30",
+      "applies_to": "all fishing craft operating in the islands",
+      "basis": "island administration sets a shorter window than the mainland states, announced close to the season",
+      "confidence": "low",
+      "caveat": "The island administration sets this close to the season and it has varied. Treat it as a weak indicator and confirm with the administration."
+    }
+  ]
+}

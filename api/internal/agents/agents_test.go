@@ -147,7 +147,7 @@ func TestInlandPlaceExplainsItself(t *testing.T) {
 }
 
 // TestKnownPlacesStillResolve guards the fix above from being over-broad: the
-// gate must not swallow the 31 places that do resolve.
+// gate must not swallow the places that do resolve.
 func TestKnownPlacesStillResolve(t *testing.T) {
 	o := newOffline(t)
 	for _, q := range []string{

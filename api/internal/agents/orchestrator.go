@@ -303,11 +303,31 @@ func (o *Orchestrator) Ask(ctx context.Context, query string, emit func(Event)) 
 	advisory = incoisAgainstZone(geo, zone, pfz)
 	f.Marine, f.Weather, f.Advisory = marine, weather, advisory
 	f.PFZ = pfz
-	f.Verdict = engine.Assess(marine, weather, pfz)
+
+	// The seasonal ban calendar is consulted before the verdict is produced,
+	// because a closed season is a legal prohibition and has to be able to
+	// produce a no-go on its own. It is keyed by state, so a place that did not
+	// resolve to a state yields UnknownBan and no conclusion is drawn.
+	banTable, banMeta, banErr := data.SeasonalBans(o.cfg.SeasonalBansPath, time.Now())
+	ban := engine.UnknownBan
+	banNote := "no ban calendar available"
+	if banErr != nil {
+		// A calendar that cannot be read must not read as "season open". Say so.
+		banNote = "ban calendar unreadable: " + banErr.Error()
+	} else {
+		ban = engine.SeasonalBan(geo.State, time.Now(), banTable)
+		if ban.Known {
+			banNote = fmt.Sprintf("%s (%s, %s confidence)", ban.Level, ban.Window.Authority, ban.Window.Confidence)
+			f.Geo.Citations = withBanCitation(f.Geo.Citations, ban, banMeta)
+		} else {
+			banNote = "no calendar for this state; no ban conclusion drawn"
+		}
+	}
+	f.Verdict = engine.AssessWithBan(marine, weather, pfz, ban)
 	rs.finish(di, domain.StatusDone,
-		fmt.Sprintf("verdict=%s (%s) from %d hazard checks · PFZ %.2f at %.0f km, %s confidence",
+		fmt.Sprintf("verdict=%s (%s) from %d hazard checks · PFZ %.2f at %.0f km, %s confidence · %s",
 			f.Verdict.Level, f.Verdict.Severity, len(f.Verdict.Hazards),
-			pfz.Score, pfz.DistanceKm, pfz.Confidence), nil, "")
+			pfz.Score, pfz.DistanceKm, pfz.Confidence, banNote), nil, "")
 	emitAgent(di, "domain", "Risk Engine (deterministic)")
 
 	// ---- 6. Narration -----------------------------------------------------
@@ -362,6 +382,34 @@ func provenance(f domain.Findings) []domain.Citation {
 		return out[i].Dataset < out[j].Dataset
 	})
 	return out
+}
+
+// withBanCitation records the ban calendar in the provenance list.
+//
+// The citation is deliberately marked not-live and carries the table's own
+// provenance and review year. A user auditing a closed-season verdict needs to
+// see that the date came from a bundled pattern reviewed in a given year, not
+// from the current year's gazette notification, because those are different
+// kinds of claim and only one of them is binding.
+func withBanCitation(c domain.Citations, ban engine.BanStatus, meta data.BanMeta) domain.Citations {
+	if c == nil {
+		c = domain.Citations{}
+	}
+	w := ban.Window
+	c["seasonal_ban"] = domain.Citation{
+		Source: w.Authority,
+		Dataset: fmt.Sprintf("%s %s to %s (%s, %s confidence)",
+			w.State, w.StartMD, w.EndMD, w.Basis, w.Confidence),
+		// The link field gets the link. meta.Source is the sentence describing
+		// the framework, and a paragraph is not a resolvable href.
+		URL:  meta.SourceURL,
+		Live: false,
+		// Note, not Err: the state department's calendar is available, it is
+		// simply a compiled pattern rather than this year's gazette. Reporting it
+		// through Err would badge a working source as unavailable.
+		Note: meta.Provenance(),
+	}
+	return c
 }
 
 func agentEvent(trace []domain.AgentRun, i int) Event {
@@ -419,10 +467,39 @@ func (o *Orchestrator) weatherAgent(ctx context.Context, geo domain.Geo, window 
 		c := v.(weatherEntry)
 		return c.w, c.c, nil
 	}
+	// Both upstreams refused on an earlier question for this same cell and
+	// window. Re-asking now would add load to an upstream that has already said
+	// no, which is how one throttle becomes an outage, so the refusal is
+	// replayed instead. It is still an error: the caller falls back to the
+	// snapshot, and the trace says the atmospheric data was unavailable rather
+	// than quoting zeroes.
+	if ferr, remembered := o.cache.GetFailure(key); remembered {
+		return domain.Weather{}, domain.Citations{}, ferr
+	}
 	w, c, err := data.ForecastWindow(ctx, geo.WayLat, geo.WayLon, window)
 	if err == nil {
 		o.cache.Put(key, weatherEntry{w, c})
+		return w, c, nil
 	}
+
+	// A second provider, tried only when the first refused or failed. This is
+	// the difference between "live atmospheric data unavailable" and a live
+	// answer on the days the primary free tier is throttling, which is most of
+	// them. It is a fallback, not a mirror: the citation says which agency
+	// answered, because a gust figure for a decision about launching a boat is
+	// only as good as knowing who published it.
+	w2, c2, err2 := data.ForecastWindowMETNo(ctx, geo.WayLat, geo.WayLon, window)
+	if err2 == nil {
+		o.cache.Put(key, weatherEntry{w2, c2})
+		return w2, c2, nil
+	}
+
+	// Both failed. Return the primary's error and citations, since that is what
+	// the trace should show, but only after a short cool-off cached under the
+	// same key — see the note in the marine agent about negative caching. The
+	// refusal is cached as the error, not as the zero-valued reading it came
+	// with, so it can never be mistaken for a measurement on a later read.
+	o.cache.PutFailure(key, err)
 	return w, c, err
 }
 

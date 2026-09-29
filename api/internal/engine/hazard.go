@@ -2,6 +2,7 @@ package engine
 
 import (
 	"fmt"
+	"strings"
 
 	"orca/internal/domain"
 )
@@ -51,6 +52,14 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 	haz := make([]domain.Hazard, 0, 5)
 	rat := make([]string, 0, 6)
 
+	// Presence is checked before any threshold is compared, so that absent data
+	// is never mistaken for a reading that happens to sit below every limit.
+	// See observations.go for why this is a gate and not a hint.
+	missing := MissingObservations(m, w)
+	if len(missing) > 0 {
+		haz = append(haz, observationHazard(missing))
+	}
+
 	// 1. Significant wave height — the dominant hazard for small craft.
 	switch {
 	case m.WaveHeightM >= WaveCriticalM:
@@ -72,12 +81,13 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 		rat = append(rat, fmt.Sprintf("Significant wave height of %.2f m is elevated; treat with caution.",
 			m.WaveHeightM))
 	default:
-		haz = append(haz, domain.Hazard{
-			Kind: "waves", Severity: SevOK,
-			Value: fmt.Sprintf("%.2f m", m.WaveHeightM),
-			Limit: fmt.Sprintf("%.1f m caution", WaveCautionM),
-			Note:  "Sea state is within safe limits for small craft.",
-		})
+		haz = append(haz, benignOrAbsent("waves", !MarinePresent(m),
+			domain.Hazard{
+				Kind: "waves", Severity: SevOK,
+				Value: fmt.Sprintf("%.2f m", m.WaveHeightM),
+				Limit: fmt.Sprintf("%.1f m caution", WaveCautionM),
+				Note:  "Sea state is within safe limits for small craft.",
+			}))
 	}
 
 	// 2. Wind gusts. Gusts rather than sustained wind, because gusts are what
@@ -101,12 +111,12 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 		})
 		rat = append(rat, fmt.Sprintf("Forecast gusts of %.0f km/h are elevated.", w.GustKmh))
 	default:
-		haz = append(haz, domain.Hazard{
+		haz = append(haz, benignOrAbsent("wind", !WeatherPresent(w), domain.Hazard{
 			Kind: "wind", Severity: SevOK,
 			Value: fmt.Sprintf("%.0f km/h gusts", w.GustKmh),
 			Limit: fmt.Sprintf("%.0f km/h caution", GustCautionKMH),
 			Note:  "Wind is within safe limits.",
-		})
+		}))
 	}
 
 	// 3. Convection / lightning proxy.
@@ -127,12 +137,23 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 			Note:  "Convective showers possible. Keep a means of shelter to hand.",
 		})
 		rat = append(rat, "Some convective risk is present in the window.")
-	default:
+	case "low", "none":
 		haz = append(haz, domain.Hazard{
 			Kind: "convection", Severity: SevOK,
 			Value: string(w.LightningRisk),
 			Limit: "WMO code 95–99 or heavy rain with high cloud",
 			Note:  "No significant convective activity indicated.",
+		})
+	default:
+		// The field was not reported at all. It is not the same as "low", and
+		// it must not be printed as an empty value next to a note claiming calm:
+		// an unreported risk is unknown, and the honest severity for unknown is
+		// caution rather than ok.
+		haz = append(haz, domain.Hazard{
+			Kind: "convection", Severity: SevCaution,
+			Value: "not reported",
+			Limit: "WMO code 95–99 or heavy rain with high cloud",
+			Note:  "The convective risk was not reported by the upstream forecast, so it could not be checked.",
 		})
 	}
 
@@ -146,12 +167,12 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 		})
 		rat = append(rat, fmt.Sprintf("Tidal range of %.2f m indicates strong tidal currents near shore.", m.TideM))
 	} else {
-		haz = append(haz, domain.Hazard{
+		haz = append(haz, benignOrAbsent("tide", !MarinePresent(m), domain.Hazard{
 			Kind: "tide", Severity: SevOK,
 			Value: fmt.Sprintf("%.2f m", m.TideM),
 			Limit: fmt.Sprintf("%.1f m", TideCautionM),
 			Note:  "Tidal range is moderate.",
-		})
+		}))
 	}
 
 	// 5. Zone confidence. Not a hazard to life, so never escalates the verdict
@@ -182,7 +203,20 @@ func Assess(m domain.Marine, w domain.Weather, pfz domain.PFZ) domain.Verdict {
 	case SevCaution:
 		v.Level, v.Severity = "caution", SevCaution
 	default:
+		// Unreachable while missing observations produce a caution hazard, and
+		// kept as an explicit guard so that removing or re-levelling that hazard
+		// cannot silently reopen the fail-open this rule exists to close.
+		if len(missing) > 0 {
+			v.Level, v.Severity = "caution", SevCaution
+			break
+		}
 		v.Level, v.Severity = "go", SevOK
+	}
+
+	if len(missing) > 0 {
+		rat = append(rat, fmt.Sprintf(
+			"The %s could not be retrieved, so safety was not confirmed either way; "+
+				"this verdict is not an all-clear.", strings.Join(missing, " and ")))
 	}
 
 	if len(rat) == 0 {

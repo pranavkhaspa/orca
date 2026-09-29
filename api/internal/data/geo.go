@@ -508,6 +508,7 @@ func Geocode(ctx context.Context, query, coastalPath string) domain.Geo {
 	if t, ok := MatchTown(q, coastalPath); ok {
 		return domain.Geo{
 			Query: q, Name: t.Name, Lat: t.Lat, Lon: t.Lon,
+			State:  t.State,
 			Source: "ORCA coastal reference table",
 		}
 	}

@@ -15,7 +15,7 @@ import (
 // that does not copy static assets, or a read-only filesystem — all of which
 // would otherwise leave the service running but unable to answer.
 //
-//go:embed files/coastal_towns.json files/snapshot.json
+//go:embed files/coastal_towns.json files/snapshot.json files/seasonal_bans.json
 var baked embed.FS
 
 // embedPrefix marks a path that should be served from the binary rather than

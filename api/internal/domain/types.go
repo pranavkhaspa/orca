@@ -28,8 +28,14 @@ type Citation struct {
 	Dataset   string    // e.g. "wave_height"
 	URL       string    // the exact request that produced the value
 	Retrieved time.Time // when we fetched it
-	Live      bool      // false when the value came from a baked snapshot
+	Live      bool      // false when the value came from a baked snapshot or a bundled table
 	Err       string    // set when the fetch failed and we degraded
+	// Note discloses how a figure was obtained, for values that are not the
+	// result of a fetch: a compiled table, a derived value, a pattern rather
+	// than a measurement. It is separate from Err because Err means the fetch
+	// failed, and reusing it here would report a healthy bundled source as
+	// unavailable.
+	Note string
 }
 
 // Age is how stale the citation is. Surfaced in the UI so a user can see
@@ -52,16 +58,22 @@ type Citations map[string]Citation
 
 // Geo is the resolved spatial context for a query.
 type Geo struct {
-	Query      string    `json:"query"`
-	Name       string    `json:"name"`
-	Lat        float64   `json:"lat"`
-	Lon        float64   `json:"lon"`
-	WayLat     float64   `json:"way_lat"`
-	WayLon     float64   `json:"way_lon"`
-	DistanceKm float64   `json:"distance_km"`
-	BearingDeg float64   `json:"bearing_deg"`
-	Source     string    `json:"source"`
-	Citations  Citations `json:"-"`
+	Query      string  `json:"query"`
+	Name       string  `json:"name"`
+	Lat        float64 `json:"lat"`
+	Lon        float64 `json:"lon"`
+	WayLat     float64 `json:"way_lat"`
+	WayLon     float64 `json:"way_lon"`
+	DistanceKm float64 `json:"distance_km"`
+	BearingDeg float64 `json:"bearing_deg"`
+	// State is the Indian state the place resolves to, when known. It is on the
+	// wire because the seasonal ban calendar is keyed by state: a user who
+	// cannot see which calendar was applied cannot check it. Empty when the
+	// place did not come from the coastal reference table, in which case no
+	// ban conclusion is drawn.
+	State     string    `json:"state,omitempty"`
+	Source    string    `json:"source"`
+	Citations Citations `json:"-"`
 }
 
 // Marine is the ocean-state observation set.
@@ -139,6 +151,33 @@ type PFZ struct {
 	// numbers in the response with no source, which is what standing rule 2
 	// forbids.
 	Citations Citations `json:"-"`
+}
+
+// BanWindow is one state's recurring seasonal fishing-ban pattern.
+type BanWindow struct {
+	// State is the state name, matching the `state` field in the coastal
+	// reference table so the two join without a mapping layer.
+	State string `json:"state"`
+	// Authority is the government department that issues the notification.
+	Authority string `json:"authority"`
+	// StartMD and EndMD are month-day bounds as "MM-DD". Both ends are
+	// inclusive. The window may wrap the year boundary (start after end).
+	StartMD string `json:"typical_start"`
+	EndMD   string `json:"typical_end"`
+	// AppliesTo names the vessels the pattern covers, because most states ban
+	// mechanised and non-mechanised craft on different dates.
+	AppliesTo string `json:"applies_to"`
+	// Basis records what the window was derived from. It is surfaced to the
+	// user so a number can be audited rather than merely believed.
+	Basis string `json:"basis"`
+	// Confidence grades how stable the pattern is: "high" where the window has
+	// held for many consecutive seasons, "moderate" where it has moved, "low"
+	// where the rule is set close to the season and cannot be predicted from
+	// the previous year. It is surfaced so that a low-confidence calendar is
+	// visibly weaker advice than a stable one, rather than reading identically.
+	Confidence string `json:"confidence"`
+	// Caveat is the verification instruction shown alongside the verdict.
+	Caveat string `json:"caveat"`
 }
 
 // Hazard is one deterministic safety finding.

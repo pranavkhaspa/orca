@@ -10,17 +10,18 @@ import (
 )
 
 type Config struct {
-	Port           string
-	OpenRouterKey  string
-	PlanModel      string
-	NarrateModel   string
-	LLMTimeout     time.Duration
-	CoastalPath    string
-	SnapshotPath   string
-	CacheTTL       time.Duration
-	MarineDays     int
-	WaypointKm     float64
-	AllowedOrigins string
+	Port             string
+	OpenRouterKey    string
+	PlanModel        string
+	NarrateModel     string
+	LLMTimeout       time.Duration
+	CoastalPath      string
+	SnapshotPath     string
+	SeasonalBansPath string
+	CacheTTL         time.Duration
+	MarineDays       int
+	WaypointKm       float64
+	AllowedOrigins   string
 
 	// MaxCoastDistanceKm rejects a geocoded place that is nowhere near the sea.
 	//
@@ -129,6 +130,7 @@ const (
 	DefaultAllowedOrigins     = "*"
 	DefaultCoastalPath        = "embed:coastal_towns.json"
 	DefaultSnapshotPath       = "embed:snapshot.json"
+	DefaultSeasonalBansPath   = "embed:seasonal_bans.json"
 )
 
 // WithDefaults returns a copy with every unset field replaced by its documented
@@ -198,6 +200,9 @@ func (c Config) WithDefaults() Config {
 	if c.SnapshotPath == "" {
 		c.SnapshotPath = DefaultSnapshotPath
 	}
+	if c.SeasonalBansPath == "" {
+		c.SeasonalBansPath = DefaultSeasonalBansPath
+	}
 	return c
 }
 
@@ -214,6 +219,7 @@ func Load() Config {
 		PlannerLLMTimeout: time.Duration(envFloat("PLANNER_LLM_TIMEOUT_SEC", DefaultPlannerLLMTimeout.Seconds())) * time.Second,
 		CoastalPath:       env("COASTAL_PATH", DefaultCoastalPath),
 		SnapshotPath:      env("SNAPSHOT_PATH", DefaultSnapshotPath),
+		SeasonalBansPath:  env("SEASONAL_BANS_PATH", DefaultSeasonalBansPath),
 		CacheTTL:          time.Duration(envFloat("CACHE_TTL_SEC", DefaultCacheTTL.Seconds())) * time.Second,
 		MarineDays:        int(envFloat("MARINE_DAYS", DefaultMarineDays)),
 		WaypointKm:        envFloat("WAYPOINT_KM", DefaultWaypointKm),

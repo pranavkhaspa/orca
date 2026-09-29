@@ -23,6 +23,7 @@ type Cache struct {
 
 type entry struct {
 	val     any
+	failure error
 	expires time.Time
 }
 
@@ -31,12 +32,54 @@ func NewCache(ttl time.Duration) *Cache {
 }
 
 // Get returns a cached value and whether it was present and unexpired.
-func (c *Cache) Get(k string) (any, bool) { return c.get(k) }
+//
+// A remembered failure is never returned as a value. That distinction is the
+// whole reason failures are cached as errors and not as empty structs: an
+// earlier version cached the zero-valued observation under the same key, and a
+// later request found it, treated it as a hit, and published a Go verdict
+// computed from measured wind and wave heights of exactly zero. A cache miss is
+// recoverable. A cache hit that lies is not.
+func (c *Cache) Get(k string) (any, bool) {
+	v, ok, _ := c.get(k)
+	return v, ok
+}
+
+// GetFailure returns a remembered failure for a key, if one is still fresh.
+func (c *Cache) GetFailure(k string) (error, bool) {
+	_, _, err := c.get(k)
+	return err, err != nil
+}
 
 // Put stores a value with the cache's configured TTL.
-func (c *Cache) Put(k string, v any) { c.put(k, v) }
+func (c *Cache) Put(k string, v any) { c.put(k, entry{val: v}, c.ttl) }
 
-func (c *Cache) get(k string) (any, bool) {
+// PutFailure remembers that k could not be resolved, for staleTTL.
+//
+// It exists because of a specific failure: a rate-limited upstream. A
+// success-only cache means every subsequent request re-hits an upstream that
+// has already refused, each adding load, which is how a momentary throttle
+// becomes a sustained outage. Remembering the refusal for a few minutes costs
+// one honest error and stops the hammering.
+//
+// Caching the error rather than an empty result is deliberate. Both stop the
+// retry storm, but only one keeps the failure distinguishable from a
+// measurement, and the trace has to be able to say "rate limited" instead of
+// quoting a zero.
+func (c *Cache) PutFailure(k string, err error) {
+	if err == nil {
+		return
+	}
+	c.put(k, entry{failure: err}, staleTTL)
+}
+
+// staleTTL is how long a failure is remembered. Long enough to cover a
+// conversation, short enough that a recovered upstream is used almost
+// immediately.
+const staleTTL = 3 * time.Minute
+
+// get returns the value (if any), whether a usable value is present, and any
+// remembered failure. Exactly one of the first two results is ever non-nil.
+func (c *Cache) get(k string) (any, bool, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	e, ok := c.data[k]
@@ -44,15 +87,19 @@ func (c *Cache) get(k string) (any, bool) {
 		if ok {
 			delete(c.data, k)
 		}
-		return nil, false
+		return nil, false, nil
 	}
-	return e.val, true
+	if e.failure != nil {
+		return nil, false, e.failure
+	}
+	return e.val, true, nil
 }
 
-func (c *Cache) put(k string, v any) {
+func (c *Cache) put(k string, e entry, ttl time.Duration) {
+	e.expires = time.Now().Add(ttl)
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	c.data[k] = entry{val: v, expires: time.Now().Add(c.ttl)}
+	c.data[k] = e
 }
 
 // Stats exposes cache effectiveness for the health endpoint.
@@ -186,4 +233,12 @@ func SnapshotPlaces(path string) ([]string, error) {
 	}
 	sort.Strings(out)
 	return out, nil
+}
+
+// expiry reports when k's entry lapses, for tests that need to prove a deadline
+// was not moved. It is unexported so production code cannot depend on it.
+func (c *Cache) expiry(k string) time.Time {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.data[k].expires
 }

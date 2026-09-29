@@ -98,10 +98,28 @@ func (o *Orchestrator) pfzAgent(ctx context.Context, geo domain.Geo, marine doma
 				e := v.(marineEntry)
 				m, cites, ok = e.m, e.c, true
 			} else {
+				// A remembered refusal short-circuits before the network call.
+				// Without this the search offsets below each retry the same
+				// exhausted upstream on every question, so a rate limit sustains
+				// itself; the cell simply contributes no sample and the search
+				// carries on with the offsets that did resolve.
+				//
+				// remembered distinguishes a failure we already hold from one
+				// just learned. Only a newly learned failure may be written back,
+				// because PutFailure starts a fresh staleTTL: re-writing a
+				// remembered one would push its expiry forward on every request
+				// and turn a three-minute backoff into a permanent refusal that
+				// outlives any recovery.
 				var err error
-				if m, cites, err = data.MarineWindow(ctx, lat, lon, 6); err == nil {
+				var remembered bool
+				if ferr, hit := o.cache.GetFailure(key); hit {
+					err, remembered = ferr, true
+				} else if m, cites, err = data.MarineWindow(ctx, lat, lon, 6); err == nil {
 					o.cache.Put(key, marineEntry{m, cites})
 					ok = true
+				}
+				if err != nil && !remembered {
+					o.cache.PutFailure(key, err)
 				}
 			}
 			if !ok {

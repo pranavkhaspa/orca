@@ -2,18 +2,54 @@
   "_comment": "Approximate offshore reference points for major Indian coastal fishing hubs. Used as a deterministic fallback when geocoding is unavailable, and to project an offshore waypoint. Bearings are approximate directions from the coast toward open sea; they are deliberately coarse and are labelled as approximate in the UI.",
   "towns": [
     {
-      "name": "Veraval",
-      "state": "Gujarat",
-      "lat": 20.852,
-      "lon": 70.367,
-      "bearing_deg": 250,
-      "coast": "Arabian Sea",
+      "name": "Haldia",
+      "state": "West Bengal",
+      "lat": 22.06,
+      "lon": 88.11,
+      "bearing_deg": 120,
+      "coast": "Bay of Bengal",
       "aliases": [
-        "veravel",
-        "વેરાવળ",
-        "वेरावल",
-        "వెరావల్",
-        "ವೆರಾವಳ್"
+        "haldia",
+        "हल्दिया",
+        "ಹಲ್ದಿಯಾ",
+        "హల్దియా",
+        "ഹൽദ്യ",
+        "હલ્દિયા",
+        "ହଲ୍ଦିଆ"
+      ]
+    },
+    {
+      "name": "Digha",
+      "state": "West Bengal",
+      "lat": 21.683,
+      "lon": 87.522,
+      "bearing_deg": 105,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "digha",
+        "ଦିଗ୍ହା",
+        "டிகா",
+        "డిగా",
+        "ದಿಗ್ಹಾ",
+        "દિઘા",
+        "दीघा"
+      ]
+    },
+    {
+      "name": "Kolkata",
+      "state": "West Bengal",
+      "lat": 21.65,
+      "lon": 88.15,
+      "bearing_deg": 155,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "calcutta",
+        "কলকাতা",
+        "ಕೊಲ್ಕತಾ",
+        "కలకత్తా",
+        "કલકત્તા",
+        "कोलकाता",
+        "কলকাত্তা"
       ]
     },
     {
@@ -32,6 +68,21 @@
       ]
     },
     {
+      "name": "Veraval",
+      "state": "Gujarat",
+      "lat": 20.852,
+      "lon": 70.367,
+      "bearing_deg": 250,
+      "coast": "Arabian Sea",
+      "aliases": [
+        "veravel",
+        "વેરાવળ",
+        "वेरावल",
+        "వెరావల్",
+        "ವೆರಾವಳ್"
+      ]
+    },
+    {
       "name": "Diu",
       "state": "Gujarat",
       "lat": 20.714,
@@ -44,6 +95,79 @@
         "ദിയു",
         "దియూ",
         "தீவு"
+      ]
+    },
+    {
+      "name": "Paradip",
+      "state": "Odisha",
+      "lat": 20.264,
+      "lon": 86.694,
+      "bearing_deg": 95,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "paradeep",
+        "ପାରାଦିପ",
+        "పారాదీప",
+        "ಪಾರಾದೀಪ",
+        "પારાદીપ",
+        "पारादीप"
+      ]
+    },
+    {
+      "name": "Puri",
+      "state": "Odisha",
+      "lat": 19.813,
+      "lon": 85.831,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "puri",
+        "puri beach",
+        "ପୁରୀ",
+        "పురి",
+        "ಪುರಿ",
+        "પુરી",
+        "पुरी"
+      ]
+    },
+    {
+      "name": "Berhampur",
+      "state": "Odisha",
+      "lat": 19.315,
+      "lon": 84.794,
+      "bearing_deg": 105,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "berhampur",
+        "brahmapur",
+        "brmpur",
+        "berhampur odisha",
+        "ବରହମପୁର",
+        "బ్రహ్మపూర్",
+        "ബർഹാമപുരം",
+        "ಬ್ರಹ್ಮಪುರ",
+        "બરહમપુર",
+        "बरहमपुर"
+      ]
+    },
+    {
+      "name": "Gopalpur",
+      "state": "Odisha",
+      "lat": 19.009,
+      "lon": 84.608,
+      "bearing_deg": 105,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "gopalpur",
+        "gopal pur",
+        "gopalpur-on-sea",
+        "gopalpur beach",
+        "ଗୋପାଳପୁର",
+        "గోపాలపురం",
+        "ഗോപാലപുരം",
+        "ಗೋಪಾಳಪುರ",
+        "ગોપાલપુર",
+        "गोपालपुर"
       ]
     },
     {
@@ -83,6 +207,60 @@
       ]
     },
     {
+      "name": "Srikakulam",
+      "state": "Andhra Pradesh",
+      "lat": 18.298,
+      "lon": 83.896,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "srikakulam",
+        "srikakulam town",
+        "shrikakulam",
+        "శ్రీకాకులం",
+        "ஸ்ரீకாகுலம்",
+        "ಶ್ರೀಕಾಕುಳಂ",
+        "श्रीकाकुलम्"
+      ]
+    },
+    {
+      "name": "Vizianagaram",
+      "state": "Andhra Pradesh",
+      "lat": 18.113,
+      "lon": 83.606,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "vizianagaram",
+        "vizianagaram town",
+        "vzm",
+        "విజయనగరం",
+        "விஜயநகரம்",
+        "ವಿಜಯನಗರ",
+        "विजियनगरम"
+      ]
+    },
+    {
+      "name": "Visakhapatnam",
+      "state": "Andhra Pradesh",
+      "lat": 17.673,
+      "lon": 83.284,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "vizag",
+        "vishakhapatnam",
+        "విశాఖపట్టణం",
+        "విజాగ",
+        "ବିସାଖାପଟ୍ଟଣ",
+        "விசாகபட்டணம்",
+        "ವಿಶಾಖಪಟ್ಟಣ",
+        "विशाखापट्टनम",
+        "વિશાખપટ્ટણ",
+        "विशाखापटनम"
+      ]
+    },
+    {
       "name": "Ratnagiri",
       "state": "Maharashtra",
       "lat": 16.99,
@@ -97,6 +275,38 @@
         "റത്നാഗിരി",
         "રત્નાગિરી",
         "ରତ୍ନାଗିରୀ"
+      ]
+    },
+    {
+      "name": "Kakinada",
+      "state": "Andhra Pradesh",
+      "lat": 16.989,
+      "lon": 82.247,
+      "bearing_deg": 95,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "kakinada",
+        "కాకినాడ",
+        "காகினாடா",
+        "காகினா஡",
+        "ಕಾಕಿನಾಡ",
+        "કાકીનાડ",
+        "काकीनाड"
+      ]
+    },
+    {
+      "name": "Machilipatnam",
+      "state": "Andhra Pradesh",
+      "lat": 16.191,
+      "lon": 81.133,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "machilipatnam",
+        "మచిలిపత్నం",
+        "மசிலிபத்னம்",
+        "ಮಚಿಲಿಪತ್ನ",
+        "मचिलिपत्नम"
       ]
     },
     {
@@ -140,6 +350,43 @@
       ]
     },
     {
+      "name": "Udupi",
+      "state": "Karnataka",
+      "lat": 13.337,
+      "lon": 74.75,
+      "bearing_deg": 255,
+      "coast": "Arabian Sea",
+      "aliases": [
+        "udupi",
+        "kapu",
+        "ಉಡುಪಿ",
+        "उडुपी",
+        "உடுபி",
+        "ఉడుపి",
+        "ઉડુપી",
+        "ଉଡୁପି"
+      ]
+    },
+    {
+      "name": "Chennai",
+      "state": "Tamil Nadu",
+      "lat": 13.083,
+      "lon": 80.27,
+      "bearing_deg": 100,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "madras",
+        "சென்னை",
+        "చెన్నై",
+        "ಚೆನ್ನೈ",
+        "ചെന്നൈ",
+        "ચેન્નઈ",
+        "ଚେନ୍ନଇ",
+        "चेन्नई",
+        "சென்னை பட்டை"
+      ]
+    },
+    {
       "name": "Mangaluru",
       "state": "Karnataka",
       "lat": 12.915,
@@ -161,21 +408,54 @@
       ]
     },
     {
-      "name": "Udupi",
-      "state": "Karnataka",
-      "lat": 13.337,
-      "lon": 74.75,
-      "bearing_deg": 255,
-      "coast": "Arabian Sea",
+      "name": "Pondicherry",
+      "state": "Tamil Nadu",
+      "lat": 11.933,
+      "lon": 79.83,
+      "bearing_deg": 110,
+      "coast": "Bay of Bengal",
       "aliases": [
-        "udupi",
-        "kapu",
-        "ಉಡುಪಿ",
-        "उडुपी",
-        "உடுபி",
-        "ఉడుపి",
-        "ઉડુપી",
-        "ଉଡୁପି"
+        "puducherry",
+        "பாண்டிச்சேரி",
+        "పాండిచ్చెరి",
+        "ಪಾಂಡಿಚೆರಿ",
+        "પાંડિચ્ચેરી",
+        "पुदुचेरी"
+      ]
+    },
+    {
+      "name": "Kannur",
+      "state": "Kerala",
+      "lat": 11.874,
+      "lon": 75.37,
+      "bearing_deg": 250,
+      "coast": "Laccadive Sea",
+      "aliases": [
+        "tellicherry",
+        "kannur",
+        "കണ്ണൂർ",
+        "கன்னூர்",
+        "కన్నూరు",
+        "ಕಣ್ಣೂರು",
+        "કન્નૂર",
+        "कन्नूर"
+      ]
+    },
+    {
+      "name": "Port Blair",
+      "state": "Andaman & Nicobar",
+      "lat": 11.623,
+      "lon": 92.726,
+      "bearing_deg": 90,
+      "coast": "Andaman Sea",
+      "aliases": [
+        "portblair",
+        "port blair",
+        "போர்ட் பிளேர்",
+        "పోర్ట్ బ్లైర్",
+        "ಪೋರ್ಟ್ ಬ್ಲೇರ್",
+        "પોર્ટ બ્લેર",
+        "पोर्ट ब्लेयर"
       ]
     },
     {
@@ -197,6 +477,56 @@
         "कोझिकोड",
         "कज़िकोड",
         "कोजिकोड"
+      ]
+    },
+    {
+      "name": "Nagapattinam",
+      "state": "Tamil Nadu",
+      "lat": 10.766,
+      "lon": 79.843,
+      "bearing_deg": 115,
+      "coast": "Bay of Bengal",
+      "aliases": [
+        "nagaapattinam",
+        "நாகப்பட்டினம்",
+        "நாகபட்டினம்",
+        "నాగపట్టినం",
+        "ನಾಗಪಟ್ಟಿನಂ",
+        "નાગપટ્ટિનં",
+        "ନାଗପଟ୍ଟିନଂ",
+        "नागपट्टनम"
+      ]
+    },
+    {
+      "name": "Kavaratti",
+      "state": "Lakshadweep",
+      "lat": 10.567,
+      "lon": 72.642,
+      "bearing_deg": 265,
+      "coast": "Laccadive Sea",
+      "aliases": [
+        "lakshadweep",
+        "കവരത്തി",
+        "കവറട്ടി",
+        "ಕವರತ್ತಿ",
+        "કવરત્તી",
+        "कवरत्ती"
+      ]
+    },
+    {
+      "name": "Thrissur",
+      "state": "Kerala",
+      "lat": 10.527,
+      "lon": 75.878,
+      "bearing_deg": 255,
+      "coast": "Laccadive Sea",
+      "aliases": [
+        "thrissur",
+        "തൃശ്ശൂർ",
+        "തിരുവനന്തപുരം",
+        "ತೃಶೂರು",
+        "ત્રિશૂર",
+        "त्रिशूर"
       ]
     },
     {
@@ -223,19 +553,37 @@
       ]
     },
     {
-      "name": "Thrissur",
-      "state": "Kerala",
-      "lat": 10.527,
-      "lon": 75.878,
-      "bearing_deg": 255,
-      "coast": "Laccadive Sea",
+      "name": "Rameswaram",
+      "state": "Tamil Nadu",
+      "lat": 9.288,
+      "lon": 79.312,
+      "bearing_deg": 125,
+      "coast": "Gulf of Mannar",
       "aliases": [
-        "thrissur",
-        "തൃശ്ശൂർ",
-        "തിരുവനന്തപുരം",
-        "ತೃಶೂರು",
-        "ત્રિશૂર",
-        "त्रिशूर"
+        "rameswaram",
+        "rameswaram island",
+        "ராமேஸ்வரம்",
+        "ராமெஸ்வரம்",
+        "రామేశ్వరం",
+        "ರಾಮೇಶ್ವರ",
+        "રામેશ્વર",
+        "ରାମେଶ୍ୱର",
+        "रामेश्वर"
+      ]
+    },
+    {
+      "name": "Car Nicobar",
+      "state": "Andaman & Nicobar",
+      "lat": 9.164,
+      "lon": 92.943,
+      "bearing_deg": 110,
+      "coast": "Andaman Sea",
+      "aliases": [
+        "nicobar",
+        "car nicobar island",
+        "கார் நிகோபார்",
+        "कार निकोबार",
+        "కార్ నికోబార్"
       ]
     },
     {
@@ -275,282 +623,6 @@
         "તુત્તુકોડ",
         "ତୁତ୍ତୁକୋଡ",
         "ठुट्टुकुड"
-      ]
-    },
-    {
-      "name": "Rameswaram",
-      "state": "Tamil Nadu",
-      "lat": 9.288,
-      "lon": 79.312,
-      "bearing_deg": 125,
-      "coast": "Gulf of Mannar",
-      "aliases": [
-        "rameswaram",
-        "rameswaram island",
-        "ராமேஸ்வரம்",
-        "ராமெஸ்வரம்",
-        "రామేశ్వరం",
-        "ರಾಮೇಶ್ವರ",
-        "રામેશ્વર",
-        "ରାମେଶ୍ୱର",
-        "रामेश्वर"
-      ]
-    },
-    {
-      "name": "Nagapattinam",
-      "state": "Tamil Nadu",
-      "lat": 10.766,
-      "lon": 79.843,
-      "bearing_deg": 115,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "nagaapattinam",
-        "நாகப்பட்டினம்",
-        "நாகபட்டினம்",
-        "నాగపట్టినం",
-        "ನಾಗಪಟ್ಟಿನಂ",
-        "નાગપટ્ટિનં",
-        "ନାଗପଟ୍ଟିନଂ",
-        "नागपट्टनम"
-      ]
-    },
-    {
-      "name": "Chennai",
-      "state": "Tamil Nadu",
-      "lat": 13.083,
-      "lon": 80.27,
-      "bearing_deg": 100,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "madras",
-        "சென்னை",
-        "చెన్నై",
-        "ಚೆನ್ನೈ",
-        "ചെന്നൈ",
-        "ચેન્નઈ",
-        "ଚେନ୍ନଇ",
-        "चेन्नई",
-        "சென்னை பட்டை"
-      ]
-    },
-    {
-      "name": "Pondicherry",
-      "state": "Tamil Nadu",
-      "lat": 11.933,
-      "lon": 79.83,
-      "bearing_deg": 110,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "puducherry",
-        "பாண்டிச்சேரி",
-        "పాండిచ్చెరి",
-        "ಪಾಂಡಿಚೆರಿ",
-        "પાંડિચ્ચેરી",
-        "पुदुचेरी"
-      ]
-    },
-    {
-      "name": "Kakinada",
-      "state": "Andhra Pradesh",
-      "lat": 16.989,
-      "lon": 82.247,
-      "bearing_deg": 95,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "kakinada",
-        "కాకినాడ",
-        "காகினாடா",
-        "காகினா஡",
-        "ಕಾಕಿನಾಡ",
-        "કાકીનાડ",
-        "काकीनाड"
-      ]
-    },
-    {
-      "name": "Machilipatnam",
-      "state": "Andhra Pradesh",
-      "lat": 16.191,
-      "lon": 81.133,
-      "bearing_deg": 100,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "machilipatnam",
-        "మచిలిపత్నం",
-        "மசிலிபத்னம்",
-        "ಮಚಿಲಿಪತ್ನ",
-        "मचिलिपत्नम"
-      ]
-    },
-    {
-      "name": "Visakhapatnam",
-      "state": "Andhra Pradesh",
-      "lat": 17.673,
-      "lon": 83.284,
-      "bearing_deg": 100,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "vizag",
-        "vishakhapatnam",
-        "vizianagaram",
-        "విశాఖపట్టణం",
-        "విజాగ",
-        "ବିସାଖାପଟ୍ଟଣ",
-        "விசாகபட்டணம்",
-        "ವಿಶಾಖಪಟ್ಟಣ",
-        "विशाखापट्टनम",
-        "વિશાખપટ્ટણ",
-        "विजयवाड़ा",
-        "विशाखापटनम"
-      ]
-    },
-    {
-      "name": "Puri",
-      "state": "Odisha",
-      "lat": 19.813,
-      "lon": 85.831,
-      "bearing_deg": 100,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "puri",
-        "puri beach",
-        "ପୁରୀ",
-        "పురి",
-        "ಪುರಿ",
-        "પુરી",
-        "पुरी"
-      ]
-    },
-    {
-      "name": "Paradip",
-      "state": "Odisha",
-      "lat": 20.264,
-      "lon": 86.694,
-      "bearing_deg": 95,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "paradeep",
-        "ପାରାଦିପ",
-        "పారాదీప",
-        "ಪಾರಾದೀಪ",
-        "પારાદીપ",
-        "पारादीप"
-      ]
-    },
-    {
-      "name": "Haldia",
-      "state": "West Bengal",
-      "lat": 22.06,
-      "lon": 88.11,
-      "bearing_deg": 120,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "haldia",
-        "हल्दिया",
-        "ಹಲ್ದಿಯಾ",
-        "హల్దియా",
-        "ഹൽദ്യ",
-        "હલ્દિયા",
-        "ହଲ୍ଦିଆ"
-      ]
-    },
-    {
-      "name": "Kolkata",
-      "state": "West Bengal",
-      "lat": 21.65,
-      "lon": 88.15,
-      "bearing_deg": 155,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "calcutta",
-        "কলকাতা",
-        "ಕೊಲ್ಕತಾ",
-        "కలకత్తా",
-        "કલકત્તા",
-        "कोलकाता",
-        "কলকাত্তা"
-      ]
-    },
-    {
-      "name": "Digha",
-      "state": "West Bengal",
-      "lat": 21.683,
-      "lon": 87.522,
-      "bearing_deg": 105,
-      "coast": "Bay of Bengal",
-      "aliases": [
-        "digha",
-        "ଦିଗ୍ହା",
-        "டிகா",
-        "డిగా",
-        "ದಿಗ್ಹಾ",
-        "દિઘા",
-        "दीघा"
-      ]
-    },
-    {
-      "name": "Port Blair",
-      "state": "Andaman & Nicobar",
-      "lat": 11.623,
-      "lon": 92.726,
-      "bearing_deg": 90,
-      "coast": "Andaman Sea",
-      "aliases": [
-        "portblair",
-        "port blair",
-        "போர்ட் பிளேர்",
-        "పోర్ట్ బ్లైర్",
-        "ಪೋರ್ಟ್ ಬ್ಲೇರ್",
-        "પોર્ટ બ્લેર",
-        "पोर्ट ब्लेयर"
-      ]
-    },
-    {
-      "name": "Car Nicobar",
-      "state": "Andaman & Nicobar",
-      "lat": 9.164,
-      "lon": 92.943,
-      "bearing_deg": 110,
-      "coast": "Andaman Sea",
-      "aliases": [
-        "nicobar",
-        "car nicobar island",
-        "கார் நிகோபார்",
-        "कार निकोबार",
-        "కార్ నికోబార్"
-      ]
-    },
-    {
-      "name": "Kavaratti",
-      "state": "Lakshadweep",
-      "lat": 10.567,
-      "lon": 72.642,
-      "bearing_deg": 265,
-      "coast": "Laccadive Sea",
-      "aliases": [
-        "lakshadweep",
-        "കവരത്തി",
-        "കവറട്ടി",
-        "ಕವರತ್ತಿ",
-        "કવરત્તી",
-        "कवरत्ती"
-      ]
-    },
-    {
-      "name": "Kannur",
-      "state": "Kerala",
-      "lat": 11.874,
-      "lon": 75.37,
-      "bearing_deg": 250,
-      "coast": "Laccadive Sea",
-      "aliases": [
-        "tellicherry",
-        "kannur",
-        "കണ്ണൂർ",
-        "கன்னூர்",
-        "కన్నూరు",
-        "ಕಣ್ಣೂರು",
-        "કન્નૂર",
-        "कन्नूर"
       ]
     },
     {
