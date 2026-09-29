@@ -95,7 +95,7 @@ func MatchTown(q, path string) (Town, bool) {
 		return Town{}, false
 	}
 
-	// Two of the 31 names are multi-word: Car Nicobar and Port Blair. For those
+	// Two of the reference names are multi-word: Car Nicobar and Port Blair. For
 	// two, only an exact match against the whole name or one of its aliases is
 	// accepted, and the loose passes below are skipped.
 	//

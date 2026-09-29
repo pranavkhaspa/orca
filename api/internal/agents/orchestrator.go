@@ -170,11 +170,20 @@ func (o *Orchestrator) Ask(ctx context.Context, query string, emit func(Event)) 
 	// which means it also covers an unknown place name, a geocoder outage and a
 	// rate-limited response. No verdict, no hazard checks, no zone: a clarifying
 	// question instead.
-	if geo.Source == "unresolved" {
+	if geo.Source == "unresolved" || geo.Source == "inland" {
 		f.Plan = plan
 		f.Trace = rs.snapshot()
 		f.AnswerLang = string(detected)
-		f.Answer = unknownPlace(plan.Place, detected)
+		if geo.Source == "inland" {
+			// A different sentence, because the diagnosis is different. "I could
+			// not find that place" invites the user to retype a name that is
+			// perfectly correct; "that is not on the coast" tells them what is
+			// actually wrong with the question, which is the part they can act
+			// on.
+			f.Answer = inlandPlace(plan.Place, detected)
+		} else {
+			f.Answer = unknownPlace(plan.Place, detected)
+		}
 		emit(Event{Type: "answer", Answer: f.Answer, AnswerLang: f.AnswerLang})
 		emit(Event{Type: "done", Final: &f})
 		return f
@@ -368,9 +377,30 @@ func (o *Orchestrator) resolveGeo(ctx context.Context, place string) domain.Geo 
 	if geo.Source == "unresolved" {
 		return geo
 	}
+	nearest, dist, err := data.NearestTown(geo.Lat, geo.Lon, o.cfg.CoastalPath)
+	// A geocoded place that is nowhere near the sea is not a fishing location.
+	//
+	// The geocoder resolves "Hyderabad" to a point 314 km inland and "Jaipur"
+	// to one 845 km inland, both without complaint, and the marine API will
+	// happily return a grid cell for a location that is not water. The response
+	// then carries wave heights, a sea-surface temperature and a go verdict for
+	// a city in Telangana, with real provenance attached, and nothing in it says
+	// the coordinates describe dry land. It is the same failure as answering
+	// about the Gulf of Guinea, reached a different way: a coordinate was
+	// obtained, so the pipeline trusted it.
+	//
+	// The reference table is the only coastline this service has, so distance
+	// to the nearest known fishing port is the test. It is generous on purpose
+	// (see MaxCoastDistanceKm): rejecting a coastal village the table has not
+	// caught up with costs one clarifying question, and accepting a landlocked
+	// city costs the answer.
+	if err != nil || dist > o.cfg.MaxCoastDistanceKm {
+		geo.Source = "inland"
+		return geo
+	}
 	bearing, townName := 250.0, geo.Name
-	if t, d, err := data.NearestTown(geo.Lat, geo.Lon, o.cfg.CoastalPath); err == nil && d < 500 {
-		bearing, townName = t.BearingDeg, t.Name
+	if err == nil {
+		bearing, townName = nearest.BearingDeg, nearest.Name
 	}
 	wl, wo := data.ProjectWaypoint(geo.Lat, geo.Lon, bearing, o.cfg.WaypointKm)
 	geo.BearingDeg = bearing

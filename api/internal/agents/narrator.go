@@ -118,6 +118,46 @@ func unknownPlace(place string, code lang.Code) string {
 	return head + " " + clarify(code)
 }
 
+// inlandPlace answers a question about a place that exists but has no sea.
+//
+// This is deliberately a different sentence from unknownPlace. "I could not
+// find Hyderabad" is false and invites the user to go and check the spelling of
+// a city that is very much there; the actual answer is that Hyderabad is 300 km
+// from the water and no wave height in the world applies to it. Telling someone
+// the difference between "I don't know this place" and "this place cannot have
+// a marine forecast" is the entire difference between a service that knows what
+// it is talking about and one that guesses.
+func inlandPlace(place string, code lang.Code) string {
+	name := place
+	if name == "" {
+		name = "that place"
+	}
+	var head string
+	switch code {
+	case lang.HI:
+		head = fmt.Sprintf("**%s** तट से दूर है, इसलिए इसकी समुद्री स्थिति नहीं होती।", name)
+	case lang.MR:
+		head = fmt.Sprintf("**%s** किनार्यापासून दूर आहे, म्हणून त्याची सागरीय स्थिती नाही.", name)
+	case lang.TA:
+		head = fmt.Sprintf("**%s** கடலோரத்திலிருந்து தூரத்தில் உள்ளது, எனவே அதன் கடல் நிலை இல்லை.", name)
+	case lang.TE:
+		head = fmt.Sprintf("**%s** సముద్రం నుండి దూరంలో ఉంది, కాబట్టి దాని సముద్ర స్థితి లేదు.", name)
+	case lang.KN:
+		head = fmt.Sprintf("**%s** ಸಮುದ್ರದಿಂದ ದೂರವಿದೆ, ಹಾಗಾಗಿ ಅದರ ಸಮುದ್ರ ಸ್ಥಿತಿ ಇಲ್ಲ.", name)
+	case lang.ML:
+		head = fmt.Sprintf("**%s** കടലിൽ നിന്ന് അകന്നതാണ്, അതിനാൽ സമുദ്ര സ്ഥിതിയില്ല.", name)
+	case lang.GU:
+		head = fmt.Sprintf("**%s** દરિયાથી દૂર છે, તેથી તેનું દરિયાઈ સ્થિતિ નથી.", name)
+	case lang.OR:
+		head = fmt.Sprintf("**%s** ସମୁଦ୍ରରୁ ଦୂରରେ ଅଛି, ତେଣୁ ତାର ସମୁଦ୍ର ସ୍ଥିତି ନାହିଁ।", name)
+	case lang.BN:
+		head = fmt.Sprintf("**%s** সমুদ্র থেকে দূরে, তাই এর সামুদ্রিক অবস্থা নেই।", name)
+	default:
+		head = fmt.Sprintf("**%s** is not near the coast, so there is no marine condition to report for it.", name)
+	}
+	return head + " " + clarify(code)
+}
+
 // clarify asks for a location when the question did not contain one. Asking is
 // the correct behaviour here: guessing a coast would produce a confident,
 // wrong answer about a real person's safety.

@@ -23,10 +23,11 @@ func newOffline(t *testing.T) *Orchestrator {
 	data.SetOffline(true)
 	t.Cleanup(func() { data.SetOffline(false) })
 	cfg := config.Config{
-		CoastalPath:  coastal,
-		SnapshotPath: "embed:snapshot.json",
-		WaypointKm:   45,
-		CacheTTL:     time.Minute,
+		CoastalPath:        coastal,
+		SnapshotPath:       "embed:snapshot.json",
+		WaypointKm:         45,
+		CacheTTL:           time.Minute,
+		MaxCoastDistanceKm: config.DefaultMaxCoastDistanceKm,
 	}
 	return New(cfg, llm.New("", 0, ""), data.NewCache(time.Minute))
 }
@@ -48,7 +49,6 @@ func newOffline(t *testing.T) *Orchestrator {
 func TestUnresolvablePlaceNeverYieldsAVerdict(t *testing.T) {
 	o := newOffline(t)
 	for _, q := range []string{
-		"Is it safe to go fishing off Kanyakumari?",
 		"conditions near Atlantis",
 		"Is tomorrow safe at Port of Nowhere?",
 	} {
@@ -67,16 +67,82 @@ func TestUnresolvablePlaceNeverYieldsAVerdict(t *testing.T) {
 		// The specific coordinates that caused the bug. (0, 0) is a valid point
 		// of ocean, so the invariant is that the response never *claims* to have
 		// resolved a location. An empty source means geo was never attempted
-		// (the planner discarded the name) and "unresolved" means it was
-		// attempted and failed; both are honest, and neither may carry a
-		// verdict.
-		if f.Geo.Source != "" && f.Geo.Source != "unresolved" {
+		// (the planner discarded the name), "unresolved" means it was attempted
+		// and nothing was found, and "inland" means it was attempted and found
+		// somewhere with no sea near it. All three are honest, and none of them
+		// may carry a verdict.
+		if f.Geo.Source != "" && f.Geo.Source != "unresolved" && f.Geo.Source != "inland" {
 			t.Errorf("%q: claims a resolved location from source %q at %v,%v", q, f.Geo.Source, f.Geo.Lat, f.Geo.Lon)
 		}
 		if f.PFZ.Score != 0 || f.PFZ.DistanceKm != 0 {
 			t.Errorf("%q: a fishing zone was scored for an unresolved location (score %v, %v km)",
 				q, f.PFZ.Score, f.PFZ.DistanceKm)
 		}
+	}
+}
+
+// TestLandlockedPlacesAreRejected is the guard for a failure that never showed up
+// in a test suite, because it only happens when a model key is configured.
+//
+// With no key the router never proposes a place it cannot find, so "Hyderabad"
+// was already safe: the query died at the routing step. With a key the model
+// supplies the place, the geocoder obligingly resolves Hyderabad to 17.38 N,
+// 78.46 E, and the pipeline carried on from there. The geocoder has no idea it
+// was asked about a city 314 km from the Arabian Sea, and neither did the
+// response, which was a marine forecast with real wave heights and honest
+// provenance attached.
+//
+// The rule is distance from the reference table, checked here against real
+// coordinates and the real table rather than a stub, because the whole risk is
+// that the two halves disagree about where the coast is.
+func TestLandlockedPlacesAreRejected(t *testing.T) {
+	o := newOffline(t)
+	maxKm := o.cfg.MaxCoastDistanceKm
+	if maxKm <= 0 {
+		t.Fatalf("MaxCoastDistanceKm is %v; the inland guard would reject everything", maxKm)
+	}
+
+	cases := []struct {
+		name     string
+		lat, lon float64
+		coastal  bool
+		why      string
+	}{
+		{"Kochi", 9.931, 76.267, true, "a supported fishing port"},
+		{"Kanyakumari", 8.088, 77.541, true, "a major fishing port absent from the 31-name table, ~90 km from Tuticorin"},
+		{"Chennai", 13.083, 80.27, true, "a supported port"},
+		{"Hyderabad", 17.384, 78.456, false, "314 km inland, the case that actually shipped"},
+		{"Jaipur", 26.920, 75.788, false, "845 km inland"},
+		{"Thar Desert", 26.0, 71.0, false, "desert, no sea"},
+	}
+	for _, c := range cases {
+		_, dist, err := data.NearestTown(c.lat, c.lon, o.cfg.CoastalPath)
+		if err != nil {
+			t.Fatalf("%s: reference table: %v", c.name, err)
+		}
+		if got := dist <= maxKm; got != c.coastal {
+			t.Errorf("%s: %.0f km from the nearest known port, threshold %.0f km -> accepted=%v, want %v (%s)",
+				c.name, dist, maxKm, got, c.coastal, c.why)
+		}
+	}
+}
+
+// TestInlandPlaceExplainsItself checks that a city which exists is never
+// reported as missing. "I could not find Hyderabad" is false, and sends the user
+// off to check the spelling of a city that is perfectly real.
+func TestInlandPlaceExplainsItself(t *testing.T) {
+	for _, code := range []lang.Code{lang.EN, lang.HI, lang.TA, lang.TE, lang.ML} {
+		msg := inlandPlace("Hyderabad", code)
+		if !strings.Contains(strings.ToLower(msg), "hyderabad") {
+			t.Errorf("%s: inland message does not name the place: %q", code, msg)
+		}
+	}
+	en := inlandPlace("Hyderabad", lang.EN)
+	if !strings.Contains(en, "not near the coast") {
+		t.Errorf("English inland message does not explain why there is no forecast: %q", en)
+	}
+	if strings.Contains(en, "could not find") {
+		t.Error("inland message claims the place could not be found; it is a real city with no sea near it")
 	}
 }
 
@@ -88,6 +154,10 @@ func TestKnownPlacesStillResolve(t *testing.T) {
 		"Is it safe to go fishing off Kochi?",
 		"where can I fish near Visakhapatnam?",
 		"sea state at Mumbai",
+		// Kanyakumari was the reported case. It geocodes nowhere and was
+		// therefore unanswerable, so it was added to the reference table; it is
+		// here so the next person to prune the data knows it was deliberate.
+		"Is it safe to go fishing off Kanyakumari?",
 	} {
 		f := o.Ask(context.Background(), q, nil)
 		if f.Verdict.Level == "" {

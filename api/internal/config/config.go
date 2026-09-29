@@ -22,6 +22,24 @@ type Config struct {
 	WaypointKm     float64
 	AllowedOrigins string
 
+	// MaxCoastDistanceKm rejects a geocoded place that is nowhere near the sea.
+	//
+	// The geocoder is happy to resolve "Hyderabad" to 17.38 N, 78.46 E, which
+	// is 314 km inland, and "Jaipur" to a point 845 km from the nearest
+	// coastline. Nothing in the response distinguishes either from a fishing
+	// port, so with a model key configured a question about a landlocked city
+	// produced a marine verdict with wave heights for a grid cell that is not
+	// water. The failure is invisible for the same reason the (0, 0) failure
+	// was: every field is populated and the provenance is real.
+	//
+	// The threshold is deliberately generous. It has to clear real coastal
+	// districts and river-mouth villages that the reference table does
+	// not list, while rejecting anything landlocked. The asymmetry decides it:
+	// refusing to answer about a coastal village the table has not caught up
+	// with costs one clarifying question, while answering about a city 300 km
+	// inland destroys the only thing this product is trusted for.
+	MaxCoastDistanceKm float64
+
 	// PlannerLLMTimeout is the model budget for the router's *refinement* pass,
 	// and it is deliberately far shorter than LLMTimeout.
 	//
@@ -100,16 +118,17 @@ const (
 	// The router's refinement pass is optional and already has a correct answer
 	// waiting, so it gets a budget sized for "did the model get back in time" and
 	// not for "did the model write a good paragraph".
-	DefaultPlannerLLMTimeout = 5 * time.Second
-	DefaultCacheTTL          = 15 * time.Minute
-	DefaultMarineDays        = 5
-	DefaultWaypointKm        = 45.0
-	DefaultPFZSearchKm       = 120.0
-	DefaultMaxConcurrent     = 6
-	DefaultRateLimitPerMin   = 12
-	DefaultAllowedOrigins    = "*"
-	DefaultCoastalPath       = "embed:coastal_towns.json"
-	DefaultSnapshotPath      = "embed:snapshot.json"
+	DefaultPlannerLLMTimeout  = 5 * time.Second
+	DefaultCacheTTL           = 15 * time.Minute
+	DefaultMarineDays         = 5
+	DefaultWaypointKm         = 45.0
+	DefaultPFZSearchKm        = 120.0
+	DefaultMaxCoastDistanceKm = 120.0
+	DefaultMaxConcurrent      = 6
+	DefaultRateLimitPerMin    = 12
+	DefaultAllowedOrigins     = "*"
+	DefaultCoastalPath        = "embed:coastal_towns.json"
+	DefaultSnapshotPath       = "embed:snapshot.json"
 )
 
 // WithDefaults returns a copy with every unset field replaced by its documented
@@ -144,6 +163,9 @@ func (c Config) WithDefaults() Config {
 	}
 	if c.PlannerLLMTimeout <= 0 {
 		c.PlannerLLMTimeout = DefaultPlannerLLMTimeout
+	}
+	if c.MaxCoastDistanceKm <= 0 {
+		c.MaxCoastDistanceKm = DefaultMaxCoastDistanceKm
 	}
 	if c.CacheTTL <= 0 {
 		c.CacheTTL = DefaultCacheTTL

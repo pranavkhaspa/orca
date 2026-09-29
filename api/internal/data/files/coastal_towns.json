@@ -552,6 +552,26 @@
         "કન્નૂર",
         "कन्नूर"
       ]
+    },
+    {
+      "name": "Kanyakumari",
+      "state": "Tamil Nadu",
+      "lat": 8.088,
+      "lon": 77.541,
+      "bearing_deg": 215,
+      "coast": "Laccadive Sea",
+      "aliases": [
+        "kanyakumari",
+        "kanyakumari cape",
+        "cape comorin",
+        "comorin",
+        "கனியாகுமரி",
+        "కన్యాకుమారి",
+        "ಕನ್ಯಾಕುಮಾರಿ",
+        "കന്യാകുമാരി",
+        "કન્યાકુમારી",
+        "कन्याकुमारी"
+      ]
     }
   ],
   "note": "Approximate coastal reference points. Coordinates are town/port centroids; offshore bearings are coarse and indicate the direction of open water, not a navigational course. Aliases cover common English spellings plus native-script and transliterated forms, so the deterministic router can resolve a question in any supported language without a model call."

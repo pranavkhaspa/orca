@@ -304,7 +304,17 @@ func measure(ctx context.Context, o *agents.Orchestrator, c Case) Result {
 	// A refusal is the absence of a resolved place, not merely an empty
 	// verdict string: a query that resolves a place but finds no usable data
 	// still deserves to be scored as an answer attempt.
-	r.Clarified = strings.TrimSpace(f.Geo.Name) == ""
+	//
+	// "No resolved place" has three shapes, and scoring only the first two
+	// would have made the inland guard invisible to this suite. An unknown name
+	// leaves Geo.Name empty, a failed geocode resolves to the empty name with
+	// source "unresolved", and a place that exists but is 300 km from the sea
+	// resolves perfectly well to "Hyderabad" — with a real name, real
+	// coordinates and a real source — and is still a refusal. That last one is
+	// the only one where the name field is populated, which is exactly why it
+	// has to be named explicitly.
+	r.Clarified = strings.TrimSpace(f.Geo.Name) == "" ||
+		f.Geo.Source == "unresolved" || f.Geo.Source == "inland"
 
 	r.LangOK = r.GotLang == c.WantLang
 	if c.WantPlace == "" {
@@ -501,6 +511,19 @@ func adversarialCases() []Case {
 		{ID: "adv/empty", Query: "", WantLang: "en", WantClarification: true},
 		{ID: "adv/digits-only", Query: "24 09 10 0600", WantLang: "en", WantClarification: true},
 		{ID: "adv/very-long", Query: strings.Repeat("is it safe ", 40), WantLang: "en", WantClarification: true},
+
+		// Places that exist, are perfectly findable, and have no sea. These are
+		// the cases the inland guard was written for, and they are the hardest
+		// refusals to get right because nothing about the lookup fails: the
+		// geocoder returns a confident, correct city. Only a distance test
+		// catches them, and only an answer that says "not near the coast" rather
+		// than "I could not find" is honest about why.
+		{ID: "adv/inland-hyderabad", Query: "Is it safe to go fishing near Hyderabad?", WantLang: "en", WantClarification: true},
+		{ID: "adv/inland-jaipur", Query: "sea conditions in Jaipur", WantLang: "en", WantClarification: true},
+		{ID: "adv/inland-rajasthan", Query: "wave height in Rajasthan", WantLang: "en", WantClarification: true},
+		{ID: "adv/inland-thar", Query: "Is it safe to fish in the Thar Desert?", WantLang: "en", WantClarification: true},
+		{ID: "adv/inland-hyderabad-hi", WantLang: "hi", WantClarification: true,
+			Query: "क्या हैदराबाद के पास मछली पकड़ना सुरक्षित है?"},
 		// These two name a real place, so refusing them would be the wrong
 		// behaviour: a user is entitled to an answer about Puri even while
 		// wrapping the question in an instruction. What must not happen is the
