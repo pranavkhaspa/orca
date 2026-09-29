@@ -72,6 +72,12 @@ services:
         value: "5"
       - key: WAYPOINT_KM
         value: "45"
+      # A place further than this from the sea is refused rather than answered.
+      # Hyderabad resolves through the normal geocoder and is 314 km inland; a
+      # marine verdict for it is a confident wrong answer, which is the one
+      # failure mode this project exists to avoid.
+      - key: MAX_COAST_DISTANCE_KM
+        value: "120"
       # Radius of the fishing-zone search fan. Lower it to cut the number of
       # upstream calls per query; 0 pins the zone to the waypoint.
       - key: PFZ_SEARCH_KM

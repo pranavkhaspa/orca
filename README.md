@@ -1,6 +1,6 @@
 # ORCA
 
-**Marine safety and fishing-zone advisor for India's 31 coastal states.**
+**Marine safety and fishing-zone advisor for India's coastal states.**
 Ask in your own language, get a verdict you can check.
 
 > **ORCA** — Marine **Ec**o**O**system **R**easoning with **C**ollaborative **A**gents
@@ -58,6 +58,7 @@ ORCA takes both halves seriously:
 | **Decides with pure code** | the safety verdict is a Go function with no I/O, no clock and no randomness. A model may reword the answer. It cannot change the verdict |
 | **Shows its work** | thresholds are published via `/api/meta`; every figure carries a source and a timestamp; the agent trace is streamed to the browser |
 | **Never blocks** | every upstream is optional. No network, no model key, no INCOIS — it still answers, and says what it used |
+| **Refuses rather than guesses** | a place it cannot resolve, and a place with no sea in it, both get a question back instead of a verdict. Hyderabad geocodes fine and is 314 km inland; a marine forecast for it is a confident wrong answer |
 
 ---
 
@@ -87,6 +88,27 @@ ORCA takes both halves seriously:
 
 **Seven named agents** run per query and stream their status to the browser as
 they finish, so the collaboration is visible rather than claimed.
+
+### The interface
+
+A rotating globe opens the page, and the place you ask about is where it goes.
+The sphere is generated in a runtime `<canvas>` — an ocean gradient and a
+graticule — rather than fetched from a texture host, and the 32 supported ports
+are plotted on it, so the surface shows the coastline ORCA actually covers
+instead of a decorative globe. Nothing about the picture is invented: it comes
+from the same table the backend resolves against.
+
+The wait is narrated rather than spun. A query fans out across several upstream
+services and a model, which is long enough that a spinner reads as a hang, so
+each stage is named, the completed ones are ticked, and the progress bar moves.
+
+A short tour appears once, on a first visit, and stays reachable from the header.
+It takes arrow keys, closes on Escape, and moves focus into itself.
+
+Both are progressive enhancements that fail to nothing. The globe is a lazy
+chunk behind an error boundary with a 2D chart behind it, so a phone without
+WebGL still gets the answer. A misconfigured API base is reported as an error
+rather than left as a spinner that never finishes.
 
 ### The marine science, in full
 
@@ -142,7 +164,7 @@ unaffected.
 The most interesting part of this project is that it is graded by evidence.
 
 ```bash
-# 103 cases, 7 metrics, against the real orchestrator
+# 108 cases, 7 metrics, against the real orchestrator
 curl -s 'localhost:8080/api/eval?repeat=3' | jq '.metrics'
 
 # the same against live upstreams
@@ -168,7 +190,7 @@ node scripts/e2e.mjs    # serves web/dist itself; 44 checks over 6 languages
 
 ---
 
-## Twenty-four bugs, and why the log is in the repository
+## Twenty-eight bugs, and why the log is in the repository
 
 `INSTR.md` records every defect found while building this, what it broke, and
 the test that now pins it. It is in the repository because a project that
@@ -274,7 +296,7 @@ api/                    the service — Go, standard library only
   internal/data/        Open-Meteo, INCOIS WFS, cache, embedded snapshot
   internal/domain/      types, and the JSON contract
   internal/lang/        10-language detection, templates, i18n
-  internal/eval/        the 103-case suite
+  internal/eval/        the 108-case suite
   internal/httpapi/     REST + SSE
   internal/config/      the entire environment surface
 web/                    the interface — React 19, TypeScript, MapLibre, Vite

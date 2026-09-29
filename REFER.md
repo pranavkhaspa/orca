@@ -135,7 +135,7 @@ api/                          the service
   internal/data/              Open-Meteo, INCOIS WFS, cache, snapshot (2311)
   internal/domain/            types and the JSON contract           (378)
   internal/lang/              detection, skeletons, templates       (1088)
-  internal/eval/              the 103-case suite                     (879)
+  internal/eval/              the 108-case suite
   internal/httpapi/           REST + SSE                            (829)
   internal/llm/               OpenRouter client, optional           (385)
   internal/config/            the whole environment surface         (347)
@@ -143,13 +143,13 @@ api/                          the service
 web/                          the interface (1805 lines TS/TSX)
 scripts/e2e.mjs               44 browser checks, serves the bundle itself
 architecture.md               design rationale
-INSTR.md                      the 24-issue log
+INSTR.md                      the 28-issue log
 REFER.md                      this file
 ps.md                         the problem statements
 render.yaml                   the Render blueprint
 ```
 
-Totals: **8,741 lines of Go** across 10 test files (**100 tests**), **1,805
+Totals: **8,741 lines of Go** across 10 test files (**100 tests**), **3,163
 lines** of TypeScript and TSX. **Zero third-party Go dependencies.**
 
 ---
@@ -247,6 +247,24 @@ That is a stated limitation (§14), not a routing solution: the position is that
 a zone's distance and direction are what the user needs, and precision beyond
 that is the job of a chart, not a chat answer.
 
+### 5.5 Refusing a place that has no sea
+
+`GeoAgent` resolves a name through the coastal table first and the geocoder
+second, and a resolved place is only accepted if it is within
+`MAX_COAST_DISTANCE_KM` (default **120 km**) of the coast. Beyond that the
+result carries `geo.Source == "inland"` and the orchestrator answers with a
+refusal in the reader's language instead of a verdict.
+
+This is not hypothetical. `Hyderabad` geocodes cleanly to 17.384, 78.456 and is
+**314 km** from the nearest water; `Jaipur` is 845 km out. Both are large
+cities with large populations, both are plausible things to type into a marine
+advisor, and neither has a fishing zone. Before this check they produced a
+confident verdict computed from a waypoint projected 45 km offshore a bearing
+they had no right to. `Kanyakumari` is the opposite case and is why the
+distance test is the gate rather than a lookup: it failed to resolve at all
+until it was added to the table, and a tool that refused a real fishing town
+while answering for a landlocked city had the priorities exactly backwards.
+
 ---
 
 ## 6. Data
@@ -338,6 +356,7 @@ The entire surface. Everything is optional; `PORT` has a default.
 | `MARINE_DAYS` | `5` | forecast days requested |
 | `WAYPOINT_KM` | `45` | offshore projection distance |
 | `PFZ_SEARCH_KM` | `120` | zone search radius |
+| `MAX_COAST_DISTANCE_KM` | `120` | a resolved place further inland than this is refused, not answered |
 | `MAX_CONCURRENT` | `6` | parallel upstream cap |
 | `RATE_LIMIT_PER_MIN` | `12` | per-IP limit |
 | `ALLOWED_ORIGINS` | `*` | CORS origins |
@@ -369,7 +388,7 @@ degradation and not merely for liveness.
 {
   "status": "ok",
   "uptime": "7m18s",
-  "places": 31,
+  "places": 32,
   "languages": 10,
   "llm": false,
   "llm_degraded": true,
@@ -397,6 +416,10 @@ curl -s localhost:8080/api/meta | jq
 ```json
 {
   "places": ["Alibag", "Car Nicobar", "Chennai", "..."],
+  "towns": [
+    {"name": "Veraval", "lat": 20.852, "lon": 70.367, "coast": "Arabian Sea"},
+    {"name": "Kanyakumari", "lat": 8.088, "lon": 77.541, "coast": "Laccadive Sea"}
+  ],
   "languages": [{"code": "en", "native": "English"}, {"code": "hi", "native": "हिन्दी"}],
   "rules": {
     "wave_caution_m": 2.5, "wave_critical_m": 4,
@@ -520,12 +543,12 @@ See §12. The report shape:
   "mode": "offline",
   "started_at": "2026-09-29T…Z",
   "duration": "…",
-  "cases": 103,
+  "cases": 108,
   "passed": true,
   "metrics": [
-    {"name": "language_accuracy", "good": 103, "total": 103, "pct": 100,
+    {"name": "language_accuracy", "good": 108, "total": 108, "pct": 100,
      "why": "answer written in the language the query was asked in"},
-    {"name": "determinism", "good": 103, "total": 103, "pct": 100,
+    {"name": "determinism", "good": 108, "total": 108, "pct": 100,
      "why": "the same query produces the same verdict every time"}
   ]
 }
@@ -580,17 +603,37 @@ The parity test will tell you if the router vocabulary is incomplete.
 
 ## 10. The interface
 
-React 19, TypeScript 7, Vite 7, MapLibre GL 5.6, no UI framework. 1,805 lines.
+React 19, TypeScript 7, Vite 7, three 0.186 + globe.gl 2.46, MapLibre GL 5.6 as
+a fallback, no UI framework. 3,163 lines.
 
-- **Map.** MapLibre with ORCA's zone point, the offshore waypoint and the
-  bearing between them. The base style loads from a CDN; if the style or the
-  tiles are unavailable, the map degrades to a coordinate readout rather than a
-  broken panel.
+- **Globe.** globe.gl draws a rotating sphere that flies to the place you asked
+  about and colours the result by verdict. The surface is generated at runtime
+  in a `<canvas>` — an ocean gradient and a graticule — instead of being fetched
+  from a texture host, because an ad blocker in this project's own browser ate
+  one CDN asset and a safety tool should not depend on a third party staying
+  reachable. The 32 supported ports are plotted on it, sourced from the same
+  table the backend resolves against, so the picture shows real coverage instead
+  of a decorative sphere.
+- **Map.** MapLibre remains as the 2D fallback, with ORCA's zone point, the
+  offshore waypoint and the bearing between them. The base style loads from a
+  CDN; if the style or the tiles are unavailable, the map degrades to a
+  coordinate readout rather than a broken panel.
+- **Both visualisations are lazy chunks behind an error boundary.** The verdict
+  is text and must render on its own, because the person reading it may be on a
+  boat on a 2G connection. A phone without WebGL gets the 2D chart; a rendering
+  failure in either keeps the verdict on screen. The globe also probes for a
+  live context before constructing, since a driver that refuses one can hand
+  back a renderer that silently draws nothing.
 - **Progressive streaming.** Agent events render as they arrive, so the
   collaboration is visible while it happens. The verdict panel appears only when
   a verdict exists.
+- **A narrated wait.** Stages are named and ticked off as they complete, because
+  a query takes long enough that a spinner reads as a hang.
+- **A first-visit tour**, reopenable from the header, which takes arrow keys,
+  closes on Escape and moves focus into itself.
 - **Localized throughout**, including the language selector, verdict labels and
-  provenance rows.
+  provenance rows. Hero, tour and loading copy are translated into all 10
+  languages.
 - **Provenance visible.** Every figure on screen traces to its source and
   timestamp from the panel.
 - **Zero console errors** is an enforced property of the e2e check, not an
@@ -621,11 +664,14 @@ container's runtime environment does nothing.
 Leaving it unset means **same-origin**: the deployed page requests `/api/ask`
 from its own host, which is not the API, so the map stays empty and the request
 404s in the network tab with no error in the interface. Set the variable, or put
-both behind one host with a reverse proxy.
+both behind one host with a reverse proxy. The client now also refuses to treat
+a non-event-stream response as a live trace, because the same mistake otherwise
+shows as a spinner that never finishes rather than as an error.
 
 `web/vercel.json` carries the SPA rewrite so client-side routes resolve.
 
-No Git remote is configured in this repository yet; deploy requires adding one.
+The remote is `git@github.com:pranavkhaspa/orca.git`; the API is deployed from
+`render.yaml` and the interface from `web/`.
 
 ---
 
@@ -633,9 +679,9 @@ No Git remote is configured in this repository yet; deploy requires adding one.
 
 ### 12.1 The corpus
 
-`internal/eval/`. **103 cases**, each with a query, an expected location or
+`internal/eval/`. **108 cases**, each with a query, an expected location or
 refusal, an expected language, and expectations for consistency, clarification
-and injection behaviour. The corpus covers all 10 languages, all 31 places,
+and injection behaviour. The corpus covers all 10 languages, all 32 ports,
 adversarial phrasings, and questions that name no place.
 
 ### 12.2 The seven metrics
@@ -674,8 +720,8 @@ findings and only one of them is a defect.
 
 | Mode | Result |
 |---|---|
-| Offline, `repeat=3` | 103/103 cases; **all 7 metrics 100%**; determinism 103/103 |
-| Live upstreams | 103/103 cases; **all 6 measurable metrics 100%**; determinism not measured |
+| Offline, `repeat=3` | 108/108 cases; **all 7 metrics 100%**, determinism included (108/108) |
+| Live upstreams | 108/108 cases; **all 6 measurable metrics 100%**; determinism not measured |
 | Browser e2e | **44/44** against the production bundle |
 
 ### 12.5 Running everything
@@ -863,7 +909,7 @@ correctness is non-negotiable. The argument is not that models are useless; it
 is that their failure mode is silent.
 
 **"How do you know it works in Odia if you tested it in English?"**
-The eval corpus is 103 cases across all 10 languages and all 31 places, and
+The eval corpus is 108 cases across all 10 languages and all 32 places, and
 `answer_consistency` requires the same verdict across every language of the same
 question. A language-specific failure in the router produces a metric failure,
 not a silent divergence. That metric is how the Puri bug was caught.
