@@ -12,7 +12,7 @@ export function VerdictCard({ f, t }: { f: Findings; t: T }) {
   const v = f.verdict
   const LevelIcon = VERDICT_ICON[v.level] ?? RuleIcon
   return (
-    <section className={`panel verdict v-${v.level}`}>
+    <section className={`panel verdict v-${v.level}`} id="verdict">
       <div className="verdict-inner">
         <h2>{t.verdict}</h2>
         <div className="verdict-head">
@@ -135,7 +135,7 @@ export function Observations({ f, t }: { f: Findings; t: T }) {
 export function ZoneCard({ f, t }: { f: Findings; t: T }) {
   const p = f.pfz
   return (
-    <section className="panel">
+    <section className="panel" id="zone">
       <h2>{t.zone}</h2>
       <div className="zone-head">
         <div className="zone-score">{p.score.toFixed(2)}</div>
@@ -161,6 +161,17 @@ export function ZoneCard({ f, t }: { f: Findings; t: T }) {
   )
 }
 
+// isFetched reports whether a citation carries a real retrieval time.
+//
+// A bundled table is not fetched, so Go marshals its time as the zero value,
+// which renders as 1 January year 1. Formatting that would put
+// "1/1/1, 12:00:00 AM" in front of a user as though it were a measurement.
+function isFetched(retrieved: string): boolean {
+  if (!retrieved) return false
+  const y = new Date(retrieved).getFullYear()
+  return Number.isFinite(y) && y > 1970
+}
+
 export function SourcesPanel({ f, t }: { f: Findings; t: T }) {
   const prov: Citation[] = f.prov ?? []
   // One row per source+dataset pair; the same upstream URL is called for eight
@@ -172,18 +183,24 @@ export function SourcesPanel({ f, t }: { f: Findings; t: T }) {
     bySource.set(c.Source, arr)
   }
   return (
-    <section className="panel">
+    <section className="panel" id="sources">
       <h2>{t.sources}</h2>
       {prov.length === 0 ? <p className="muted">—</p> : null}
       {Array.from(bySource.entries()).map(([source, cites]) => {
         const live = cites.some((c) => c.Live)
         const failed = cites.some((c) => c.Err)
+        // "Snapshot" means a capture of a moment. The ban calendar is a table
+        // assembled ahead of time, and labelling it a snapshot implies the dates
+        // were fetched and are therefore current, which is exactly the
+        // distinction the user needs to audit. A source that is entirely
+        // non-live and carries a provenance note is the compiled case.
+        const compiled = !live && !failed && cites.every((c) => Boolean(c.Note))
         return (
           <details key={source} className="src">
             <summary>
               <span className="src-name">{source}</span>
               <span className={`badge ${failed ? 's-critical' : live ? 's-ok' : 's-caution'}`}>
-                {failed ? t.unavailable : live ? t.live : t.snapshot}
+                {failed ? t.unavailable : live ? t.live : compiled ? t.compiled : t.snapshot}
               </span>
               <span className="muted">
                 {cites.length} dataset{cites.length === 1 ? '' : 's'}
@@ -193,9 +210,23 @@ export function SourcesPanel({ f, t }: { f: Findings; t: T }) {
               <tbody>
                 {cites.map((c) => (
                   <tr key={c.Dataset + c.Retrieved}>
-                    <td className="src-dataset">{c.Dataset}</td>
+                    <td className="src-dataset">
+                      {c.Dataset}
+                      {c.Note ? <div className="muted src-note">{c.Note}</div> : null}
+                    </td>
                     <td className="src-time">
-                      {t.retrieved} {new Date(c.Retrieved).toLocaleString()}
+                      {isFetched(c.Retrieved) ? (
+                        <>
+                          {t.retrieved} {new Date(c.Retrieved).toLocaleString()}
+                        </>
+                      ) : (
+                        // A value that was not fetched has no retrieval time, and
+                        // printing the zero time reads as a bug rather than as
+                        // provenance. The note explaining where it did come from
+                        // is already beside the dataset, so repeating it here
+                        // would print the same sentence twice in one row.
+                        <span className="muted">-</span>
+                      )}
                     </td>
                     <td>
                       {c.URL ? (

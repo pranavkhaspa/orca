@@ -11,6 +11,8 @@ export interface Citation {
   Dataset: string
   URL: string
   Retrieved: string
+  /** How a non-fetched value was obtained; empty for a live or snapshot fetch. */
+  Note?: string
   Live: boolean
   Err?: string
 }

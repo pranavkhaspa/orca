@@ -148,126 +148,239 @@ body::after {
 
 /* ============================ header ==================================== */
 
+/* The bar is a fixed-height surface that the page scrolls under, rather than a
+   sticky element competing with the content for space. Fixed positioning is what
+   makes scroll-spy and scroll-padding behave: a sticky bar changes the meaning of
+   every scrollIntoView call on the page, and this bar is the target of the nav
+   rail, so it would be a circular dependency. A spacer of the same height takes
+   its place in flow. */
 .top {
-  position: sticky;
-  top: 0;
-  z-index: 40;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  background: linear-gradient(180deg, rgba(4, 14, 24, 0.94), rgba(4, 14, 24, 0.86));
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+
+/* Once content is passing behind the bar, the bar needs a defined edge or the
+   text underneath reads through it. */
+.top.scrolled {
+  border-bottom-color: var(--line);
+  background: rgba(4, 14, 24, 0.97);
+}
+
+.top-inner {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 10px clamp(12px, 3vw, 28px);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(6, 18, 30, 0.92), rgba(6, 18, 30, 0.72));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  gap: clamp(10px, 2vw, 22px);
 }
+
+/* ---- brand --------------------------------------------------------------- */
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .logo {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   flex: none;
   display: grid;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 11px;
   color: var(--accent-ink);
   background: linear-gradient(150deg, var(--accent), var(--accent-2));
-  box-shadow: 0 8px 24px -8px rgba(34, 211, 238, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+  box-shadow: 0 6px 18px -8px rgba(34, 211, 238, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+  transition: transform 0.25s var(--ease);
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+  font: inherit;
+}
+
+.brand:hover .logo {
+  transform: translateY(-1px) rotate(-4deg);
 }
 
 .logo svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   display: block;
 }
 
 .brand-text {
   min-width: 0;
+  display: grid;
+  gap: 1px;
 }
 
-.top h1 {
+/* The wordmark and the problem-statement ID sit on one baseline. The ID is the
+   detail that tells a judge this is a submission rather than a product page, and
+   it reads as a quiet stamped tag rather than a second heading. */
+.brand-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wordmark {
+  /* Reset, because this is an <h1> for document structure and would otherwise
+     inherit the browser's block margins inside a flex row. */
   margin: 0;
-  font-size: 20px;
-  line-height: 1.1;
-  letter-spacing: 0.14em;
+  font-size: 18px;
+  line-height: 1.05;
+  letter-spacing: 0.16em;
   font-weight: 700;
 }
 
-.tagline {
-  margin: 1px 0 0;
+.brand-tag {
+  font-family: var(--font-num);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
   color: var(--ink-3);
-  font-size: 12.5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  /* The tagline is the thing that gets cut on a narrow screen, not the ID. */
+  flex: none;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--ink-3);
+  font-size: 12px;
+  line-height: 1.25;
   letter-spacing: 0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* ---- section rail ------------------------------------------------------- */
+
+/* A pill track rather than bare links. The active item needs a filled surface
+   that moves between siblings, which is only possible if they share a
+   container. */
+.rail {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(3, 10, 18, 0.5);
+  flex: none;
+}
+
+.rail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-3);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.rail-link:hover {
+  color: var(--ink);
+  background: rgba(125, 211, 252, 0.07);
+}
+
+/* aria-current is the source of truth for the visual state, so the highlight can
+   never disagree with what a screen reader announces. */
+.rail-link[aria-current='true'] {
+  color: var(--accent-ink);
+  background: linear-gradient(150deg, var(--accent), var(--accent-2));
+  font-weight: 600;
+}
+
+.rail-ico {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  opacity: 0.9;
+}
+
+/* ---- control cluster ---------------------------------------------------- */
+
 .top-right {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: none;
+  /* The rail sits between the brand and the controls, so the brand grows to fill
+     and pushes the cluster to the far end without a spacer element. */
+  margin-left: auto;
 }
 
-select {
-  appearance: none;
-  background: var(--surface-1);
+/* Language control, wrapped so the globe and the select read as one control. */
+.lang-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 10px 0 11px;
+  height: 38px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  padding: 8px 30px 8px 11px;
-  font: inherit;
-  font-size: 13px;
-  color: var(--ink);
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%),
-    linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
-  background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  cursor: pointer;
+  background: var(--surface-1);
   transition: border-color 0.2s var(--ease);
 }
 
-select:hover {
+.lang-row:hover {
   border-color: var(--line-strong);
 }
 
-.health {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--go);
-  border: 1px solid rgba(52, 211, 153, 0.32);
-  background: var(--go-bg);
-  padding: 6px 11px;
-  border-radius: 999px;
+.lang-ico {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--ink-3);
+}
+
+.lang-row select {
+  border: 0;
+  background-color: transparent;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%),
+    linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
+  padding: 8px 28px 8px 0;
+  color: var(--ink);
+}
+
+.lang-row select:hover {
+  border-color: transparent;
+}
+
+.tour-btn {
   white-space: nowrap;
 }
 
-.health::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 8px currentColor;
-}
-
-.health.offline {
-  color: var(--caution);
-  border-color: rgba(251, 191, 36, 0.34);
-  background: var(--caution-bg);
+.btn-ico {
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 
 .icon-btn {
@@ -275,6 +388,7 @@ select:hover {
   place-items: center;
   width: 38px;
   height: 38px;
+  flex: none;
   border-radius: 10px;
   border: 1px solid var(--line);
   background: var(--surface-1);
@@ -287,6 +401,238 @@ select:hover {
   color: var(--ink);
   border-color: var(--line-strong);
   background: var(--surface-2);
+}
+
+/* The menu button exists only in the results layout, and only below the
+   breakpoint where the rail is dropped. Hidden by default so it cannot appear as
+   a stray control on a wide screen. */
+.menu-btn {
+  display: none;
+}
+
+/* ---- health chip -------------------------------------------------------- */
+
+.health {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: lowercase;
+  color: var(--go);
+  border: 1px solid rgba(52, 211, 153, 0.32);
+  background: var(--go-bg);
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* A soft pulse rather than a static dot: this is the one element that changes
+   without the user doing anything, and a still dot reads as decoration. */
+.health::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 0 currentColor;
+  animation: health-pulse 2.6s var(--ease) infinite;
+}
+
+@keyframes health-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+
+.health-ico {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
+/* In offline mode the data is not moving, so the pulse would be a lie and the
+   animation is switched off with it. */
+.health.offline {
+  color: var(--caution);
+  border-color: rgba(251, 191, 36, 0.34);
+  background: var(--caution-bg);
+}
+
+.health.offline::after {
+  animation: none;
+  box-shadow: none;
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .health::after {
+    animation: none;
+  }
+}
+
+/* ---- responsive --------------------------------------------------------- */
+
+/* The rail is the first thing to go: it is the only part of the bar that is
+   duplicated elsewhere on the page, and losing it costs the least. */
+@media (max-width: 1040px) {
+  .brand-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .menu-btn {
+    display: inline-grid;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  /* The control cluster becomes a sheet under the bar. Positioned rather than
+     in flow so the bar keeps its height in both states, which means the page
+     below does not jump when the menu opens. */
+  .top-right.in-sheet {
+    position: absolute;
+    top: 100%;
+    left: clamp(12px, 3vw, 28px);
+    right: clamp(12px, 3vw, 28px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(6, 18, 30, 0.98);
+    box-shadow: var(--shadow-lift);
+    display: none;
+  }
+
+  .top-right.in-sheet.open {
+    display: flex;
+  }
+
+  .top-right.in-sheet .health,
+  .top-right.in-sheet .lang-row,
+  .top-right.in-sheet .tour-btn {
+    justify-content: center;
+  }
+
+  /* Native controls below ~40 px are hard to hit on a phone. */
+  .top-right.in-sheet .lang-row,
+  .top-right.in-sheet .tour-btn {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 560px) {
+  .top-inner {
+    padding: 9px 12px;
+  }
+
+  /* The bar shrinks with the logo rather than keeping a taller box around a
+     smaller mark. Both are set from the same value so the spacer stays true. */
+  :root {
+    --bar-h: 56px;
+  }
+
+  .logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .wordmark {
+    font-size: 16px;
+  }
+
+  /* The tagline is the first casualty of a narrow screen, so it is hidden
+     outright rather than truncated to an ellipsis that looks like a bug. */
+  .tagline {
+    display: none;
+  }
+
+  /* Below this the health chip and the tour label cannot both fit, and the chip
+     is the one carrying information. */
+  .tour-label {
+    display: none;
+  }
+
+  .tour-btn {
+    padding: 0 12px;
+  }
+}
+
+/* The bar is fixed, so the document needs a hole of exactly its height or it
+   covers the first screen. 58 px is the real measured desktop height: 10 px of
+   padding either side of a 38 px control row.
+
+   The bar and its spacer are both derived from --bar-h, and the 1 px bottom
+   border is added to both. They are asserted equal against the rendered bar by
+   scripts/check-navbar.mjs, because a mismatch here is an invisible overlap
+   rather than a visible bug, and that is exactly the kind of defect that
+   survives a refactor unnoticed. */
+:root {
+  --bar-h: 58px;
+  --bar-total: calc(var(--bar-h) + 1px);
+}
+
+.top {
+  height: var(--bar-total);
+}
+
+.top-inner {
+  height: var(--bar-h);
+}
+
+.top-spacer {
+  height: var(--bar-total);
+  flex: none;
+}
+
+/* ---- section anchors ---------------------------------------------------- */
+
+/* scrollIntoView centres a target under nothing in particular, so a section
+   scrolled to by the rail would land with its heading hidden behind the fixed
+   bar. scroll-padding on the scroll container is the fix that keeps every
+   in-page link correct, including ones added later. */
+html {
+  scroll-padding-top: calc(var(--bar-h) + 14px);
+}
+
+/* Anchored sections get a moment of highlight so the eye can find what the nav
+   just scrolled to. Purely decorative, so it is suppressed for anyone who has
+   asked for less motion. */
+#verdict,
+#zone,
+#sources {
+  scroll-margin-top: calc(var(--bar-h) + 14px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #verdict:target,
+  #zone:target,
+  #sources:target {
+    animation: anchor-in 0.9s var(--ease);
+  }
+}
+
+@keyframes anchor-in {
+  0% {
+    border-color: var(--line-strong);
+    box-shadow: 0 0 0 1px var(--line-strong), 0 0 34px -8px rgba(34, 211, 238, 0.5);
+  }
+  100% {
+    border-color: var(--line);
+    box-shadow: var(--shadow);
+  }
 }
 
 /* ============================ hero ====================================== */
@@ -1292,6 +1638,20 @@ select:hover {
 
 .src-time {
   color: var(--ink-3);
+}
+
+/* A provenance note sits under its dataset. It is a sentence rather than a
+   number, so it needs room to wrap; the table cell that holds it is the one
+   place on a narrow screen where a long disclosure would otherwise push the
+   source off the edge. */
+.src-note {
+  margin-top: 3px;
+  max-width: 46ch;
+  font-family: var(--font);
+  font-size: 11.5px;
+  line-height: 1.45;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 .rules td:first-child {

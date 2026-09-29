@@ -58,7 +58,24 @@ interface Strings {
   units: Record<UnitKey, string>;
   empty: string;
   thinking: string;
-  rulesNote: string
+  rulesNote: string;
+  // Nav-rail and menu labels. These are chrome the Go backend never produces, so
+  // unlike the safety answer there is nothing to fall back on but this table.
+  resultSections: string;
+  openMenu: string;
+  closeMenu: string;
+  // Short forms for the nav rail, kept apart from the panel headings above. The
+  // rail is a horizontal bar, so its width is set by its longest label: reusing
+  // the full panel heading ("Safety verdict", "Suggested fishing zone") made the
+  // rail 606px wide in Tamil, which is 42% of a 1440px viewport spent on
+  // navigation. A rail label is a noun, not a heading.
+  navVerdict: string;
+  navZone: string;
+  navSources: string;
+  // For a source that was assembled ahead of time rather than fetched. It is
+  // distinct from "snapshot": a snapshot is a capture of a moment, and calling a
+  // gazette pattern that would tell an auditor the dates are current.
+  compiled: string;
 }
 
 // Localized chrome strings. The safety answer itself is produced by the Go
@@ -122,6 +139,13 @@ const STRINGS = {
       'Ask a question to see the verdict, the zone, and the full reasoning trace.',
     thinking: 'Six agents are working…',
     rulesNote: 'Every figure below was produced by these thresholds.',
+    resultSections: 'Result sections',
+    navVerdict: 'Verdict',
+    navZone: 'Zone',
+    navSources: 'Sources',
+    compiled: 'compiled',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
   },
   hi: {
     title: 'ORCA',
@@ -176,6 +200,13 @@ const STRINGS = {
     empty: 'प्रश्न पूछें और निर्णय, क्षेत्र तथा पूरी प्रक्रिया देखें।',
     thinking: 'छह एजेंट काम कर रहे हैं…',
     rulesNote: 'नीचे केवल इन्हीं सीमाओं से बने आंकड़े हैं।',
+    resultSections: 'परिणाम अनुभाग',
+    navVerdict: 'निर्णय',
+    navZone: 'क्षेत्र',
+    navSources: 'स्रोत',
+    compiled: 'संकलित',
+    openMenu: 'मेन्यू खोलें',
+    closeMenu: 'मेन्यू बंद करें',
   },
   ta: {
     title: 'ORCA',
@@ -230,6 +261,13 @@ const STRINGS = {
     empty: 'கேள்வி கேட்டு முடிவு, பகுதி மற்றும் முழு செயல்பாட்டைப் பாருங்கள்.',
     thinking: 'ஆறு முகவர்கள் பணியில் உள்ளனர்…',
     rulesNote: 'கீழுள்ள எண்கள் இவ்வரம்புகளால் மட்டுமே உருவானவை.',
+    resultSections: 'முடிவு பகுதிகள்',
+    navVerdict: 'முடிவு',
+    navZone: 'மண்டலம்',
+    navSources: 'மூலங்கள்',
+    compiled: 'தொகுக்கப்பட்ட',
+    openMenu: 'மெனுவைத் திற',
+    closeMenu: 'மெனுவை மூடு',
   },
   te: {
     title: 'ORCA',
@@ -284,6 +322,13 @@ const STRINGS = {
     empty: 'ప్రశ్న అడిగి నిర్ణయం, ప్రాంతం మరియు పూర్తి వివరాలు చూడండి.',
     thinking: 'ఆరు ఏజెంట్లు పనిచేస్తున్నాయి…',
     rulesNote: 'కింది సంఖ్యలు ఈ పరిమితుల నుండే ఉత్పత్తి అయ్యాయి.',
+    resultSections: 'ఫలితాల విభాగాలు',
+    navVerdict: 'తీర్మాణం',
+    navZone: 'ప్రాంతం',
+    navSources: 'వనరులు',
+    compiled: 'సంకలితం',
+    openMenu: 'మెనూ తెరవు',
+    closeMenu: 'మెనూ మూడివేయి',
   },
   kn: {
     title: 'ORCA',
@@ -338,6 +383,13 @@ const STRINGS = {
     empty: 'ಪ್ರಶ್ನೆ ಕೇಳಿ ಮತ್ತು ನಿರ್ಧಾರ, ಪ್ರದೇಶ ಹಾಗೂ ಪೂರ್ಣ ವಿವರ ನೋಡಿ.',
     thinking: 'ಆರು ಏಜೆಂಟ್‌ಗಳು ಕೆಲಸ ಮಾಡುತ್ತಿವೆ…',
     rulesNote: 'ಕೆಳಗಿನ ಸಂಖ್ಯೆಗಳು ಈ ಮಿತಿಗಳಿಂದಲೇ ಉತ್ಪತ್ತಾಗಿವೆ.',
+    resultSections: 'ಫಲಿತದ ವಿಭಾಗಗಳು',
+    navVerdict: 'ನಿರ್ಧಾರ',
+    navZone: 'ಪ್ರದೇಶ',
+    navSources: 'ಮೂಲಗಳು',
+    compiled: 'ಸಂಕಲಿಸಲಾಗಿದೆ',
+    openMenu: 'ಮೆನು ತೆರೆಯಿರಿ',
+    closeMenu: 'ಮೆನು ಮುಚ್ಚಿ',
   },
   ml: {
     title: 'ORCA',
@@ -392,6 +444,13 @@ const STRINGS = {
     empty: 'ചോദ്യം ചോദിച്ച് തീരുമാനവും സ്ഥലവും പൂർണ്ണ വിവരവും കാണുക.',
     thinking: 'ആറ് ഏജന്റുകൾ പ്രവർത്തിക്കുന്നു…',
     rulesNote: 'താഴെയുള്ള അക്കങ്ങൾ ഈ പരിധികളിൽ നിന്നാണ് ലഭിച്ചത്.',
+    resultSections: 'ഫലങ്ങളുടെ വിഭാഗങ്ങൾ',
+    navVerdict: 'തീരുമാനം',
+    navZone: 'മേഖല',
+    navSources: 'സ്രോതങ്ങൾ',
+    compiled: 'സംകലിതം',
+    openMenu: 'മെനു തുറക്കുക',
+    closeMenu: 'മെനു അടയ്ക്കുക',
   },
   gu: {
     title: 'ORCA',
@@ -446,6 +505,13 @@ const STRINGS = {
     empty: 'પ્રશ્ન પૂછો અને નિર્ણય, વિભાગ અને સંપૂર્ણ વિવાર જુઓ.',
     thinking: 'છ એજન્ટ કામ કરી રહ્યા છે…',
     rulesNote: 'નીચેના આંકડા ફક્ત આ મર્યાદાઓથી બનેલા છે.',
+    resultSections: 'પરિણામ વિભાગો',
+    navVerdict: 'નિર્ણય',
+    navZone: 'વિસ્તાર',
+    navSources: 'સ્રોત',
+    compiled: 'સંકલિત',
+    openMenu: 'મેનૂ ખોલો',
+    closeMenu: 'મેનૂ બંધ કરો',
   },
   or: {
     title: 'ORCA',
@@ -500,6 +566,13 @@ const STRINGS = {
     empty: 'ପ୍ରଶ୍ନ ପଚାରନ୍ତୁ ଏବଂ ସିଦ୍ଧାନ୍ତ, ଅଞ୍ଚଳ ଓ ବିସ୍ତୃତ ବିବର ଦେଖନ୍ତୁ।',
     thinking: 'ଛଅ ଏଜେଣ୍ଟ କାମ କରୁଛନ୍ତି…',
     rulesNote: 'ତଳକାର ସଂଖ୍ୟା ଏହି ସୀମାରୁ ଉତ୍ପନ୍ନ।',
+    resultSections: 'ଫଳାଫଳ ବିଭାଗ',
+    navVerdict: 'ନିଷ୍ପତ୍ତି',
+    navZone: 'ଅଞ୍ଚଳ',
+    navSources: 'ସ୍ରୋତ',
+    compiled: 'ସମ୍ବନ୍ଧିତ',
+    openMenu: 'ମେନୁ ଖୋଲିବନ୍ତୁ',
+    closeMenu: 'ମେନୁ ବନ୍ଦ କରିବନ୍ତୁ',
   },
   bn: {
     title: 'ORCA',
@@ -554,6 +627,13 @@ const STRINGS = {
     empty: 'একটি প্রশ্ন করুন এবং সিদ্ধান্ত, এলাকা ও পুরো যুক্তি দেখুন।',
     thinking: 'ছয়টি এজেন্ট কাজ করছে…',
     rulesNote: 'নিচের সংখ্যাগুলো এই সীমা থেকেই তৈরি।',
+    resultSections: 'ফলাফল বিভাগ',
+    navVerdict: 'সিদ্ধান্ত',
+    navZone: 'এলাকা',
+    navSources: 'উৎস',
+    compiled: 'সংকলিত',
+    openMenu: 'মেনু খুলুন',
+    closeMenu: 'মেনু বন্ধ করুন',
   },
   mr: {
     title: 'ORCA',
@@ -608,6 +688,13 @@ const STRINGS = {
     empty: 'प्रश्न विचारा आणि निर्णय, विभाग तसेच संपूर्ण कार्यप्रवाह पहा.',
     thinking: 'सहा एजंट काम करत आहेत…',
     rulesNote: 'खालील आकडे याच मर्यादांतूनच आले आहेत.',
+    resultSections: 'निकाल विभाग',
+    navVerdict: 'निर्णय',
+    navZone: 'क्षेत्र',
+    navSources: 'स्रोत',
+    compiled: 'संकलित',
+    openMenu: 'मेनू उघडा',
+    closeMenu: 'मेनू बंद करा',
   },
 };
 

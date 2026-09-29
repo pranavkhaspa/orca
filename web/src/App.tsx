@@ -16,7 +16,8 @@ import { AnswerPanel } from './components/AnswerPanel'
 import { Boundary } from './components/Boundary'
 import { LoadingResults } from './components/Loading'
 import { Tutorial } from './components/Tutorial'
-import { GlobeIcon, HelpIcon } from './components/Icons'
+import { GlobeIcon } from './components/Icons'
+import { TopBar } from './components/TopBar'
 import {
   DegradedBanner,
   HazardGrid,
@@ -172,53 +173,19 @@ export default function App() {
   return (
     <div className="shell">
       <div className="app">
-        <header className="top">
-          <div className="brand">
-            <div className="logo" aria-hidden="true">
-              <AnchorMark />
-            </div>
-            <div className="brand-text">
-              <h1>{t.title}</h1>
-              <p className="tagline">{t.tagline}</p>
-            </div>
-          </div>
-          <div className="top-right">
-            <button
-              className="icon-btn"
-              onClick={() => setTour(true)}
-              aria-label={c.tourCta}
-              title={c.tourCta}
-            >
-              <HelpIcon />
-            </button>
-            <label className="lang-pick">
-              <span className="sr-only">{t.language}</span>
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value)}
-                aria-label={t.language}
-              >
-                {(meta?.languages ?? [{ code: 'en', native: 'English' }]).map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.native}
-                  </option>
-                ))}
-              </select>
-            </label>
-            {health ? (
-              <span
-                className={`health ${health.offline ? 'offline' : ''}`}
-                title={
-                  health.offline
-                    ? 'ORCA_OFFLINE is set: every value comes from the baked snapshot'
-                    : `snapshot ${health.snapshot_age} · ${health.cache_entries} cached · ${health.places} places`
-                }
-              >
-                {health.offline ? 'offline' : health.status}
-              </span>
-            ) : null}
-          </div>
-        </header>
+        <TopBar
+          t={t}
+          c={c}
+          meta={meta}
+          health={health}
+          lang={lang}
+          onLang={setLang}
+          onTour={() => setTour(true)}
+          hasResults={Boolean(findings)}
+        />
+        {/* Takes the height of the fixed bar out of flow, so the hero is not
+            pushed under it. Kept adjacent to the bar so the pairing is obvious. */}
+        <div className="top-spacer" aria-hidden="true" />
 
         {showHero ? (
           <section className="hero">
@@ -397,38 +364,6 @@ export default function App() {
 
       {tour ? <Tutorial c={c} onClose={closeTour} /> : null}
     </div>
-  )
-}
-
-// The mark is an anchor over two waves — the same drawing as the favicon, kept
-// as a component so the two cannot drift apart.
-function AnchorMark() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path
-        d="M16 5v11"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <circle cx="16" cy="6" r="2.8" fill="currentColor" />
-      <path
-        d="M5 18c3.6 3.4 6.8 3.4 11 0 4.2-3.4 7.4-3.4 11 0"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        fill="none"
-        strokeLinecap="round"
-      />
-      <path
-        d="M5 24c3.6 3.4 6.8 3.4 11 0 4.2-3.4 7.4-3.4 11 0"
-        stroke="currentColor"
-        strokeWidth="2.6"
-        fill="none"
-        strokeLinecap="round"
-        opacity=".6"
-      />
-    </svg>
   )
 }
 

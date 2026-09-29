@@ -36,7 +36,7 @@ const EN: Copy = {
   heroLead:
     'Ask about the sea the way you would ask a person. The safety verdict is computed in Go from published thresholds — the language model writes the sentence, never the decision.',
   trust: [
-    '32 coastal locations',
+    '36 coastal locations',
     '10 Indian languages',
     '4 public data sources',
     'Verdict from deterministic rules',

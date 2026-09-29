@@ -184,6 +184,55 @@ export const VERDICT_ICON = {
   'no-go': StopIcon,
 } as const
 
+// ---- Navbar --------------------------------------------------------------
+
+export function MenuIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  )
+}
+
+export function CloseIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  )
+}
+
+export function LayersIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M12 3.5 3 8l9 4.5L21 8z" />
+      <path d="m3 12.5 9 4.5 9-4.5" opacity=".75" />
+      <path d="m3 17 9 4.5 9-4.5" opacity=".45" />
+    </svg>
+  )
+}
+
+export function SourceIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <ellipse cx="12" cy="6" rx="7" ry="2.6" />
+      <path d="M5 6v12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6" />
+      <path d="M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6" opacity=".7" />
+    </svg>
+  )
+}
+
+export function SignalIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M5.5 18.5a10 10 0 0 1 0-13M18.5 5.5a10 10 0 0 1 0 13" />
+      <path d="M8.5 15.5a5.5 5.5 0 0 1 0-7M15.5 8.5a5.5 5.5 0 0 1 0 7" opacity=".7" />
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+
 export const AGENT_ICON = {
   planner: CompassIcon,
   geo: PinIcon,
