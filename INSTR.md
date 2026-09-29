@@ -136,7 +136,7 @@ Recorded because rule 6 makes executed-and-observed the bar for DONE.
 
 | # | Phase | Issue | Severity | Status | Resolution |
 |---|---|---|---|---|---|
-| I1 | P0 | `erddap.incois.gov.in` unreachable from build environment | Medium | Accepted | Optional enrichment only. System never depends on it. |
+| I1 | P0 | `erddap.incois.gov.in` TLS chain defect: server omits the `GlobalSign RSA OV SSL CA 2018` intermediate | Medium | Accepted | The host is live, not down. Certificate validation fails against a normal root store. Resolution is to pin the intermediate, never to disable verification. Optional enrichment only; the system never depends on it. |
 | I2 | P0 | `coastwatch.pfeg.noaa.gov` 30s timeout | Medium | Accepted | Optional enrichment only. System never depends on it. |
 | I3 | P0 | INCOIS PFZ payload not in server HTML | Low | Accepted | We compute PFZ ourselves (D3). `IncoisAgent` does reachability corroboration only. |
 | I4 | — | OpenRouter free tier 50 req/day | High | Mitigated | $10 top-up → 1,000/day. Two calls per query (D7), model strictly optional. |

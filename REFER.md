@@ -439,7 +439,7 @@ curl -s localhost:8080/api/meta | jq
 `llm` reports whether a key is present. `rules` is the same struct the engine
 reads, so client and server cannot disagree about a threshold.
 
-31 places, 10 languages, 4 sources.
+36 places, 10 languages, 4 sources.
 
 ### `POST /api/ask`
 
@@ -611,9 +611,13 @@ a fallback, no UI framework. 3,163 lines.
   `<canvas>` — a gradient and a graticule — rather than being fetched from a
   texture host, because an ad blocker in this project's own browser ate one CDN
   asset and a safety tool should not depend on a third party staying reachable.
-  The land is real and equally self-hosted: Natural Earth 110m (public domain),
-  converted to GeoJSON at build time by `web/scripts/build-land.mjs` and
-  committed to `web/public/geo/land.json` at 74 kB. The 32 supported ports are
+  The land is real and equally self-hosted: Natural Earth 50m (public domain),
+  converted to GeoJSON at build time by `web/scripts/build-geo.mjs` and
+  committed to `web/public/geo/world.json` at 988 kB raw, 300 kB gzipped, with
+  `labels.json` alongside it. The resolution is a build argument:
+  `npm run build:geo -- 110m` for a smaller file, `10m` for a larger one. The
+  default is 50m because 110m loses small peninsulas and 10m is several
+  megabytes for detail the globe cannot show. The 36 supported ports are
   plotted on top of it, sourced from the same table the backend resolves
   against, so the picture shows real coverage instead of a decorative sphere.
   `vercel.json` excludes `/geo` from the SPA rewrite — the rewrite would
@@ -686,7 +690,7 @@ The remote is `git@github.com:pranavkhaspa/orca.git`; the API is deployed from
 
 `internal/eval/`. **108 cases**, each with a query, an expected location or
 refusal, an expected language, and expectations for consistency, clarification
-and injection behaviour. The corpus covers all 10 languages, all 32 ports,
+and injection behaviour. The corpus covers all 10 languages, all 36 ports,
 adversarial phrasings, and questions that name no place.
 
 ### 12.2 The seven metrics
@@ -914,7 +918,7 @@ correctness is non-negotiable. The argument is not that models are useless; it
 is that their failure mode is silent.
 
 **"How do you know it works in Odia if you tested it in English?"**
-The eval corpus is 108 cases across all 10 languages and all 32 places, and
+The eval corpus is 108 cases across all 10 languages and all 36 places, and
 `answer_consistency` requires the same verdict across every language of the same
 question. A language-specific failure in the router produces a metric failure,
 not a silent divergence. That metric is how the Puri bug was caught.

@@ -113,8 +113,15 @@ Two details that are easy to get wrong and were verified against the live APIs:
 
 ### The INCOIS bulletin
 
-`erddap.incois.gov.in` is unreachable from the build environment and
-`coastwatch.pfeg.noaa.gov` times out after 30 s, so neither is used.
+`erddap.incois.gov.in` is live and serves its ERDDAP endpoints, so it is
+reachable. What fails is certificate validation: the server does not send the
+`GlobalSign RSA OV SSL CA 2018` intermediate that its own leaf chains to, so a
+client that validates the chain rejects it. That is a server-side chain defect,
+not an outage, and the two must not be conflated. Pinning the intermediate
+resolves it without disabling verification; disabling verification would trade a
+documented TLS defect for an undisclosed one.
+
+`coastwatch.pfeg.noaa.gov` times out after 30 s and is not used.
 
 The INCOIS advisory used to be read by scraping a home page that loads its
 bulletin over XHR, so the served HTML contained no advisory text. It is now read

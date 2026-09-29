@@ -27,3 +27,9 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# ---- Local research clones, never committed -------------------------------
+# Competitor repositories surveyed while comparing approaches. Roughly 190 MB,
+# and one of them is a mirror of this project, so committing any of it would be
+# both wasteful and confusing. Regenerate with the survey in INSTR.md.
+.opencode/competitors/
