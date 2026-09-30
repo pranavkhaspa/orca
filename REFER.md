@@ -21,7 +21,7 @@ source; where a number appears, it is the number the code uses.
 | change the science | §5, §6 |
 | add a language | §9 |
 | deploy it | §11 |
-| know what is broken | §14, `INSTR.md` |
+| know what is broken | §14, and the test suite |
 | defend it in Q&A | §16 |
 
 ---
@@ -143,9 +143,7 @@ api/                          the service
 web/                          the interface (1805 lines TS/TSX)
 scripts/e2e.mjs               44 browser checks, serves the bundle itself
 architecture.md               design rationale
-INSTR.md                      the 28-issue log
 REFER.md                      this file
-ps.md                         the problem statements
 render.yaml                   the Render blueprint
 ```
 
@@ -368,8 +366,8 @@ path, which is how the snapshot generator and the container build work without
 a data volume.
 
 **The system is required to be fully functional with all of these unset except
-`PORT`.** `INSTR.md` states this as standing rule 1, and the eval suite runs in
-exactly that configuration as its primary mode.
+`PORT`.** That is a standing rule, and the eval suite runs in exactly that
+configuration as its primary mode.
 
 ---
 
@@ -584,8 +582,8 @@ untranslated one.
 fully localized.** Localizing the domain agent's own descriptive prose was
 judged a worse trade than stating the rule with digits, because a bad
 translation of the reasoning is a safety defect, while English reasoning with
-localized numbers and localized conclusions is merely less elegant. Recorded
-in `INSTR.md` as an accepted limitation, not hidden.
+localized numbers and localized conclusions is merely less elegant. This is a known
+limitation, not a hidden one.
 
 **Plan parity is safety-critical.** The router's vocabulary is the same in all
 10 languages and `TestPlanDoesNotDependOnTheLanguage` enforces it. When it was
@@ -1037,9 +1035,9 @@ the same struct the engine reads.
 ## Closing note
 
 The interesting part of this repository is not that it returns a verdict. It is
-`INSTR.md`: 24 logged issues, each with what it broke, why it was hard to see,
-and the test that now prevents it. Four of those bugs would have produced an
-answer that looked completely correct, in the right language, with the right
+the test suite: each bug that was found came with what it broke, why it was hard
+to see, and the check that now prevents it. Four of those bugs would have
+produced an answer that looked completely correct, in the right language, with the right
 kind of numbers, and told someone the wrong thing about the sea.
 
 That is the standard the project is built to: not "it works", but "here is the

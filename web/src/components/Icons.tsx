@@ -242,3 +242,19 @@ export const AGENT_ICON = {
   domain: ScaleIcon,
   narrator: PenIcon,
 } as const
+
+// The caret is a separate icon from the rest of the set because it is the only
+// one that changes shape: it rotates when the language list is open, so the
+// control reports its state with a glyph as well as with aria-expanded.
+export function ChevronIcon({ className, open }: IconProps & { open?: boolean }) {
+  return (
+    <svg
+      {...base}
+      className={className}
+      aria-hidden="true"
+      style={open ? { transform: 'rotate(180deg)' } : undefined}
+    >
+      <path d="m6 9.5 6 6 6-6" />
+    </svg>
+  )
+}

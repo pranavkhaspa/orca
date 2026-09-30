@@ -240,6 +240,6 @@ func Load() Config {
 }
 
 // LLMAvailable reports whether a model call is possible. The entire system is
-// required to work without it (INSTR.md standing rule 1), so callers must
+// required to work without it, so callers must
 // branch on this rather than assume failure.
 func (c Config) LLMAvailable() bool { return strings.TrimSpace(c.OpenRouterKey) != "" }

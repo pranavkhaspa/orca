@@ -2,7 +2,7 @@
 //
 // Every call is optional by construction: callers must handle an error, and the
 // system is required to produce a complete answer without any of them
-// succeeding (INSTR.md standing rule 1).
+// succeeding.
 package llm
 
 import (

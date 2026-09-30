@@ -1,7 +1,7 @@
 // Package engine holds the deterministic marine reasoning that produces the
 // safety verdict. It performs no I/O and calls no model: given the same
 // observations it always returns the same verdict, which is what makes the
-// verdict auditable (architecture.md §2, INSTR.md rule 6).
+// verdict auditable (architecture.md §2).
 package engine
 
 import (

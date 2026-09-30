@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnchorMark } from './AnchorMark'
 import {
+  CheckIcon,
+  ChevronIcon,
   CloseIcon,
   GlobeIcon,
   HelpIcon,
@@ -65,6 +67,149 @@ interface Props {
   hasResults: boolean
 }
 
+// A real listbox, not a <select>.
+//
+// The native control was wrong in three separate ways that all showed up as
+// "the dropdown looks broken". It has no appearance:none, so the browser draws
+// its own option list and in a dark UI that list is a white rectangle with
+// black text. The custom arrow was a background gradient with no
+// background-position, so it was painted in the top-left corner of the control.
+// And the control never inherited the page font, so it fell back to Arial next
+// to nine other elements in the same typeface. A native popup also cannot be
+// styled consistently across platforms, and on some of them it opens slowly
+// enough to feel like the click did not register.
+//
+// So the option list is ours: it opens on the same frame as the click, it is
+// painted with the app's own surfaces and ink, and it is keyboard-complete.
+// The ARIA follows the listbox pattern with aria-activedescendant, which keeps
+// DOM focus on the button so Escape and Tab behave the way people expect.
+function LanguagePicker({
+  languages,
+  lang,
+  onLang,
+  label,
+  className,
+}: {
+  languages: { code: string; native: string }[]
+  lang: string
+  onLang: (code: string) => void
+  label: string
+  className?: string
+}) {
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(0)
+  const wrap = useRef<HTMLDivElement>(null)
+  const current = languages.find((l) => l.code === lang) ?? languages[0]
+
+  const openAt = (i: number) => {
+    setActive(i)
+    setOpen(true)
+  }
+
+  const commit = (i: number) => {
+    const pick = languages[i]
+    if (pick) onLang(pick.code)
+    setOpen(false)
+  }
+
+  // Pointer-down outside closes, and it closes before the click lands so a
+  // stray click never selects an option the user was not looking at.
+  useEffect(() => {
+    if (!open) return
+    const onDown = (e: PointerEvent) => {
+      if (!wrap.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        setOpen(false)
+      }
+    }
+    document.addEventListener('pointerdown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  useEffect(() => {
+    const i = languages.findIndex((l) => l.code === lang)
+    if (i >= 0) setActive(i)
+  }, [lang, languages])
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!open) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        openAt(e.key === 'ArrowUp' ? languages.length - 1 : 0)
+      }
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive((i) => (i + 1) % languages.length)
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive((i) => (i - 1 + languages.length) % languages.length)
+    } else if (e.key === 'Home') {
+      e.preventDefault()
+      setActive(0)
+    } else if (e.key === 'End') {
+      e.preventDefault()
+      setActive(languages.length - 1)
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      commit(active)
+    } else if (e.key === 'Tab') {
+      setOpen(false)
+    }
+  }
+
+  return (
+    <div className={`lang-pick${className ? ` ${className}` : ''}`} ref={wrap}>
+      <button
+        type="button"
+        className="lang-btn"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={label}
+        aria-controls="lang-menu"
+        onClick={() => (open ? setOpen(false) : openAt(languages.findIndex((l) => l.code === lang)))}
+        onKeyDown={onKeyDown}
+      >
+        <span className="lang-btn-text">{current?.native}</span>
+        <ChevronIcon className="lang-caret" open={open} />
+      </button>
+      {open && (
+        <ul
+          className="lang-menu"
+          id="lang-menu"
+          role="listbox"
+          aria-label={label}
+          aria-activedescendant={`lang-opt-${languages[active]?.code ?? ''}`}
+          tabIndex={-1}
+        >
+          {languages.map((l, i) => (
+            <li
+              key={l.code}
+              id={`lang-opt-${l.code}`}
+              role="option"
+              aria-selected={l.code === lang}
+              className={`lang-opt${i === active ? ' is-active' : ''}${l.code === lang ? ' is-current' : ''}`}
+              onMouseEnter={() => setActive(i)}
+              onClick={() => commit(i)}
+            >
+              <span className="lang-opt-native">{l.native}</span>
+              {l.code === lang && <CheckIcon className="lang-check" />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 export function TopBar({ t, c, meta, health, lang, onLang, onTour, hasResults }: Props) {
   // Which section is on screen. Starts on the first one so the rail has an
   // active state immediately rather than flickering in as the user scrolls.
@@ -82,7 +227,19 @@ export function TopBar({ t, c, meta, health, lang, onLang, onTour, hasResults }:
   // hidden behind the sheet that was just dismissed to reach it.
   const go = useCallback((id: string) => {
     setOpen(false)
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const el = document.getElementById(id)
+    if (!el) return
+    // Smooth only for a hop the eye can follow.
+    //
+    // A rail click can be a 3000px jump, and Chrome's smooth scroll runs that on
+    // the main thread, competing with the render loop. Measured on the answered
+    // page it took 7.6 seconds and produced a 4.2 second long task: a slower,
+    // more nauseating way to arrive than simply being there. Short hops keep
+    // the animation, because that is where it reads as movement rather than
+    // waiting.
+    const distance = Math.abs(el.getBoundingClientRect().top)
+    const behavior: ScrollBehavior = distance > window.innerHeight * 1.5 ? 'auto' : 'smooth'
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - (railRef.current?.getBoundingClientRect().height ?? 0) - 14, behavior })
   }, [])
 
   useEffect(() => {
@@ -235,20 +392,12 @@ export function TopBar({ t, c, meta, health, lang, onLang, onTour, hasResults }:
 
           <div className="lang-row">
             <GlobeIcon className="lang-ico" />
-            <label className="lang-pick">
-              <span className="sr-only">{t.language}</span>
-              <select
-                value={lang}
-                onChange={(e) => onLang(e.target.value)}
-                aria-label={t.language}
-              >
-                {languages.map((l) => (
-                  <option key={l.code} value={l.code}>
-                    {l.native}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <LanguagePicker
+              languages={languages}
+              lang={lang}
+              onLang={onLang}
+              label={t.language}
+            />
           </div>
 
           <button className="btn ghost tour-btn" onClick={onTour}>

@@ -27,6 +27,7 @@ interface Strings {
   submit: string;
   example: string;
   language: string;
+  globeLoading: string;
   verdict: string;
   verdictSource: string;
   hazards: string;
@@ -91,6 +92,7 @@ const STRINGS = {
     submit: 'Check conditions',
     example: 'Try an example',
     language: 'Language',
+    globeLoading: 'Drawing the globe',
     verdict: 'Safety verdict',
     verdictSource:
       'Computed by deterministic rules — not by the language model',
@@ -155,6 +157,7 @@ const STRINGS = {
     submit: 'स्थिति जाँचें',
     example: 'उदाहरण चुनें',
     language: 'भाषा',
+    globeLoading: 'ग्लोब बना रहे हैं',
     verdict: 'सुरक्षा निर्णय',
     verdictSource: 'नियमों से निर्धारित — भाषा मॉडल से नहीं',
     hazards: 'जोखिम जाँच',
@@ -216,6 +219,7 @@ const STRINGS = {
     submit: 'நிலையை சரிபார்',
     example: 'உதாரணம் தேர்வு',
     language: 'மொழி',
+    globeLoading: 'உலகை வரைபடம் தீட்கிறது',
     verdict: 'பாதுகாப்பு முடிவு',
     verdictSource: 'விதிகளால் கணிக்கப்பட்டது — மொழி மாதிரியால் அல்ல',
     hazards: 'ஆபத்து சரிபார்ப்புகள்',
@@ -277,6 +281,7 @@ const STRINGS = {
     submit: 'పరిస్థితిని తనిఖీ చేయి',
     example: 'ఉదాహరణ ఎంచుకోండి',
     language: 'భాష',
+    globeLoading: 'గ్లోబ్‌ను గీసుతోంది',
     verdict: 'భద్రతా నిర్ణయం',
     verdictSource: 'నియమాల ద్వారా లెక్కించబడింది — భాషా మోడల్ ద్వారా కాదు',
     hazards: 'ప్రమాద సమీక్షలు',
@@ -338,6 +343,7 @@ const STRINGS = {
     submit: 'ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ',
     example: 'ಉದಾಹರಣೆ ಆಯ್ಕೆಮಾಡಿ',
     language: 'ಭಾಷೆ',
+    globeLoading: 'ಗ್ಲೋಬ್ ನಿರ್ಮಿಸಲಾಗುತ್ತಿದೆ',
     verdict: 'ಸುರಕ್ಷತಾ ನಿರ್ಧಾರ',
     verdictSource: 'ನಿಯಮಗಳ ಮೂಲಕ ಲೆಕ್ಕಿಸಲಾಗಿದೆ — ಭಾಷಾ ಮಾದರಿಯಲ್ಲ',
     hazards: 'ಅಪಾಯ ಪರಿಶೀಲನೆ',
@@ -399,6 +405,7 @@ const STRINGS = {
     submit: 'സ്ഥിതി പരിശോധിക്കുക',
     example: 'ഉദാഹരണം തിരഞ്ഞെടുക്കുക',
     language: 'ഭാഷ',
+    globeLoading: 'ഗ്ലോബ് വരച്ചുകൊണ്ടിരിക്കുന്നു',
     verdict: 'സുരക്ഷാ തീരുമാനം',
     verdictSource: 'നിയമങ്ങൾ അനുസരിച്ച് കണക്കാക്കിയത് — ഭാഷാ മോഡലിലല്ല',
     hazards: 'അപകട പരിശോധനകൾ',
@@ -460,6 +467,7 @@ const STRINGS = {
     submit: 'હાલની સ્થિતિ તપાસો',
     example: 'ઉદાહરણ પસંદ કરો',
     language: 'ભાષા',
+    globeLoading: 'ગ્લોબ બનાવી રહ્યું છે',
     verdict: 'સુરક્ષા નિર્ણય',
     verdictSource: 'નિયમોથી ગણવાયેલ — ભાષા મોડલથી નહીં',
     hazards: 'જોખમ તપાસ',
@@ -521,6 +529,7 @@ const STRINGS = {
     submit: 'ସ୍ଥିତି ଯାଞ୍ଚ କରନ୍ତୁ',
     example: 'ଉଦାହରଣ ବାଛନ୍ତୁ',
     language: 'ଭାଷା',
+    globeLoading: 'ଗ୍ଲୋବ ତିଆରି ହେଉଛି',
     verdict: 'ସୁରକ୍ଷା ସିଦ୍ଧାନ୍ତ',
     verdictSource: 'ନିୟମ ଅନୁସାରେ ଗଣନା — ଭାଷା ମଡେଲ ଦ୍ୱାରା ନୁହେଁ',
     hazards: 'ବିପଦ ଯାଞ୍ଚ',
@@ -582,6 +591,7 @@ const STRINGS = {
     submit: 'পরিস্থিতি দেখুন',
     example: 'উদাহরণ বাছুন',
     language: 'ভাষা',
+    globeLoading: 'গ্লোব তৈরি হচ্ছে',
     verdict: 'নিরাপত্তা সিদ্ধান্ত',
     verdictSource: 'নিয়ম অনুসারে গণনা করা — ভাষা মডেল দিয়ে নয়',
     hazards: 'ঝুঁকি পরীক্ষা',
@@ -643,6 +653,7 @@ const STRINGS = {
     submit: 'स्थिती तपासा',
     example: 'उदाहरण निवडा',
     language: 'भाषा',
+    globeLoading: 'ग्लोब तयार होत आहे',
     verdict: 'सुरक्षा निर्णय',
     verdictSource: 'नियमांनुसार गणले — भाषा मॉडेलमुळे नाही',
     hazards: 'धोका तपासणी',

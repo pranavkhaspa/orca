@@ -116,10 +116,9 @@ func TestPlaceCountInProseMatchesTheReferenceTable(t *testing.T) {
 		regexp.MustCompile(`(?i)\b(coastal\s+)?(locations|places)\s+supported\s*[:=]\s*(\d+)`),
 	}
 
-	// INSTR.md is a dated iteration log. Its historical counts are correct as
-	// history and rewriting them would falsify the record, so lines carrying an
-	// iteration marker are exempt. Its present-tense sections have no marker and
-	// are still checked.
+	// A dated iteration log records counts that were correct at the time.
+	// Rewriting them would falsify the record, so lines carrying an iteration
+	// marker are exempt. Present-tense prose has no marker and is still checked.
 	iterationMarker := regexp.MustCompile(`\|\s*\**I\d+\**\s*\||\|\s*\*\*P\d+\*\*\s*\||·[PI]\d+`)
 
 	for _, path := range trackedFiles(t, root) {

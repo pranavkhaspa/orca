@@ -193,11 +193,11 @@ node scripts/e2e.mjs    # serves web/dist itself; 44 checks over 6 languages
 
 ---
 
-## Twenty-eight bugs, and why the log is in the repository
+## Twenty-eight bugs, and why the tests are in the repository
 
-`INSTR.md` records every defect found while building this, what it broke, and
-the test that now pins it. It is in the repository because a project that
-claims to be trustworthy should be able to show its work. Four of them changed
+Every defect found while building this was recorded with what it broke and the
+test that now pins it, and those tests are the record. A project that claims to
+be trustworthy should be able to show its work. Four of those bugs changed
 the design:
 
 - **A localized answer claimed the water was inside the 24–30 °C band at
@@ -305,9 +305,7 @@ api/                    the service — Go, standard library only
 web/                    the interface — React 19, TypeScript, MapLibre, Vite
 scripts/e2e.mjs         44 browser checks against the production bundle
 architecture.md         the design and its reasoning
-INSTR.md                the 24-issue log
 REFER.md                the full technical reference, for the team
-ps.md                   the problem statements this was built against
 render.yaml             the complete Render blueprint
 ```
 

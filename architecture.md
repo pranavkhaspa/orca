@@ -436,8 +436,6 @@ web/                  React + Vite + MapLibre
   vercel.json         build config and cache headers
 render.yaml           Render blueprint for the API
 architecture.md       this file
-INSTR.md              build instructions and the live phase log
-ps.md                 the selected problem statement
 ```
 
 ## 10. Success criteria

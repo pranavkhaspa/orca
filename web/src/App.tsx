@@ -28,6 +28,9 @@ import {
   ZoneCard,
 } from './components/Panels'
 
+// Shared so its identity never changes between renders.
+const NO_TOWNS: Meta['towns'] = []
+
 // Two heavy, optional visualisations, both kept out of the critical path. The
 // verdict is text and must render on its own: a fisher on a 2G connection in a
 // boat is the person this is for, and a 620 kB WebGL bundle must never stand
@@ -38,6 +41,18 @@ const Globe3D = lazy(() =>
 const MapPanel = lazy(() =>
   import('./components/MapPanel').then((m) => ({ default: m.MapPanel })),
 )
+
+// The globe is fetched as a separate chunk and then spends seconds building its
+// geometry. Both waits show this, because both end in the same object and a
+// blank panel in the meantime reads as a broken page.
+function GlobeWaiting({ label, className }: { label: string; className?: string }) {
+  return (
+    <div className={`globe-wait${className ? ` ${className}` : ''}`} role="status" aria-live="polite">
+      <span className="globe-load-mark" aria-hidden="true" />
+      <span className="globe-load-text">{label}</span>
+    </div>
+  )
+}
 
 const AGENT_LABELS: Record<string, string> = {
   planner: 'Planner',
@@ -167,7 +182,12 @@ export default function App() {
   const pending = ORDER.filter((n) => !reported.has(n)).slice(0, busy ? 2 : 0)
   const stage = runs.reduce((s, r) => Math.max(s, STAGE_OF[r.name] ?? 0), 0)
 
-  const towns = meta?.towns ?? []
+  // `?? []` in render allocates a fresh array every time, so any effect keyed on
+  // this value re-runs on every single render. The globe has effects keyed on
+  // the port list, which meant the globe re-labelled itself continuously and its
+  // render loop never got a chance to idle. One shared empty array fixes it.
+
+  const towns = meta?.towns ?? NO_TOWNS
   const showHero = !findings && !busy
 
   return (
@@ -206,13 +226,14 @@ export default function App() {
             </div>
             <div className="hero-globe">
               <Boundary fallback={<div className="sk-orbit" />} label="hero globe">
-                <Suspense fallback={<div className="sk-orbit" />}>
+                <Suspense fallback={<GlobeWaiting label={t.globeLoading} className="sk-orbit" />}>
                   <Globe3D
                     towns={towns}
                     geo={null}
                     pfz={null}
                     level={null}
                     onFail={() => setGlobeFailed(true)}
+                    loadingLabel={t.globeLoading}
                   />
                 </Suspense>
               </Boundary>
@@ -312,13 +333,14 @@ export default function App() {
                     }
                     label="result globe"
                   >
-                    <Suspense fallback={<div className="sk-globe" />}>
+                    <Suspense fallback={<GlobeWaiting label={t.globeLoading} className="sk-globe" />}>
                       <Globe3D
                         towns={towns}
                         geo={findings?.geo ?? null}
                         pfz={findings?.pfz ?? null}
                         level={findings?.verdict.level ?? null}
                         onFail={() => setGlobeFailed(true)}
+                        loadingLabel={t.globeLoading}
                       />
                     </Suspense>
                   </Boundary>

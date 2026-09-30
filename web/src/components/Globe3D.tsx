@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Globe, { type GlobeInstance } from 'globe.gl'
 import * as THREE from 'three'
 import type { Geo, PFZ, VerdictLevel } from '../types'
@@ -25,6 +25,23 @@ import type { Geo, PFZ, VerdictLevel } from '../types'
 // are plotted on top from the same table the backend resolves against, so a dot
 // on the coast is a port ORCA can actually answer for, and the shape of the
 // Indian coastline is the reason those dots sit where they do.
+
+// usePrefersReducedMotion reports the OS setting, live.
+//
+// A permanently rotating globe is exactly the kind of motion this setting
+// exists to suppress, and it is also the most expensive thing on the page, so
+// the two concerns point the same way.
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const on = () => setReduced(mq.matches)
+    on()
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  return reduced
+}
 
 const IDLE_POV = { lat: 14, lng: 80, altitude: 2.35 }
 const FOCUS_ALTITUDE = 0.85
@@ -177,12 +194,14 @@ export function Globe3D({
   pfz,
   level,
   onFail,
+  loadingLabel,
 }: {
   towns: PortDot[]
   geo: Geo | null
   pfz: PFZ | null
   level: VerdictLevel | null
   onFail?: () => void
+  loadingLabel?: string
 }) {
   const host = useRef<HTMLDivElement>(null)
   const globe = useRef<GlobeInstance | null>(null)
@@ -193,9 +212,71 @@ export function Globe3D({
   // too far away to read a fishing port from.
   const [zoomedIn, setZoomedIn] = useState(false)
 
+  // A decorative globe that renders forever blocks everything else.
+  //
+  // Measured on the answered page: clicking a rail link produced a 4.2 second
+  // long task and the smooth scroll took 7.6 seconds to finish, because the
+  // render loop was competing for the same main thread that drives the scroll
+  // animation. Nothing about the globe changes while the user reads a verdict.
+  //
+  // So the loop is now demand-driven. Anything that needs frames — a camera
+  // flight, a drag, new data — wakes it, and it stops again once the scene is
+  // still. Auto-rotation is capped rather than removed, because a moving globe
+  // is the point of the landing page, but it no longer runs at whatever rate the
+  // GPU can manage.
+  const wakeTimer = useRef<number | null>(null)
+  const reducedMotion = usePrefersReducedMotion()
+  const [drawn, setDrawn] = useState(false)
+  const [preparing, setPreparing] = useState(false)
+
+  // Keep the loop alive for `ms` after the last thing that needed it. The tail
+  // matters: a flight is not done the instant it is requested, and a data write
+  // settles a frame or two later.
+  const wake = useCallback((ms = 2500) => {
+    const g = globe.current
+    if (!g) return
+    g.resumeAnimation()
+    if (wakeTimer.current) window.clearTimeout(wakeTimer.current)
+    wakeTimer.current = window.setTimeout(() => {
+      if (globe.current) globe.current.pauseAnimation()
+    }, ms)
+  }, [])
+
   useEffect(() => {
     const el = host.current
     if (!el || globe.current) return
+    let disposed = false
+
+    // Creating the renderer and tessellating the coastline is hundreds of
+    // milliseconds of blocked main thread, measured at 2.6s under software
+    // rendering. Doing it in the first effect meant the page could not be
+    // interacted with until a decorative sphere was ready. Idle time is exactly
+    // when that work belongs: the page is on screen and usable, and the globe
+    // arrives a moment later. The timeout is the backstop for a browser with no
+    // requestIdleCallback, and it is deliberately short.
+    // The teardown has to be kept, not discarded. The hero globe is unmounted
+    // the moment a verdict arrives and its replacement mounts, so a globe that
+    // was built but never destroyed leaves a second sphere rendering behind a
+    // page nobody can see it on, which is precisely the lag this work removed.
+    let teardown: (() => void) | undefined
+    const start = () => {
+      if (disposed) return
+      teardown = buildGlobe(el)
+    }
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
+      .requestIdleCallback
+    if (ric) ric(start, { timeout: 600 })
+    else window.setTimeout(start, 60)
+    return () => {
+      disposed = true
+      teardown?.()
+      teardown = undefined
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // The globe itself, once the browser has nothing better to do.
+  const buildGlobe = (el: HTMLDivElement) => {
 
     // A failed WebGL context does not always throw — some drivers return null
     // from getContext and hand back a renderer that silently draws nothing. A
@@ -250,7 +331,12 @@ export function Globe3D({
       .globeOffset?.([0, 0])
 
     const controls = g.controls()
-    controls.autoRotate = true
+    // No auto-rotation. A sphere that spins by itself needs a frame every
+    // millisecond forever, and it was the single reason the whole site felt
+    // slow: the answer rendered fine but every keystroke, scroll and click
+    // queued behind the render loop. The globe is scenery, and scenery that
+    // costs a frame budget is not worth it. It still turns when you drag it.
+    controls.autoRotate = false
     controls.autoRotateSpeed = 0.45
     controls.enableZoom = true
     controls.enablePan = false
@@ -267,6 +353,7 @@ export function Globe3D({
     const ro = new ResizeObserver(() => {
       g.width(el.clientWidth)
       g.height(el.clientHeight)
+      wake()
     })
     ro.observe(el)
 
@@ -277,6 +364,60 @@ export function Globe3D({
     g.onGlobeReady(() => {
       if (!cancelled) setReady(true)
     })
+
+    // Backstop for renderers that never fire onGlobeReady. Without it the globe
+    // stays empty and the loader spins forever on exactly the machines that are
+    // already slow, which is the opposite of what the loader is for.
+    const readyFallback = window.setTimeout(() => {
+      if (!cancelled) setReady(true)
+    }, 2500)
+
+    // A drag has to render, and the loop is paused when the scene is still, so
+    // interaction is what wakes it back up.
+    //
+    // 'start' and 'end', never 'change': 'change' fires once per frame while
+    // the camera is moving, including every frame of the auto-rotation, so
+    // waking on it means the loop is never allowed to stand down and the timer
+    // is reset on every frame. That is strictly worse than not pausing at all,
+    // and it is how the first version of this measured slower than the code it
+    // replaced.
+    // 'change' fires while the camera is actually moving — a drag, a wheel, a
+    // flight tween — and nothing else, now that the globe no longer turns by
+    // itself. That is exactly the set of moments that need frames, and it is
+    // what keeps a long drag alive past the first wake.
+    controls.addEventListener('start', () => wake(2000))
+    controls.addEventListener('change', () => wake(2000))
+
+    // A backgrounded tab must not animate. The loop keeps running when nobody
+    // can see it, which is the clearest way to make a laptop hot for no benefit.
+    const onVisibility = () => {
+      const g2 = globe.current
+      if (!g2) return
+      if (document.hidden) g2.pauseAnimation()
+      else wake(1500)
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    // A globe nobody can see has no business rendering. On the results page the
+    // reader is looking at a verdict, and on a phone the globe is often scrolled
+    // past entirely; in both cases an animating sphere is invisible work that
+    // still owns the main thread. This was measured: with the globe present the
+    // page threw 2.6 second and 500 millisecond main-thread tasks while nothing
+    // on screen was changing, and with WebGL disabled there were none at all.
+    const visible = { on: true }
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry) return
+        visible.on = entry.isIntersecting
+        const g2 = globe.current
+        if (!g2) return
+        if (entry.isIntersecting) wake(1500)
+        else g2.pauseAnimation()
+      },
+      { threshold: 0.01 },
+    )
+    io.observe(el)
 
     // Port names are drawn only once the camera is close enough to read them.
     // This covers the user zooming in on the idle globe. The answered-question
@@ -290,6 +431,9 @@ export function Globe3D({
     return () => {
       cancelled = true
       ro.disconnect()
+      if (wakeTimer.current) window.clearTimeout(wakeTimer.current)
+      io.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
       globe.current = null
       setReady(false)
       try {
@@ -297,9 +441,10 @@ export function Globe3D({
       } catch {
         /* already torn down */
       }
+      window.clearTimeout(readyFallback)
       el.replaceChildren()
     }
-  }, [onFail])
+  }
 
   // The map. Fetched from this origin, decoded once, and drawn under everything
   // else. If it fails the globe is still a working globe — an ocean with the
@@ -339,14 +484,16 @@ export function Globe3D({
           ? (world as unknown as { features: GeoJsonFeature[] }).features
           : [world]
 
+      wake()
       g.polygonsData(features)
         .polygonCapColor(() => LAND_FILL)
         .polygonSideColor(() => LAND_SIDE)
         .polygonStrokeColor(() => LAND_EDGE)
         .polygonAltitude(0.007)
-        .polygonCapCurvatureResolution(4)
+        .polygonCapCurvatureResolution(2)
 
       setCountryLabels(labels)
+      setDrawn(true)
     }
     void load()
 
@@ -420,6 +567,7 @@ export function Globe3D({
       })
     }
 
+    wake()
     g.labelsData(marks)
       .labelLat('lat')
       .labelLng('lon')
@@ -438,8 +586,10 @@ export function Globe3D({
     if (!g || !ready) return
 
     if (!geo) {
-      g.controls().autoRotate = true
-      g.pointOfView(IDLE_POV, 1200)
+      if (!reducedMotion) g.pointOfView(IDLE_POV, 1200)
+      // The loop is paused whenever the scene is still, and a 1200ms flight is
+      // motion, so it has to be woken for the flight plus its tail.
+      wake(3000)
       // IDLE_POV sits above the label threshold, so the port names have to come
       // off. A programmatic move does not fire onZoom, so this is not optional
       // bookkeeping: without it the names stay drawn over a globe they are too
@@ -454,7 +604,14 @@ export function Globe3D({
     const hasZone = Boolean(pfz && (pfz.lat !== 0 || pfz.lon !== 0))
 
     g.controls().autoRotate = false
-    g.pointOfView({ lat: geo.lat, lng: geo.lon, altitude: FOCUS_ALTITUDE }, 1600)
+    if (reducedMotion) {
+      g.pointOfView({ lat: geo.lat, lng: geo.lon, altitude: FOCUS_ALTITUDE })
+    } else {
+      g.pointOfView({ lat: geo.lat, lng: geo.lon, altitude: FOCUS_ALTITUDE }, 1600)
+    }
+    // 1600ms of camera motion, plus the tail the wake timer adds, plus the
+    // frames the result markers need to appear once the camera settles.
+    wake(3200)
     // The flight lands closer than the label threshold, so the port names belong
     // on screen. onZoom does not fire for a programmatic move, so without this
     // the camera arrives at a coastline with no port on it — the one moment the
@@ -503,7 +660,29 @@ export function Globe3D({
       .ringMaxRadius(3.4)
       .ringPropagationSpeed(1.1)
       .ringRepeatPeriod(1400)
-  }, [geo, pfz, level, ready])
+  }, [geo, pfz, level, ready, reducedMotion, wake])
 
-  return <div ref={host} className="globe-host" aria-hidden="true" />
+  // Show the same indicator for the flight to a newly entered place, then take
+  // it away. The floor of 450ms stops it flashing in and out when the place is
+  // already cached and the flight starts immediately.
+  useEffect(() => {
+    if (!drawn || !geo) return
+    setPreparing(true)
+    const t = window.setTimeout(() => setPreparing(false), reducedMotion ? 200 : 1750)
+    return () => window.clearTimeout(t)
+  }, [drawn, geo, reducedMotion])
+
+  const showLoader = !drawn || preparing
+
+  return (
+    <div className="globe-wrap">
+      <div ref={host} className="globe-host" aria-hidden="true" />
+      {showLoader && (
+        <div className="globe-load" role="status" aria-live="polite">
+          <span className="globe-load-mark" aria-hidden="true" />
+          <span className="globe-load-text">{loadingLabel ?? 'Drawing the globe'}</span>
+        </div>
+      )}
+    </div>
+  )
 }

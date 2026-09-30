@@ -254,15 +254,23 @@ await new Promise((r) => setTimeout(r, 800))
 
 const enLabels = await evalJs(`[...document.querySelectorAll('.rail-link')].map(l => l.textContent.trim())`)
 
-const switched = await evalJs(`(async () => {
-  const sel = document.querySelector('.lang-row select') || document.querySelector('select')
-  if (!sel) return 'no language control'
-  const s = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set
-  s.call(sel, 'kn')
-  sel.dispatchEvent(new Event('change', { bubbles: true }))
-  await new Promise(r => setTimeout(r, 600))
+// The language control is a real listbox, not a <select>, so it has to be
+// driven the way a person drives it: open the list, click the option. Setting
+// .value on a select would have passed against a control the user cannot use.
+const pickLanguage = (code) => evalJs(`(async () => {
+  const btn = document.querySelector('.lang-btn')
+  if (!btn) return 'no language button'
+  btn.click()
+  for (let i = 0; i < 40 && !document.querySelector('.lang-menu'); i++) await new Promise(r => setTimeout(r, 25))
+  const opt = document.querySelector('.lang-opt[id="lang-opt-${code}"]')
+  if (!opt) return 'no option for ${code}'
+  opt.click()
+  for (let i = 0; i < 60 && document.querySelector('.lang-menu'); i++) await new Promise(r => setTimeout(r, 25))
+  await new Promise(r => setTimeout(r, 250))
   return 'ok'
 })()`)
+
+const switched = await pickLanguage('kn')
 if (switched !== 'ok') fail(`could not switch language: ${switched}`)
 
 const kn = await evalJs(`({
@@ -289,14 +297,22 @@ else pass(`menu aria-label localised ("${kn.menuLabel}")`)
 // Each step has to await a render: measuring in the same tick as the change
 // event would just read the previous language's labels.
 const widest = await evalJs(`(async () => {
-  const sel = document.querySelector('.lang-row select') || document.querySelector('select')
-  const sv = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set
-  const codes = [...sel.options].map(o => o.value)
+  // The list of languages comes from the control itself, so the harness does
+  // not carry its own copy of the supported set.
+  const btn0 = document.querySelector('.lang-btn')
+  btn0.click()
+  for (let i = 0; i < 40 && !document.querySelector('.lang-menu'); i++) await new Promise(r => setTimeout(r, 25))
+  const codes = [...document.querySelectorAll('.lang-opt')].map(o => o.id.replace('lang-opt-', ''))
+  document.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+  document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+  await new Promise(r => setTimeout(r, 200))
   let worst = { w: 0, lang: '' }
   for (const c of codes) {
-    sv.call(sel, c)
-    sel.dispatchEvent(new Event('change', { bubbles: true }))
-    await new Promise(r => setTimeout(r, 250))
+    const btn = document.querySelector('.lang-btn')
+    btn.click()
+    await new Promise(r => setTimeout(r, 60))
+    document.querySelector('.lang-opt[id="lang-opt-' + c + '"]')?.click()
+    await new Promise(r => setTimeout(r, 300))
     const rail = document.querySelector('.rail')
     if (!rail) return { worst, vw: window.innerWidth, missingRail: c }
     const w = rail.getBoundingClientRect().width

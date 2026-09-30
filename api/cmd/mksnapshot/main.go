@@ -2,7 +2,7 @@
 //
 // Run it before a demo and commit the result. The service serves this file when
 // every upstream is unreachable, so the demo cannot be taken down by a provider
-// outage, a rate limit, or a dead ERDDAP host (INSTR.md issue D2).
+// outage, a rate limit, or a dead ERDDAP host.
 //
 //	go run ./cmd/mksnapshot -out data/snapshot.json -places 14
 package main

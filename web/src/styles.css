@@ -360,17 +360,103 @@ body::after {
   color: var(--ink-3);
 }
 
-.lang-row select {
+.lang-pick {
+  position: relative;
+}
+
+.lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 8px 0 2px;
   border: 0;
-  background-color: transparent;
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink-2) 50%),
-    linear-gradient(135deg, var(--ink-2) 50%, transparent 50%);
-  padding: 8px 28px 8px 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease);
+}
+
+.lang-btn:hover {
+  background: var(--surface-2);
+}
+
+.lang-btn-text {
+  max-width: 9.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang-caret {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  color: var(--ink-3);
+  transition: transform 0.18s var(--ease);
+}
+
+/* The option list. It is an absolutely positioned panel rather than a modal,
+   so it paints on the compositor's next frame and cannot lag behind the click
+   that opened it. */
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  z-index: 60;
+  min-width: 168px;
+  max-height: 264px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface-2);
+  box-shadow: 0 14px 34px rgba(3, 12, 20, 0.42);
+}
+
+.lang-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lang-opt.is-active {
+  background: var(--surface-3);
   color: var(--ink);
 }
 
-.lang-row select:hover {
-  border-color: transparent;
+.lang-opt.is-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.lang-opt-native {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang-check {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--accent);
 }
 
 .tour-btn {
@@ -724,11 +810,62 @@ html {
   pointer-events: none;
 }
 
+.globe-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .globe-host {
   width: 100%;
   height: 100%;
   touch-action: none;
   cursor: grab;
+}
+
+/* The globe takes seconds to build its geometry, and a blank panel for ten
+   seconds reads as a crashed page. The wait is stated instead, and it is a
+   polite live region so it is also announced rather than only seen. */
+.globe-load {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 46%, rgba(11, 40, 58, 0.5), transparent 62%);
+}
+
+.globe-load-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 211, 238, 0.22);
+  border-top-color: var(--accent);
+  animation: globe-load-spin 1.05s linear infinite;
+}
+
+.globe-load-text {
+  color: var(--ink-3);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+@keyframes globe-load-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* A spinning ring is exactly the thing a motion-sensitive user asked not to
+   see, so it holds still and the text alone carries the message. */
+@media (prefers-reduced-motion: reduce) {
+  .globe-load-mark {
+    animation: none;
+    border-top-color: var(--accent);
+  }
 }
 
 .globe-host:active {
@@ -1717,6 +1854,23 @@ html {
   height: 128px;
   border-radius: var(--radius);
   margin-bottom: 14px;
+}
+
+.globe-wait {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+}
+
+.globe-wait.sk-orbit {
+  margin: 0 auto;
+}
+
+.globe-wait.sk-globe {
+  width: 100%;
+  height: 100%;
 }
 
 .sk-globe {
